@@ -3,7 +3,7 @@
 // figure references a key in FIGURES (js/figures.js).
 // duration is the default hold time in seconds.
 
-export const POSES = [
+window.POSES = [
   // --- Centering ---
   {
     id: 'mountain',
@@ -233,6 +233,6 @@ export const POSES = [
   },
 ];
 
-export function posesByCategory(category) {
-  return POSES.filter((p) => p.category === category);
-}
+window.posesByCategory = function posesByCategory(category) {
+  return window.POSES.filter((p) => p.category === category);
+};

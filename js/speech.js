@@ -34,11 +34,11 @@ if (window.speechSynthesis) {
   preferredVoice = pickVoice();
 }
 
-export function speechAvailable() {
+window.speechAvailable = function speechAvailable() {
   return 'speechSynthesis' in window;
-}
+};
 
-export function speak(text, { rate = 0.95 } = {}) {
+window.speak = function speak(text, { rate = 0.95 } = {}) {
   if (!speechAvailable()) return;
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
@@ -49,11 +49,11 @@ export function speak(text, { rate = 0.95 } = {}) {
   window.speechSynthesis.speak(utter);
 }
 
-export function stopSpeaking() {
-  if (speechAvailable()) window.speechSynthesis.cancel();
-}
+window.stopSpeaking = function stopSpeaking() {
+  if (window.speechAvailable()) window.speechSynthesis.cancel();
+};
 
-export function chime() {
+window.chime = function chime() {
   const ctx = ensureAudioCtx();
   if (!ctx) return;
   if (ctx.state === 'suspended') ctx.resume();
@@ -67,11 +67,11 @@ export function chime() {
   gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
   osc.start();
   osc.stop(ctx.currentTime + 0.5);
-}
+};
 
-export function unlockAudio() {
+window.unlockAudio = function unlockAudio() {
   // Call from a user gesture (e.g. the Start button) so autoplay policies
   // don't block the chime/speech later.
   const ctx = ensureAudioCtx();
   if (ctx && ctx.state === 'suspended') ctx.resume();
-}
+};

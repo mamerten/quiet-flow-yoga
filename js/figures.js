@@ -12,7 +12,7 @@ function svg(inner) {
   return `<svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">${inner}</svg>`;
 }
 
-export const FIGURES = {
+window.FIGURES = {
   // T1 — standing, arms relaxed at sides (Mountain)
   standingNeutral: svg(
     HEAD(50, 16) +

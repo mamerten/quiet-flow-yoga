@@ -1,4 +1,4 @@
-import { POSES, posesByCategory } from './poses.js';
+// Uses window.POSES / window.posesByCategory from poses.js (loaded first).
 
 // Phases, in order, with a rough share of the total practice time.
 // "centering" and "relaxation" are handled with fixed/near-fixed durations
@@ -27,7 +27,7 @@ function shuffle(arr) {
 // through a shuffled pool so a longer workout can reuse poses without
 // repeating one twice in a row.
 function fillPhase(category, budgetSeconds) {
-  const pool = shuffle(posesByCategory(category));
+  const pool = shuffle(window.posesByCategory(category));
   if (pool.length === 0) return [];
 
   const segments = [];
@@ -67,9 +67,9 @@ function closingDuration(totalMinutes) {
  * `totalMinutes` of practice, structured as centering -> warm-up ->
  * standing -> balance -> seated -> final relaxation.
  */
-export function generateWorkout(totalMinutes) {
+window.generateWorkout = function generateWorkout(totalMinutes) {
   const totalSeconds = Math.round(totalMinutes * 60);
-  const savasana = POSES.find((p) => p.id === 'savasana');
+  const savasana = window.POSES.find((p) => p.id === 'savasana');
   const closingSeconds = Math.min(closingDuration(totalMinutes), totalSeconds * 0.3);
   const phaseBudget = Math.max(totalSeconds - closingSeconds, 30);
 
@@ -90,4 +90,4 @@ export function generateWorkout(totalMinutes) {
   segments.push({ pose: savasana, duration: Math.round(closingSeconds) });
 
   return segments;
-}
+};

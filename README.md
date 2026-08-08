@@ -1,12 +1,12 @@
 # Quiet Flow — Yoga Timer
 
-A tiny, dependency-free web app for short, guided yoga practices — like Apple Fitness+'s time-based workouts, but yoga-only. Pick 5, 7, or 10 minutes (or type your own length), and it narrates you through a sequence of poses with a simple reference image for each.
+A tiny, dependency-free web app for short, guided yoga practices — like Apple Fitness+'s time-based workouts, but yoga-only. Pick 5, 7, 10, or 15 minutes (or type your own length), and it narrates you through a sequence of poses with a simple reference image for each.
 
 **[Live demo →](https://matmerten.com/)** *(update this link once deployed)*
 
 ## What it does
 
-- **Pick a length.** 5 / 7 / 10 minutes, or any custom length from 2–60 minutes.
+- **Pick a length.** 5 / 7 / 10 / 15 minutes, or any custom length from 2–60 minutes.
 - **It builds a flow for you.** Each practice moves through phases — centering, warm-up, standing poses, balance, seated/twists, and a closing relaxation — pulling poses from a small library and sizing each hold to fit the total time. The sequence is shuffled a bit each time, so repeat practices don't feel identical.
 - **Audible instructions.** Uses the browser's built-in text-to-speech (Web Speech API) to speak the pose name and cue at the start of each pose — no audio files, no recording, no hosting cost.
 - **Minimal visuals.** Each pose has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
@@ -14,7 +14,7 @@ A tiny, dependency-free web app for short, guided yoga practices — like Apple 
 
 ## Why it's built this way
 
-- **Zero build step, zero dependencies.** Plain HTML/CSS/JS (ES modules). Open `index.html` in a modern browser, or serve the folder statically — that's it. Easy to drop straight into a static site (e.g. matmerten.com) or GitHub Pages.
+- **Zero build step, zero dependencies.** Plain HTML/CSS/JS, loaded as ordinary `<script>` tags (not ES modules), so it works whether you double-click `index.html` and open it straight from disk, or serve the folder from any static host. Easy to drop straight into a static site (e.g. matmerten.com) or GitHub Pages.
 - **No copyrighted media.** All illustrations are small original SVGs authored for this project; all narration is generated locally by the browser's speech synthesis, not a recorded voice.
 
 ## Project structure
@@ -49,7 +49,9 @@ The workout generator picks up new poses automatically — no other changes need
 
 ## Running locally
 
-ES modules need to be served over HTTP (not opened via `file://`). Any static server works, e.g.:
+Just open [`index.html`](index.html) directly in a browser (double-click it, or drag it into a browser window) — no server required.
+
+You can also serve the folder over HTTP if you prefer, e.g.:
 
 ```bash
 npx serve .
@@ -60,8 +62,6 @@ or Python's built-in server:
 ```bash
 python -m http.server 8000
 ```
-
-Then open the printed local URL.
 
 ## Deploying
 

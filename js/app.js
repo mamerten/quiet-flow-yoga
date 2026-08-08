@@ -1,6 +1,6 @@
-import { FIGURES } from './figures.js';
-import { generateWorkout } from './workout.js';
-import { speak, stopSpeaking, chime, unlockAudio, speechAvailable } from './speech.js';
+// FIGURES, generateWorkout, and the speech helpers are attached to `window`
+// by figures.js / workout.js / speech.js, which load before this file.
+const { FIGURES, generateWorkout, speak, stopSpeaking, chime, unlockAudio, speechAvailable } = window;
 
 const homeScreen = document.getElementById('screen-home');
 const workoutScreen = document.getElementById('screen-workout');
