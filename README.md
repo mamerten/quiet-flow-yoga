@@ -1,32 +1,37 @@
 # Quiet Flow — Yoga Timer
 
-A tiny, dependency-free web app for short, guided yoga practices — like Apple Fitness+'s time-based workouts, but yoga-only. Pick 5, 7, 10, or 15 minutes (or type your own length), and it narrates you through a sequence of poses with a simple reference image for each.
+A tiny, dependency-free web app for short, guided yoga practices — like Apple Fitness+'s time-based workouts, but yoga-only. Pick 5, 7, 10, or 15 minutes, and it narrates you through a sequence of poses with a simple reference image for each, a 3-2-1 countdown between poses, and optional background sound.
 
 **[Live demo →](https://matmerten.com/)** *(update this link once deployed)*
 
 ## What it does
 
-- **Pick a length.** 5 / 7 / 10 / 15 minutes, or any custom length from 2–60 minutes.
+- **Pick a length.** 5 / 7 / 10 / 15 minutes.
 - **It builds a flow for you.** Each practice moves through phases — centering, warm-up, standing poses, balance, seated/twists, and a closing relaxation — pulling poses from a small library and sizing each hold to fit the total time. The sequence is shuffled a bit each time, so repeat practices don't feel identical.
+- **A 3-second countdown between poses.** Before each pose starts, a brief "Get ready for &lt;pose&gt;" countdown (3-2-1, with its own soft tick and the upcoming pose already on screen) gives you a moment to get into position.
 - **Audible instructions.** Uses the browser's built-in text-to-speech (Web Speech API) to speak the pose name and cue at the start of each pose — no audio files, no recording, no hosting cost.
+- **Optional background sound.** None (default), Soft Pad, Gentle Rain, Singing Bowl, or Ocean Waves — all generated on the fly with the Web Audio API, and independent of narration, so both play together.
 - **Minimal visuals.** Each pose has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
-- **Controls.** Pause/Resume, Skip, End, plus an overall progress bar and per-pose countdown.
+- **Controls.** Pause/Resume, Skip, End, plus an overall progress bar and per-pose countdown/timer.
+- **Version + source link.** A small footer shows the current version and links back to this repo.
 
 ## Why it's built this way
 
 - **Zero build step, zero dependencies.** Plain HTML/CSS/JS, loaded as ordinary `<script>` tags (not ES modules), so it works whether you double-click `index.html` and open it straight from disk, or serve the folder from any static host. Easy to drop straight into a static site (e.g. matmerten.com) or GitHub Pages.
-- **No copyrighted media.** All illustrations are small original SVGs authored for this project; all narration is generated locally by the browser's speech synthesis, not a recorded voice.
+- **No copyrighted media.** All illustrations are small original SVGs authored for this project; all narration and background sound are generated locally (speech synthesis + Web Audio), not recordings.
+- **Responsive for phones.** Portrait keeps the usual stacked card layout. In landscape on a phone (short, wide viewport), the workout screen splits into two columns — the pose image on the left, the name/cue/timer/controls on the right — so a full practice fits without scrolling.
 
 ## Project structure
 
 ```
 index.html          Screens: home, active workout, complete
-css/style.css        All styling
+css/style.css        All styling, incl. the phone-landscape split layout
 js/poses.js          The pose repository (name, cue, category, default duration, figure)
 js/figures.js        A handful of simple stick-figure SVG templates, reused across poses
 js/workout.js        Builds a timed sequence of poses for a given number of minutes
-js/speech.js         Text-to-speech + a soft transition chime (Web Speech / Web Audio API)
-js/app.js            Screen/timer state machine and UI wiring
+js/speech.js         Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
+js/music.js          Optional procedural background sound tracks (Web Audio API)
+js/app.js            Screen/timer/countdown state machine and UI wiring
 ```
 
 ## Extending the pose library

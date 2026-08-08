@@ -13,6 +13,24 @@ function ensureAudioCtx() {
   return audioCtx;
 }
 
+// Shared AudioContext, reused by music.js so background sound, the chime,
+// and the countdown tick all live on one audio graph — this is also what
+// lets narration and music play at the same time (they're independent
+// Web APIs, speechSynthesis vs. Web Audio, so neither blocks the other).
+window.getAudioContext = ensureAudioCtx;
+
+// Suspending/resuming the AudioContext pauses every sound running on it
+// (music, chime, tick) in one call — used when the practice is paused.
+window.pauseAllAudio = function pauseAllAudio() {
+  const ctx = ensureAudioCtx();
+  if (ctx && ctx.state === 'running') ctx.suspend();
+};
+
+window.resumeAllAudio = function resumeAllAudio() {
+  const ctx = ensureAudioCtx();
+  if (ctx && ctx.state === 'suspended') ctx.resume();
+};
+
 function pickVoice() {
   if (!window.speechSynthesis) return null;
   const voices = window.speechSynthesis.getVoices();
@@ -67,6 +85,24 @@ window.chime = function chime() {
   gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
   osc.start();
   osc.stop(ctx.currentTime + 0.5);
+};
+
+window.countdownTick = function countdownTick() {
+  // A short, higher-pitched blip for the 3-2-1 countdown — distinct from
+  // the longer chime that marks a pose actually starting.
+  const ctx = ensureAudioCtx();
+  if (!ctx) return;
+  if (ctx.state === 'suspended') ctx.resume();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.frequency.value = 880; // A5
+  gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.1, ctx.currentTime + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15);
+  osc.start();
+  osc.stop(ctx.currentTime + 0.15);
 };
 
 window.unlockAudio = function unlockAudio() {

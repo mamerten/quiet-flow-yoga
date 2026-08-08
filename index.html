@@ -36,12 +36,9 @@
           </button>
         </div>
 
-        <div class="custom-row">
-          <label for="custom-minutes">Or choose your own length</label>
-          <div class="custom-input-row">
-            <input type="number" id="custom-minutes" min="2" max="60" step="1" placeholder="e.g. 15" />
-            <button id="custom-start">Start</button>
-          </div>
+        <div class="music-row">
+          <label for="music-select">Background sound</label>
+          <select id="music-select"></select>
         </div>
 
         <p id="audio-note" class="note">Turn your sound on — this practice is narrated. Each pose also shows a simple image and written cue.</p>
@@ -59,21 +56,36 @@
           <span id="next-label">Next: —</span>
         </div>
 
-        <div id="figure-host" class="figure-host" aria-hidden="true"></div>
+        <div class="workout-body">
+          <div class="workout-left">
+            <div id="figure-host" class="figure-host" aria-hidden="true"></div>
+          </div>
 
-        <h2 id="pose-name">Pose</h2>
-        <p id="pose-sanskrit" class="sanskrit"></p>
-        <p id="pose-cue" class="cue" aria-live="polite"></p>
+          <div class="workout-right">
+            <!-- Shown for the brief countdown before a pose begins -->
+            <div id="countdown-view" class="countdown-view hidden">
+              <div id="countdown-number" class="countdown-number">3</div>
+              <p class="countdown-label">Get ready for</p>
+              <p id="countdown-next" class="countdown-next">Pose</p>
+            </div>
 
-        <div class="pose-progress">
-          <div id="pose-progress-bar" class="pose-progress-bar"></div>
-        </div>
-        <div id="pose-time-left" class="time-left">0:00</div>
+            <!-- Shown while actively holding a pose -->
+            <div id="hold-view" class="hold-view hidden">
+              <h2 id="pose-name">Pose</h2>
+              <p id="pose-sanskrit" class="sanskrit"></p>
+              <p id="pose-cue" class="cue" aria-live="polite"></p>
+              <div class="pose-progress">
+                <div id="pose-progress-bar" class="pose-progress-bar"></div>
+              </div>
+              <div id="pose-time-left" class="time-left">0:00</div>
+            </div>
 
-        <div class="controls">
-          <button id="pause-btn" class="control-btn">Pause</button>
-          <button id="skip-btn" class="control-btn">Skip</button>
-          <button id="end-btn" class="control-btn control-btn-danger">End</button>
+            <div class="controls">
+              <button id="pause-btn" class="control-btn">Pause</button>
+              <button id="skip-btn" class="control-btn">Skip</button>
+              <button id="end-btn" class="control-btn control-btn-danger">End</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -90,6 +102,11 @@
       </div>
     </section>
 
+    <footer class="app-footer">
+      Quiet Flow <span id="app-version"></span> ·
+      <a href="https://github.com/mamerten/quiet-flow-yoga" target="_blank" rel="noopener">GitHub</a>
+    </footer>
+
   </main>
 
   <!-- Plain scripts (not type="module") so this also runs when opened
@@ -98,6 +115,7 @@
   <script src="js/poses.js"></script>
   <script src="js/workout.js"></script>
   <script src="js/speech.js"></script>
+  <script src="js/music.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

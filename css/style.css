@@ -35,7 +35,8 @@ body {
   max-width: 480px;
 }
 
-.screen.hidden {
+.screen.hidden,
+.hidden {
   display: none;
 }
 
@@ -107,38 +108,26 @@ h1 {
   padding: 14px;
 }
 
-.custom-row {
+.music-row {
   margin-bottom: 20px;
   text-align: left;
 }
 
-.custom-row label {
+.music-row label {
   display: block;
   font-size: 0.85rem;
   color: var(--text-soft);
   margin-bottom: 8px;
 }
 
-.custom-input-row {
-  display: flex;
-  gap: 8px;
-}
-
-.custom-input-row input {
-  flex: 1;
+.music-row select {
+  width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid #d7ded9;
+  background: white;
+  color: var(--text);
   font-size: 1rem;
-}
-
-.custom-input-row button {
-  padding: 10px 18px;
-  border-radius: 10px;
-  border: none;
-  background: var(--text);
-  color: white;
-  cursor: pointer;
 }
 
 .note {
@@ -174,6 +163,15 @@ h1 {
   font-size: 0.78rem;
   color: var(--text-soft);
   margin-bottom: 10px;
+}
+
+/* Portrait: figure and text simply stack (see landscape override below). */
+.workout-body {
+  display: block;
+}
+
+.workout-left {
+  margin-bottom: 4px;
 }
 
 .figure-host {
@@ -243,6 +241,36 @@ h1 {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- Countdown between poses --- */
+
+.countdown-view {
+  padding: 6px 0 10px;
+}
+
+.countdown-number {
+  font-size: 3.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--sage-dark);
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+  margin: 0 0 2px;
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.countdown-next {
+  margin: 0 0 20px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--sage-dark);
+}
+
 .controls {
   display: flex;
   gap: 10px;
@@ -279,8 +307,107 @@ h1 {
   gap: 4px;
 }
 
+.app-footer {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-soft);
+}
+
+.app-footer a {
+  color: var(--sage-dark);
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 380px) {
   .card {
     padding: 24px 18px;
+  }
+}
+
+/* --- Phone landscape ---
+   Short, wide viewport: split the workout card into two columns instead
+   of stacking everything vertically, so the practice fits without
+   scrolling. The pose image stays on the left; the pose name, cue,
+   countdown/timer, and controls move to the right. */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
+  body {
+    padding: 10px;
+    align-items: flex-start;
+  }
+
+  .app {
+    max-width: 760px;
+  }
+
+  .card {
+    padding: 16px 22px;
+  }
+
+  .tagline {
+    margin-bottom: 16px;
+  }
+
+  .duration-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .workout-card {
+    padding-top: 12px;
+  }
+
+  .workout-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    text-align: left;
+  }
+
+  .workout-left {
+    flex: 0 0 32%;
+    margin-bottom: 0;
+  }
+
+  .workout-right {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .figure-host {
+    width: 120px;
+    height: 140px;
+    margin: 0 auto;
+  }
+
+  #pose-name {
+    font-size: 1.25rem;
+  }
+
+  .cue {
+    min-height: 0;
+    margin-bottom: 10px;
+  }
+
+  .time-left {
+    margin-bottom: 10px;
+  }
+
+  .countdown-number {
+    font-size: 2.6rem;
+    margin-bottom: 4px;
+  }
+
+  .countdown-next {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .app-footer {
+    margin-top: 10px;
   }
 }
