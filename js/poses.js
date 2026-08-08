@@ -1,0 +1,238 @@
+// Repository of standard yoga poses.
+// category drives which phase of a workout a pose can appear in.
+// figure references a key in FIGURES (js/figures.js).
+// duration is the default hold time in seconds.
+
+export const POSES = [
+  // --- Centering ---
+  {
+    id: 'mountain',
+    name: 'Mountain Pose',
+    sanskrit: 'Tadasana',
+    category: 'centering',
+    figure: 'standingNeutral',
+    duration: 30,
+    cue: 'Stand tall with your feet together, arms relaxed at your sides. Close your eyes if you like, and take a deep breath in, and out.',
+  },
+  {
+    id: 'easy-seat',
+    name: 'Easy Seat Breathing',
+    sanskrit: 'Sukhasana',
+    category: 'centering',
+    figure: 'seatedNeutral',
+    duration: 30,
+    cue: 'Sit comfortably with your legs crossed, hands resting on your knees. Breathe in slowly through your nose, and exhale gently.',
+  },
+
+  // --- Warm-up ---
+  {
+    id: 'cat-cow',
+    name: 'Cat-Cow Stretch',
+    sanskrit: 'Marjaryasana-Bitilasana',
+    category: 'warmup',
+    figure: 'tabletop',
+    duration: 40,
+    cue: 'Come to hands and knees. Inhale, drop your belly and lift your gaze. Exhale, round your spine toward the ceiling. Keep flowing with your breath.',
+  },
+  {
+    id: 'downdog',
+    name: 'Downward-Facing Dog',
+    sanskrit: 'Adho Mukha Svanasana',
+    category: 'warmup',
+    figure: 'downdog',
+    duration: 30,
+    cue: 'Press your hips up and back into an upside-down V. Press the floor away with your hands and relax your neck.',
+  },
+  {
+    id: 'forward-fold',
+    name: 'Standing Forward Fold',
+    sanskrit: 'Uttanasana',
+    category: 'warmup',
+    figure: 'standingForwardFold',
+    duration: 30,
+    cue: 'Hinge at your hips and fold forward, letting your head and arms hang heavy. Soften your knees.',
+  },
+  {
+    id: 'plank',
+    name: 'Plank Pose',
+    sanskrit: 'Phalakasana',
+    category: 'warmup',
+    figure: 'tabletop',
+    duration: 30,
+    cue: 'Come to a straight line from head to heels, hands under your shoulders. Engage your core and breathe steadily.',
+  },
+
+  // --- Standing / strength ---
+  {
+    id: 'warrior1',
+    name: 'Warrior I',
+    sanskrit: 'Virabhadrasana I',
+    category: 'standing',
+    figure: 'lungeArmsUp',
+    duration: 35,
+    cue: 'Step one foot back, bend your front knee, and reach your arms overhead. Square your hips toward the front.',
+  },
+  {
+    id: 'warrior2',
+    name: 'Warrior II',
+    sanskrit: 'Virabhadrasana II',
+    category: 'standing',
+    figure: 'standingArmsOutT',
+    duration: 35,
+    cue: 'Open your hips to the side, bend your front knee, and stretch your arms out like a T. Gaze over your front hand.',
+  },
+  {
+    id: 'triangle',
+    name: 'Extended Triangle Pose',
+    sanskrit: 'Utthita Trikonasana',
+    category: 'standing',
+    figure: 'standingArmsOutT',
+    duration: 30,
+    cue: 'Straighten your front leg and reach your torso forward and down, one hand toward your shin, the other reaching to the sky.',
+  },
+  {
+    id: 'side-angle',
+    name: 'Extended Side Angle',
+    sanskrit: 'Utthita Parsvakonasana',
+    category: 'standing',
+    figure: 'standingArmsOutT',
+    duration: 30,
+    cue: 'Bend your front knee deeply and rest your forearm on your thigh, reaching your other arm overhead in one long line.',
+  },
+  {
+    id: 'chair',
+    name: 'Chair Pose',
+    sanskrit: 'Utkatasana',
+    category: 'standing',
+    figure: 'standingArmsUp',
+    duration: 30,
+    cue: 'Bend your knees like you are sitting into a chair, and reach your arms up by your ears.',
+  },
+  {
+    id: 'low-lunge',
+    name: 'Low Lunge',
+    sanskrit: 'Anjaneyasana',
+    category: 'standing',
+    figure: 'lungeArmsUp',
+    duration: 30,
+    cue: 'Step one foot forward into a deep lunge, sink your hips low, and reach your arms overhead.',
+  },
+  {
+    id: 'cobra',
+    name: 'Cobra Pose',
+    sanskrit: 'Bhujangasana',
+    category: 'standing',
+    figure: 'lyingFront',
+    duration: 25,
+    cue: 'Lie on your belly and gently lift your chest, pressing lightly through your hands. Keep your shoulders relaxed.',
+  },
+  {
+    id: 'bridge',
+    name: 'Bridge Pose',
+    sanskrit: 'Setu Bandhasana',
+    category: 'standing',
+    figure: 'lyingBack',
+    duration: 30,
+    cue: 'Lie on your back, feet flat on the floor, and lift your hips toward the ceiling. Roll your shoulders underneath you.',
+  },
+
+  // --- Balance ---
+  {
+    id: 'tree',
+    name: 'Tree Pose',
+    sanskrit: 'Vrksasana',
+    category: 'balance',
+    figure: 'balanceOneLeg',
+    duration: 30,
+    cue: 'Shift your weight onto one foot, rest the other foot on your inner leg, and bring your hands to your heart or reach them overhead.',
+  },
+  {
+    id: 'eagle',
+    name: 'Eagle Pose',
+    sanskrit: 'Garudasana',
+    category: 'balance',
+    figure: 'balanceOneLeg',
+    duration: 25,
+    cue: 'Cross one leg over the other and wrap your arms around each other in front of you. Sink your hips and find your balance.',
+  },
+  {
+    id: 'warrior3',
+    name: 'Warrior III',
+    sanskrit: 'Virabhadrasana III',
+    category: 'balance',
+    figure: 'balanceOneLeg',
+    duration: 25,
+    cue: 'Hinge forward on one leg, lifting the other leg behind you until your body forms a T. Reach your arms forward.',
+  },
+
+  // --- Seated / twist ---
+  {
+    id: 'seated-fold',
+    name: 'Seated Forward Fold',
+    sanskrit: 'Paschimottanasana',
+    category: 'seated',
+    figure: 'seatedNeutral',
+    duration: 30,
+    cue: 'Extend your legs forward and reach toward your feet, letting your spine lengthen and your head relax.',
+  },
+  {
+    id: 'spinal-twist',
+    name: 'Seated Spinal Twist',
+    sanskrit: 'Ardha Matsyendrasana',
+    category: 'seated',
+    figure: 'seatedNeutral',
+    duration: 30,
+    cue: 'Sit tall, cross one leg over, and gently twist your torso toward that side. Keep lengthening your spine as you turn.',
+  },
+  {
+    id: 'butterfly',
+    name: 'Butterfly Pose',
+    sanskrit: 'Baddha Konasana',
+    category: 'seated',
+    figure: 'seatedNeutral',
+    duration: 30,
+    cue: 'Bring the soles of your feet together and let your knees drop open. Fold forward gently if that feels good.',
+  },
+  {
+    id: 'cow-face-arms',
+    name: 'Cow Face Arms',
+    sanskrit: 'Gomukhasana',
+    category: 'seated',
+    figure: 'seatedNeutral',
+    duration: 25,
+    cue: 'Reach one arm overhead and bend it behind your back, and reach the other arm up from below to clasp your hands, or hold a strap.',
+  },
+  {
+    id: 'happy-baby',
+    name: 'Happy Baby Pose',
+    sanskrit: 'Ananda Balasana',
+    category: 'seated',
+    figure: 'lyingBack',
+    duration: 25,
+    cue: 'Lie on your back, grab the outside edges of your feet, and gently rock side to side.',
+  },
+
+  // --- Relaxation / cooldown ---
+  {
+    id: 'childs-pose',
+    name: "Child's Pose",
+    sanskrit: 'Balasana',
+    category: 'relaxation',
+    figure: 'kneelingFold',
+    duration: 40,
+    cue: 'Kneel and sit back onto your heels, then fold forward with your arms stretched out or resting by your sides. Breathe deeply and let go.',
+  },
+  {
+    id: 'savasana',
+    name: 'Final Relaxation',
+    sanskrit: 'Savasana',
+    category: 'relaxation',
+    figure: 'lyingBack',
+    duration: 60,
+    cue: 'Lie flat on your back, let your arms and legs relax completely, and close your eyes. Just breathe, and let everything go.',
+  },
+];
+
+export function posesByCategory(category) {
+  return POSES.filter((p) => p.category === category);
+}

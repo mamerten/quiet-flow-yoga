@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Quiet Flow — Yoga Timer</title>
+  <meta name="description" content="Short, guided yoga practices with audible instructions and simple visual cues. Pick 5, 7, or 10 minutes." />
+  <meta name="theme-color" content="#7c9885" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="app">
+
+    <!-- HOME -->
+    <section id="screen-home" class="screen">
+      <div class="card">
+        <h1>Quiet Flow</h1>
+        <p class="tagline">A short, guided yoga practice. Pick a length and press start — I'll walk you through it.</p>
+
+        <div class="duration-grid">
+          <button class="duration-btn" data-minutes="5">
+            <span class="big">5</span>
+            <span class="small">minutes</span>
+          </button>
+          <button class="duration-btn" data-minutes="7">
+            <span class="big">7</span>
+            <span class="small">minutes</span>
+          </button>
+          <button class="duration-btn" data-minutes="10">
+            <span class="big">10</span>
+            <span class="small">minutes</span>
+          </button>
+        </div>
+
+        <div class="custom-row">
+          <label for="custom-minutes">Or choose your own length</label>
+          <div class="custom-input-row">
+            <input type="number" id="custom-minutes" min="2" max="60" step="1" placeholder="e.g. 15" />
+            <button id="custom-start">Start</button>
+          </div>
+        </div>
+
+        <p id="audio-note" class="note">Turn your sound on — this practice is narrated. Each pose also shows a simple image and written cue.</p>
+      </div>
+    </section>
+
+    <!-- WORKOUT -->
+    <section id="screen-workout" class="screen hidden">
+      <div class="card workout-card">
+        <div class="overall-progress">
+          <div id="overall-progress-bar" class="overall-progress-bar"></div>
+        </div>
+        <div class="step-row">
+          <span id="step-label">Pose 1 of 1</span>
+          <span id="next-label">Next: —</span>
+        </div>
+
+        <div id="figure-host" class="figure-host" aria-hidden="true"></div>
+
+        <h2 id="pose-name">Pose</h2>
+        <p id="pose-sanskrit" class="sanskrit"></p>
+        <p id="pose-cue" class="cue" aria-live="polite"></p>
+
+        <div class="pose-progress">
+          <div id="pose-progress-bar" class="pose-progress-bar"></div>
+        </div>
+        <div id="pose-time-left" class="time-left">0:00</div>
+
+        <div class="controls">
+          <button id="pause-btn" class="control-btn">Pause</button>
+          <button id="skip-btn" class="control-btn">Skip</button>
+          <button id="end-btn" class="control-btn control-btn-danger">End</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPLETE -->
+    <section id="screen-complete" class="screen hidden">
+      <div class="card">
+        <h1>Namaste 🙏</h1>
+        <p id="summary-text" class="tagline">Practice complete.</p>
+        <div class="complete-actions">
+          <button id="restart-btn" class="duration-btn wide">Choose another length</button>
+          <button id="home-btn" class="control-btn wide">Back to home</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
