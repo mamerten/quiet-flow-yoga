@@ -25,19 +25,20 @@ A tiny, dependency-free web app for short, guided yoga practices — like Apple 
 ## Project structure
 
 ```
-index.html          Screens: home, active workout, complete
-css/style.css        All styling, incl. the phone-landscape split layout
-js/poses.js          The pose repository (name, cue, category, default duration, figure)
-js/figures.js        A handful of simple stick-figure SVG templates, reused across poses
-js/workout.js        Builds a timed sequence of poses for a given number of minutes
-js/speech.js         Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
-js/music.js          Optional procedural background music tracks (Web Audio API)
-js/app.js            Screen/timer/countdown state machine and UI wiring
+wrangler.toml         Cloudflare Pages config (build output = public/)
+public/index.html     Screens: home, active workout, complete
+public/css/style.css  All styling, incl. the phone-landscape split layout and dark mode
+public/js/poses.js    The pose repository (name, cue, category, default duration, figure)
+public/js/figures.js  A handful of simple stick-figure SVG templates, reused across poses
+public/js/workout.js  Builds a timed sequence of poses for a given number of minutes
+public/js/speech.js   Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
+public/js/music.js    Optional procedural background music tracks (Web Audio API)
+public/js/app.js      Screen/timer/countdown state machine and UI wiring
 ```
 
 ## Extending the pose library
 
-Add an entry to `POSES` in [`js/poses.js`](js/poses.js):
+Add an entry to `POSES` in [`public/js/poses.js`](public/js/poses.js):
 
 ```js
 {
@@ -45,33 +46,39 @@ Add an entry to `POSES` in [`js/poses.js`](js/poses.js):
   name: 'Pose Name',
   sanskrit: 'Optional Sanskrit Name',
   category: 'centering' | 'warmup' | 'standing' | 'balance' | 'seated' | 'relaxation',
-  figure: 'one of the keys in js/figures.js',
+  figure: 'one of the keys in public/js/figures.js',
   duration: 30, // default hold time in seconds
   cue: 'What gets spoken and displayed for this pose.',
 }
 ```
 
-The workout generator picks up new poses automatically — no other changes needed. To add a new illustration, add a template to `FIGURES` in `js/figures.js`.
+The workout generator picks up new poses automatically — no other changes needed. To add a new illustration, add a template to `FIGURES` in `public/js/figures.js`.
 
 ## Running locally
 
-Just open [`index.html`](index.html) directly in a browser (double-click it, or drag it into a browser window) — no server required.
+Just open [`public/index.html`](public/index.html) directly in a browser (double-click it, or drag it into a browser window) — no server required.
 
-You can also serve the folder over HTTP if you prefer, e.g.:
-
-```bash
-npx serve .
-```
-
-or Python's built-in server:
+You can also serve the `public/` folder over HTTP if you prefer, e.g.:
 
 ```bash
-python -m http.server 8000
+npx serve public
 ```
 
-## Deploying
+or via Wrangler, matching how it runs in production:
 
-This is a static site — deploy the folder as-is to GitHub Pages, Netlify, Cloudflare Pages, or as a subdirectory of matmerten.com. No build step required.
+```bash
+npm run dev
+```
+
+## Deployment
+
+Cloudflare Pages, building from the connected GitHub repo:
+
+- **Build output directory:** `public` (see `wrangler.toml`)
+- **Build command:** none — this is a static site, no build step
+- **Framework preset:** None
+
+A manual deploy from your machine is also available: `npm run deploy` (requires `wrangler login` once).
 
 ## Browser support notes
 
