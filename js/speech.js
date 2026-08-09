@@ -31,16 +31,29 @@ window.resumeAllAudio = function resumeAllAudio() {
   if (ctx && ctx.state === 'suspended') ctx.resume();
 };
 
+// Recognizable names of natural/neural-sounding voice engines (as opposed
+// to older, more robotic-sounding synthesis) across major platforms.
+const NATURAL_VOICE = /natural|online|neural|premium|enhanced/i;
+// Recognizable names of soft-sounding female voices across major
+// platforms/browsers (Windows, macOS/iOS, Chrome's Google voices, Android).
+const FEMALE_VOICE = /aria|jenny|emma|ava|zira|samantha|victoria|susan|karen|moira|tessa|hazel|salli|joanna|kendra|kimberly|ivy|serena|fiona|female|woman|google us english|google uk english female/i;
+
 function pickVoice() {
   if (!window.speechSynthesis) return null;
   const voices = window.speechSynthesis.getVoices();
   if (!voices.length) return null;
-  // Prefer a calm-sounding English voice if one is available; otherwise
-  // fall back to whatever the browser defaults to.
+
+  const englishVoices = voices.filter((v) => v.lang && v.lang.toLowerCase().startsWith('en'));
+  const pool = englishVoices.length ? englishVoices : voices;
+
+  // Prefer a natural/neural female voice; fall back in stages toward
+  // "least robotic available" rather than jumping straight to whatever
+  // the browser defaults to (which is often an older, choppier voice).
   const preferred =
-    voices.find((v) => /en-US|en-GB/.test(v.lang) && /female|samantha|victoria|zira/i.test(v.name)) ||
-    voices.find((v) => v.lang && v.lang.startsWith('en')) ||
-    voices[0];
+    pool.find((v) => NATURAL_VOICE.test(v.name) && FEMALE_VOICE.test(v.name)) ||
+    pool.find((v) => FEMALE_VOICE.test(v.name)) ||
+    pool.find((v) => NATURAL_VOICE.test(v.name)) ||
+    pool[0];
   voicesReady = true;
   return preferred;
 }
@@ -56,16 +69,21 @@ window.speechAvailable = function speechAvailable() {
   return 'speechSynthesis' in window;
 };
 
-window.speak = function speak(text, { rate = 0.95 } = {}) {
+// Narration is mixed slightly under full volume so background music (see
+// js/music.js) reads clearly alongside it rather than being drowned out.
+const NARRATION_VOLUME = 0.8;
+
+window.speak = function speak(text, { rate = 0.95, volume = NARRATION_VOLUME } = {}) {
   if (!speechAvailable()) return;
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
   utter.rate = rate;
   utter.pitch = 1;
+  utter.volume = volume;
   if (!preferredVoice && voicesReady === false) preferredVoice = pickVoice();
   if (preferredVoice) utter.voice = preferredVoice;
   window.speechSynthesis.speak(utter);
-}
+};
 
 window.stopSpeaking = function stopSpeaking() {
   if (window.speechAvailable()) window.speechSynthesis.cancel();

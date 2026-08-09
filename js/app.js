@@ -43,6 +43,7 @@ const countdownNext = document.getElementById('countdown-next');
 
 const overallProgressBar = document.getElementById('overall-progress-bar');
 const stepLabel = document.getElementById('step-label');
+const topTimer = document.getElementById('top-timer');
 const nextLabel = document.getElementById('next-label');
 const pauseBtn = document.getElementById('pause-btn');
 const skipBtn = document.getElementById('skip-btn');
@@ -112,6 +113,7 @@ function startCountdown(index) {
   countdownView.classList.remove('hidden');
   countdownNumber.textContent = String(state.remaining);
   countdownNext.textContent = seg.pose.name;
+  topTimer.textContent = ''; // only shown once a pose is actually live
 
   updateOverallProgress(index);
   speak(`Up next: ${seg.pose.name}`);
@@ -132,6 +134,7 @@ function startHold(index) {
   poseCue.textContent = seg.pose.cue;
   poseTimeLeft.textContent = formatTime(state.remaining);
   poseProgressBar.style.width = '100%';
+  topTimer.textContent = formatTime(state.remaining);
 
   chime();
   speak(`${seg.pose.name}. ${seg.pose.cue}`);
@@ -153,7 +156,9 @@ function tick() {
 
   // Holding a pose.
   const seg = state.segments[state.index];
-  poseTimeLeft.textContent = formatTime(Math.max(state.remaining, 0));
+  const timeLeft = formatTime(Math.max(state.remaining, 0));
+  poseTimeLeft.textContent = timeLeft;
+  topTimer.textContent = timeLeft;
   poseProgressBar.style.width = `${Math.max((state.remaining / seg.duration) * 100, 0)}%`;
   updateOverallProgress(state.index, seg.duration - state.remaining);
 

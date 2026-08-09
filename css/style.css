@@ -160,9 +160,17 @@ h1 {
 .step-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 0.78rem;
   color: var(--text-soft);
   margin-bottom: 10px;
+}
+
+.top-timer {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--sage-dark);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Portrait: figure and text simply stack (see landscape override below). */

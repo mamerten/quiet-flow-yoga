@@ -9,6 +9,13 @@
   let masterGain = null;
   let currentTrack = 'none';
 
+  // Overall background-sound level, relative to narration/chime. Bumped up
+  // from the original tuning — the first pass was mixed too low to be
+  // heard clearly, especially the low-frequency Pad tones on phone
+  // speakers (which reproduce bass poorly), so Pad/Bowl also use higher,
+  // more phone-speaker-friendly frequencies below.
+  const MASTER_LEVEL = 1.5;
+
   window.MUSIC_TRACKS = [
     { id: 'none', label: 'None (narration only)' },
     { id: 'pad', label: 'Soft Pad' },
@@ -26,9 +33,12 @@
   }
 
   function startPad(ctx, out) {
-    // A few slow, quiet detuned tones (open fifth + octave) with a gentle
-    // volume swell — a simple ambient drone.
-    const freqs = [110, 164.81, 220];
+    // A few slow, detuned tones (open fifth + octave) with a gentle volume
+    // swell — a simple ambient drone. Pitched an octave higher than the
+    // original version so it's actually audible on small phone speakers,
+    // which roll off heavily below ~200 Hz.
+    const freqs = [220, 329.63, 440];
+    const levels = [0.09, 0.055, 0.04];
     freqs.forEach((freq, i) => {
       const osc = ctx.createOscillator();
       osc.type = 'sine';
@@ -36,7 +46,7 @@
 
       const gain = ctx.createGain();
       gain.gain.value = 0.0001;
-      gain.gain.linearRampToValueAtTime(0.05 / (i + 1), ctx.currentTime + 3);
+      gain.gain.linearRampToValueAtTime(levels[i], ctx.currentTime + 1.5);
 
       osc.connect(gain).connect(out);
       osc.start();
@@ -46,7 +56,7 @@
       const lfo = ctx.createOscillator();
       lfo.frequency.value = 0.05 + i * 0.015;
       const lfoGain = ctx.createGain();
-      lfoGain.gain.value = 0.015;
+      lfoGain.gain.value = levels[i] * 0.3;
       lfo.connect(lfoGain).connect(gain.gain);
       lfo.start();
       nodes.push(lfo, lfoGain);
@@ -85,22 +95,30 @@
   }
 
   function startBowlLoop(ctx, out) {
-    // A soft struck-bowl tone every ~7-9 seconds, with a long decay.
+    // A soft struck-bowl tone roughly every 6-8 seconds, with a long decay.
+    // Pitched up and boosted from the original version, and the higher
+    // (more audible-on-phone-speakers) partials are no longer the
+    // quietest ones.
     function strike() {
       const t = ctx.currentTime;
-      [220, 330, 440].forEach((freq, i) => {
+      const partials = [
+        { freq: 440, level: 0.07 },
+        { freq: 660, level: 0.06 },
+        { freq: 880, level: 0.045 },
+      ];
+      partials.forEach(({ freq, level }) => {
         const osc = ctx.createOscillator();
         osc.type = 'sine';
         osc.frequency.value = freq;
         const gain = ctx.createGain();
         gain.gain.setValueAtTime(0.0001, t);
-        gain.gain.linearRampToValueAtTime(0.05 / (i + 1), t + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.0001, t + 6);
+        gain.gain.linearRampToValueAtTime(level, t + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 5);
         osc.connect(gain).connect(out);
         osc.start(t);
-        osc.stop(t + 6.2);
+        osc.stop(t + 5.2);
       });
-      timers.push(setTimeout(strike, 7000 + Math.random() * 2000));
+      timers.push(setTimeout(strike, 6000 + Math.random() * 2000));
     }
     strike();
   }
@@ -108,20 +126,20 @@
   function startOceanWaves(ctx, out) {
     const gain = startNoiseBed(ctx, out, {
       filterType: 'lowpass',
-      freq: 900,
+      freq: 1200,
       q: 0.6,
       level: 0.0001,
       lfoRate: 0.1,
-      lfoDepth: 150,
+      lfoDepth: 200,
     });
     // Slow amplitude swell so the noise bed washes in and out like surf.
     const waveLfo = ctx.createOscillator();
     waveLfo.frequency.value = 0.08;
     const waveLfoGain = ctx.createGain();
-    waveLfoGain.gain.value = 0.03;
+    waveLfoGain.gain.value = 0.045;
     waveLfo.connect(waveLfoGain).connect(gain.gain);
     waveLfo.start();
-    gain.gain.value = 0.03;
+    gain.gain.value = 0.045;
     nodes.push(waveLfo, waveLfoGain);
   }
 
@@ -148,12 +166,13 @@
     if (ctx.state === 'suspended') ctx.resume();
 
     masterGain = ctx.createGain();
-    masterGain.gain.value = 1;
+    masterGain.gain.value = MASTER_LEVEL;
     masterGain.connect(ctx.destination);
+    window.__musicMasterGain = masterGain; // debug/verification hook only
 
     if (trackId === 'pad') startPad(ctx, masterGain);
     else if (trackId === 'rain') {
-      startNoiseBed(ctx, masterGain, { filterType: 'lowpass', freq: 1800, q: 0.5, level: 0.045, lfoRate: 0.08, lfoDepth: 300 });
+      startNoiseBed(ctx, masterGain, { filterType: 'lowpass', freq: 1800, q: 0.5, level: 0.065, lfoRate: 0.08, lfoDepth: 300 });
     } else if (trackId === 'ocean') startOceanWaves(ctx, masterGain);
     else if (trackId === 'bowl') startBowlLoop(ctx, masterGain);
 
