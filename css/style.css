@@ -1,13 +1,38 @@
 :root {
   --sage: #7c9885;
   --sage-dark: #5f7a68;
+  --bg-top: #eef2ec;
   --cream: #faf7f2;
   --card: #ffffff;
   --text: #2f3b34;
   --text-soft: #6b7570;
   --danger: #b5665b;
+  --card-shadow: rgba(47, 59, 52, 0.08);
+  --border: #d7ded9;
+  --track-bg: #e7ece7;
+  --control-hover-bg: #f2f5f1;
+  --danger-border: #ecd7d3;
   --radius: 18px;
   color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sage: #8fbfa0;
+    --sage-dark: #bfe4cc;
+    --bg-top: #171f1b;
+    --cream: #10140f;
+    --card: #1c2620;
+    --text: #eaf0ec;
+    --text-soft: #9fb0a6;
+    --danger: #e5978a;
+    --card-shadow: rgba(0, 0, 0, 0.45);
+    --border: #34423b;
+    --track-bg: #283329;
+    --control-hover-bg: #24302a;
+    --danger-border: #4a322d;
+    color-scheme: dark;
+  }
 }
 
 * {
@@ -21,7 +46,7 @@ html, body {
 body {
   margin: 0;
   font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(180deg, #eef2ec 0%, var(--cream) 100%);
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--cream) 100%);
   color: var(--text);
   display: flex;
   align-items: center;
@@ -44,7 +69,7 @@ body {
   background: var(--card);
   border-radius: var(--radius);
   padding: 32px 28px;
-  box-shadow: 0 10px 40px rgba(47, 59, 52, 0.08);
+  box-shadow: 0 10px 40px var(--card-shadow);
   text-align: center;
 }
 
@@ -124,8 +149,8 @@ h1 {
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid #d7ded9;
-  background: white;
+  border: 1px solid var(--border);
+  background: var(--card);
   color: var(--text);
   font-size: 1rem;
 }
@@ -144,7 +169,7 @@ h1 {
 
 .overall-progress {
   height: 6px;
-  background: #e7ece7;
+  background: var(--track-bg);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 14px;
@@ -229,7 +254,7 @@ h1 {
 
 .pose-progress {
   height: 8px;
-  background: #e7ece7;
+  background: var(--track-bg);
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 6px;
@@ -288,20 +313,20 @@ h1 {
   flex: 1;
   padding: 12px 10px;
   border-radius: 12px;
-  border: 1px solid #d7ded9;
-  background: white;
+  border: 1px solid var(--border);
+  background: var(--card);
   color: var(--text);
   cursor: pointer;
   font-size: 0.9rem;
 }
 
 .control-btn:hover {
-  background: #f2f5f1;
+  background: var(--control-hover-bg);
 }
 
 .control-btn-danger {
   color: var(--danger);
-  border-color: #ecd7d3;
+  border-color: var(--danger-border);
 }
 
 .control-btn.wide {

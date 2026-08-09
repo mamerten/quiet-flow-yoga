@@ -10,16 +10,17 @@ A tiny, dependency-free web app for short, guided yoga practices — like Apple 
 - **It builds a flow for you.** Each practice moves through phases — centering, warm-up, standing poses, balance, seated/twists, and a closing relaxation — pulling poses from a small library and sizing each hold to fit the total time. The sequence is shuffled a bit each time, so repeat practices don't feel identical.
 - **A 3-second countdown between poses.** Before each pose starts, a brief "Get ready for &lt;pose&gt;" countdown (3-2-1, with its own soft tick and the upcoming pose already on screen) gives you a moment to get into position.
 - **Audible instructions.** Uses the browser's built-in text-to-speech (Web Speech API) to speak the pose name and cue at the start of each pose — no audio files, no recording, no hosting cost.
-- **Optional background sound.** None (default), Soft Pad, Gentle Rain, Singing Bowl, or Ocean Waves — all generated on the fly with the Web Audio API, and independent of narration, so both play together.
+- **Optional background music.** None (default), Soft Piano, Gentle Strings, or Wind Chimes — a slow, quiet four-chord loop played back three different ways, generated on the fly with the Web Audio API. Runs independently of narration, so both play together, with narration mixed slightly under the music so neither drowns out the other.
 - **Minimal visuals.** Each pose has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
-- **Controls.** Pause/Resume, Skip, End, plus an overall progress bar and per-pose countdown/timer.
+- **Controls.** Pause/Resume, Skip, End, plus an overall progress bar, a compact timer in the top bar once a pose is live, and a per-pose countdown/timer.
 - **Version + source link.** A small footer shows the current version and links back to this repo.
 
 ## Why it's built this way
 
 - **Zero build step, zero dependencies.** Plain HTML/CSS/JS, loaded as ordinary `<script>` tags (not ES modules), so it works whether you double-click `index.html` and open it straight from disk, or serve the folder from any static host. Easy to drop straight into a static site (e.g. matmerten.com) or GitHub Pages.
-- **No copyrighted media.** All illustrations are small original SVGs authored for this project; all narration and background sound are generated locally (speech synthesis + Web Audio), not recordings.
+- **No copyrighted media.** All illustrations are small original SVGs authored for this project; all narration and background music are generated locally (speech synthesis + Web Audio), not recordings.
 - **Responsive for phones.** Portrait keeps the usual stacked card layout. In landscape on a phone (short, wide viewport), the workout screen splits into two columns — the pose image on the left, the name/cue/timer/controls on the right — so a full practice fits without scrolling.
+- **Light/dark mode.** Follows the system's `prefers-color-scheme` automatically — no toggle needed.
 
 ## Project structure
 
@@ -30,7 +31,7 @@ js/poses.js          The pose repository (name, cue, category, default duration,
 js/figures.js        A handful of simple stick-figure SVG templates, reused across poses
 js/workout.js        Builds a timed sequence of poses for a given number of minutes
 js/speech.js         Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
-js/music.js          Optional procedural background sound tracks (Web Audio API)
+js/music.js          Optional procedural background music tracks (Web Audio API)
 js/app.js            Screen/timer/countdown state machine and UI wiring
 ```
 

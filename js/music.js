@@ -1,146 +1,126 @@
-// Optional background sound during a practice. Everything here is
+// Optional background music during a practice. Everything here is
 // generated on the fly with the Web Audio API — no audio files to record,
 // license, or host. Runs independently of the spoken narration
 // (js/speech.js uses the separate speechSynthesis API), so both play at
 // the same time without either blocking the other.
+//
+// This intentionally leans toward actual soft *music* — a slow chord
+// progression, arpeggiated or sustained — rather than a drone/noise-bed/
+// gong ("white noise machine") sound, which is what an earlier version of
+// this file did and didn't land well.
 (function () {
-  let nodes = []; // oscillators/sources/gains to tear down on stop
-  let timers = []; // setTimeout ids (for the singing-bowl loop)
+  let nodes = []; // long-lived nodes (sustained chords) to hard-stop on stop
+  let timers = []; // setTimeout ids driving note/chord scheduling
   let masterGain = null;
   let currentTrack = 'none';
 
-  // Overall background-sound level, relative to narration/chime. Bumped up
-  // from the original tuning — the first pass was mixed too low to be
-  // heard clearly, especially the low-frequency Pad tones on phone
-  // speakers (which reproduce bass poorly), so Pad/Bowl also use higher,
-  // more phone-speaker-friendly frequencies below.
-  const MASTER_LEVEL = 1.5;
+  // Overall background-music level, relative to narration/chime. Kept
+  // gentle on purpose — "quiet and soft" was the ask, not loud.
+  const MASTER_LEVEL = 1.2;
+
+  // A slow, calm four-chord loop (Cmaj7 - Am7 - Fmaj7 - G), shared by all
+  // the music tracks below so they sound like variations on one quiet
+  // piece rather than unrelated sound effects.
+  const CHORD_PROGRESSION = [
+    [261.63, 329.63, 392.0, 493.88], // Cmaj7
+    [220.0, 261.63, 329.63, 392.0], // Am7
+    [174.61, 220.0, 261.63, 329.63], // Fmaj7
+    [196.0, 246.94, 293.66], // G
+  ];
+
+  const PENTATONIC = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25];
 
   window.MUSIC_TRACKS = [
     { id: 'none', label: 'None (narration only)' },
-    { id: 'pad', label: 'Soft Pad' },
-    { id: 'rain', label: 'Gentle Rain' },
-    { id: 'bowl', label: 'Singing Bowl' },
-    { id: 'ocean', label: 'Ocean Waves' },
+    { id: 'piano', label: 'Soft Piano' },
+    { id: 'strings', label: 'Gentle Strings' },
+    { id: 'chimes', label: 'Wind Chimes' },
   ];
 
-  function makeNoiseBuffer(ctx, seconds) {
-    const length = Math.floor(ctx.sampleRate * seconds);
-    const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < length; i++) data[i] = Math.random() * 2 - 1;
-    return buffer;
-  }
-
-  function startPad(ctx, out) {
-    // A few slow, detuned tones (open fifth + octave) with a gentle volume
-    // swell — a simple ambient drone. Pitched an octave higher than the
-    // original version so it's actually audible on small phone speakers,
-    // which roll off heavily below ~200 Hz.
-    const freqs = [220, 329.63, 440];
-    const levels = [0.09, 0.055, 0.04];
-    freqs.forEach((freq, i) => {
+  // A single soft, piano/bell-like plucked note: quick attack, gentle
+  // exponential decay. Two oscillators (fundamental + quiet octave-ish
+  // overtone) give it a little warmth instead of a flat, sterile tone.
+  // These are short and self-stopping, so — like the existing chime/tick
+  // sounds — they're not tracked in `nodes` for teardown; stopping the
+  // scheduling timers just lets the last note or two ring out naturally.
+  function pluckNote(ctx, out, freq, { peak = 0.08, decay = 2.2, overtoneMult = 2 } = {}) {
+    const t = ctx.currentTime;
+    [{ mult: 1, level: peak }, { mult: overtoneMult, level: peak * 0.22 }].forEach(({ mult, level }) => {
       const osc = ctx.createOscillator();
       osc.type = 'sine';
-      osc.frequency.value = freq;
-
+      osc.frequency.value = freq * mult;
       const gain = ctx.createGain();
-      gain.gain.value = 0.0001;
-      gain.gain.linearRampToValueAtTime(levels[i], ctx.currentTime + 1.5);
-
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.linearRampToValueAtTime(level, t + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + decay);
       osc.connect(gain).connect(out);
-      osc.start();
-      nodes.push(osc, gain);
-
-      // Slow LFO so the pad breathes instead of holding a flat tone.
-      const lfo = ctx.createOscillator();
-      lfo.frequency.value = 0.05 + i * 0.015;
-      const lfoGain = ctx.createGain();
-      lfoGain.gain.value = levels[i] * 0.3;
-      lfo.connect(lfoGain).connect(gain.gain);
-      lfo.start();
-      nodes.push(lfo, lfoGain);
+      osc.start(t);
+      osc.stop(t + decay + 0.1);
     });
   }
 
-  function startNoiseBed(ctx, out, opts) {
-    const { filterType, freq, q, level, lfoRate, lfoDepth } = opts;
-    const src = ctx.createBufferSource();
-    src.buffer = makeNoiseBuffer(ctx, 3);
-    src.loop = true;
-
-    const filter = ctx.createBiquadFilter();
-    filter.type = filterType;
-    filter.frequency.value = freq;
-    filter.Q.value = q;
-
-    const gain = ctx.createGain();
-    gain.gain.value = level;
-
-    src.connect(filter).connect(gain).connect(out);
-    src.start();
-    nodes.push(src, filter, gain);
-
-    if (lfoRate) {
-      const lfo = ctx.createOscillator();
-      lfo.frequency.value = lfoRate;
-      const lfoGain = ctx.createGain();
-      lfoGain.gain.value = lfoDepth;
-      lfo.connect(lfoGain).connect(filter.frequency);
-      lfo.start();
-      nodes.push(lfo, lfoGain);
+  // Soft Piano: slowly arpeggiates the chord progression, one note at a
+  // time, like a quiet lullaby loop.
+  function startSoftPiano(ctx, out) {
+    let chordIdx = 0;
+    let noteIdx = 0;
+    function nextNote() {
+      const chord = CHORD_PROGRESSION[chordIdx];
+      pluckNote(ctx, out, chord[noteIdx % chord.length], { peak: 0.09, decay: 2.4 });
+      noteIdx++;
+      if (noteIdx >= chord.length) {
+        noteIdx = 0;
+        chordIdx = (chordIdx + 1) % CHORD_PROGRESSION.length;
+      }
+      timers.push(setTimeout(nextNote, 1500 + Math.random() * 300));
     }
-
-    return gain;
+    nextNote();
   }
 
-  function startBowlLoop(ctx, out) {
-    // A soft struck-bowl tone roughly every 6-8 seconds, with a long decay.
-    // Pitched up and boosted from the original version, and the higher
-    // (more audible-on-phone-speakers) partials are no longer the
-    // quietest ones.
-    function strike() {
+  // Gentle Strings: the same chord progression, but sustained and
+  // crossfaded rather than plucked — a slow, soft, drifting pad that
+  // actually moves between chords instead of holding one static drone.
+  function startGentleStrings(ctx, out) {
+    let chordIdx = 0;
+    const HOLD = 6; // seconds each chord is held (incl. its fades)
+    const FADE = 2.2; // seconds of fade in/out
+
+    function playChord() {
+      const freqs = CHORD_PROGRESSION[chordIdx % CHORD_PROGRESSION.length];
       const t = ctx.currentTime;
-      const partials = [
-        { freq: 440, level: 0.07 },
-        { freq: 660, level: 0.06 },
-        { freq: 880, level: 0.045 },
-      ];
-      partials.forEach(({ freq, level }) => {
-        const osc = ctx.createOscillator();
-        osc.type = 'sine';
-        osc.frequency.value = freq;
-        const gain = ctx.createGain();
-        gain.gain.setValueAtTime(0.0001, t);
-        gain.gain.linearRampToValueAtTime(level, t + 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.0001, t + 5);
-        osc.connect(gain).connect(out);
-        osc.start(t);
-        osc.stop(t + 5.2);
+      const perNotePeak = 0.05 / freqs.length; // keep total chord loudness roughly level
+      freqs.forEach((freq) => {
+        [1, 1.006].forEach((detune) => { // two barely-detuned oscillators = soft chorus warmth
+          const osc = ctx.createOscillator();
+          osc.type = 'triangle';
+          osc.frequency.value = freq * detune;
+          const gain = ctx.createGain();
+          gain.gain.setValueAtTime(0.0001, t);
+          gain.gain.linearRampToValueAtTime(perNotePeak, t + FADE);
+          gain.gain.setValueAtTime(perNotePeak, t + HOLD - FADE);
+          gain.gain.linearRampToValueAtTime(0.0001, t + HOLD);
+          osc.connect(gain).connect(out);
+          osc.start(t);
+          osc.stop(t + HOLD + 0.1);
+          nodes.push(osc, gain);
+        });
       });
-      timers.push(setTimeout(strike, 6000 + Math.random() * 2000));
+      chordIdx++;
+      // Next chord's fade-in overlaps this one's fade-out.
+      timers.push(setTimeout(playChord, (HOLD - FADE) * 1000));
     }
-    strike();
+    playChord();
   }
 
-  function startOceanWaves(ctx, out) {
-    const gain = startNoiseBed(ctx, out, {
-      filterType: 'lowpass',
-      freq: 1200,
-      q: 0.6,
-      level: 0.0001,
-      lfoRate: 0.1,
-      lfoDepth: 200,
-    });
-    // Slow amplitude swell so the noise bed washes in and out like surf.
-    const waveLfo = ctx.createOscillator();
-    waveLfo.frequency.value = 0.08;
-    const waveLfoGain = ctx.createGain();
-    waveLfoGain.gain.value = 0.045;
-    waveLfo.connect(waveLfoGain).connect(gain.gain);
-    waveLfo.start();
-    gain.gain.value = 0.045;
-    nodes.push(waveLfo, waveLfoGain);
+  // Wind Chimes: sparse, random soft bell tones from a pentatonic scale —
+  // minimal and quiet, more like an actual wind chime than a gong strike.
+  function startWindChimes(ctx, out) {
+    function chime() {
+      const freq = PENTATONIC[Math.floor(Math.random() * PENTATONIC.length)];
+      pluckNote(ctx, out, freq, { peak: 0.065, decay: 3.4, overtoneMult: 2.01 });
+      timers.push(setTimeout(chime, 2800 + Math.random() * 3200));
+    }
+    chime();
   }
 
   window.stopMusic = function stopMusic() {
@@ -170,11 +150,9 @@
     masterGain.connect(ctx.destination);
     window.__musicMasterGain = masterGain; // debug/verification hook only
 
-    if (trackId === 'pad') startPad(ctx, masterGain);
-    else if (trackId === 'rain') {
-      startNoiseBed(ctx, masterGain, { filterType: 'lowpass', freq: 1800, q: 0.5, level: 0.065, lfoRate: 0.08, lfoDepth: 300 });
-    } else if (trackId === 'ocean') startOceanWaves(ctx, masterGain);
-    else if (trackId === 'bowl') startBowlLoop(ctx, masterGain);
+    if (trackId === 'piano') startSoftPiano(ctx, masterGain);
+    else if (trackId === 'strings') startGentleStrings(ctx, masterGain);
+    else if (trackId === 'chimes') startWindChimes(ctx, masterGain);
 
     currentTrack = trackId;
   };

@@ -131,4 +131,29 @@ window.FIGURES = {
     LINE(50, 74, 50, 132) +
     POLY('50,74 65,95 45,90')
   ),
+
+  // T13 — wide stance, straight legs, torso tilted sideways, one arm
+  // reaching down toward the front foot and one reaching straight up
+  // (Triangle) — distinct from T3's upright, level "T" arms.
+  triangleReach: svg(
+    HEAD(24, 36, 7) +
+    LINE(28, 43, 50, 72) +
+    LINE(28, 43, 18, 95) +
+    LINE(28, 43, 58, 8) +
+    LINE(50, 72, 18, 132) +
+    LINE(50, 72, 85, 128)
+  ),
+
+  // T14 — wide stance with a bent front knee, torso tilted sideways over
+  // it, front arm reaching down and back arm reaching overhead in one
+  // long diagonal line (Extended Side Angle) — distinct from both T3
+  // (Warrior II's upright T arms) and T13 (Triangle's straight legs).
+  sideAngleReach: svg(
+    HEAD(22, 48, 7) +
+    LINE(28, 55, 50, 74) +
+    LINE(28, 55, 15, 96) +
+    LINE(28, 55, 60, 14) +
+    POLY('50,74 30,100 15,128') +
+    LINE(50, 74, 88, 128)
+  ),
 };
