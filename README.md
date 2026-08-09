@@ -2,7 +2,7 @@
 
 A tiny, dependency-free web app for short, guided yoga practices — like Apple Fitness+'s time-based workouts, but yoga-only. Pick 5, 7, 10, or 15 minutes, and it narrates you through a sequence of poses with a simple reference image for each, a 3-2-1 countdown between poses, and optional background sound.
 
-**[Live demo →](https://matmerten.com/)** *(update this link once deployed)*
+**[Live demo →](https://quiet-flow-yoga.pages.dev)** *(swap to a matmerten.com custom domain once it's mapped)*
 
 ## What it does
 
