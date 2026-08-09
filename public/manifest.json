@@ -1,0 +1,18 @@
+{
+  "id": "/",
+  "name": "Quiet Flow — Yoga Timer",
+  "short_name": "Quiet Flow",
+  "description": "A short, guided yoga practice with audible instructions and simple pose visuals.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf7f2",
+  "theme_color": "#7c9885",
+  "orientation": "any",
+  "categories": ["health", "fitness", "lifestyle"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

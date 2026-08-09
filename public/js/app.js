@@ -296,3 +296,14 @@ document.addEventListener('visibilitychange', () => {
 });
 
 showScreen(homeScreen);
+
+// Register the service worker for offline support / installability.
+// Service workers require http(s) — silently skip under file:// (opening
+// index.html directly still works, it just won't be installable/offline).
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {
+      // Not fatal — the app still works fully online without it.
+    });
+  });
+}

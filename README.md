@@ -2,7 +2,7 @@
 
 A tiny, dependency-free web app for short, guided yoga practices — like Apple Fitness+'s time-based workouts, but yoga-only. Pick 5, 7, 10, or 15 minutes, and it narrates you through a sequence of poses with a simple reference image for each, a 3-2-1 countdown between poses, and optional background sound.
 
-**[Live demo →](https://quiet-flow-yoga.pages.dev)** *(swap to a matmerten.com custom domain once it's mapped)*
+**[Live demo →](https://quiet-flow-yoga.matmerten.com)** (also reachable at [quiet-flow-yoga.pages.dev](https://quiet-flow-yoga.pages.dev)) — installable as a home-screen app, and works offline once loaded.
 
 ## What it does
 
@@ -14,6 +14,7 @@ A tiny, dependency-free web app for short, guided yoga practices — like Apple 
 - **Minimal visuals.** Each pose has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
 - **Controls.** Pause/Resume, Skip, End, plus an overall progress bar, a compact timer in the top bar once a pose is live, and a per-pose countdown/timer.
 - **Version + source link.** A small footer shows the current version and links back to this repo.
+- **Installable, works offline.** A web app manifest + service worker let you add it to your phone's home screen (opens full-screen, no browser chrome) and run a practice with no connection once you've loaded it at least once.
 
 ## Why it's built this way
 
@@ -34,6 +35,9 @@ public/js/workout.js  Builds a timed sequence of poses for a given number of min
 public/js/speech.js   Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
 public/js/music.js    Optional procedural background music tracks (Web Audio API)
 public/js/app.js      Screen/timer/countdown state machine and UI wiring
+public/manifest.json  Web app manifest (installable home-screen app)
+public/sw.js          Service worker: caches the app shell for offline use
+public/icons/         App icons (192/512/512-maskable/apple-touch) + favicon.svg
 ```
 
 ## Extending the pose library
@@ -84,6 +88,7 @@ A manual deploy from your machine is also available: `npm run deploy` (requires 
 
 - **Spoken instructions** require the [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) (supported in Chrome, Edge, Safari; partial in Firefox). If unsupported, the app falls back to on-screen text only.
 - **Keep-awake** uses the [Screen Wake Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API) where available, so the screen doesn't dim mid-practice; it degrades gracefully where unsupported.
+- **Offline/installable** requires a Service Worker, which needs `http(s)` — it's skipped (silently, no error) when opening `index.html` straight from disk via `file://`. Bump `SHELL_CACHE` in `public/sw.js` whenever a cached file changes, so returning visitors pick up the update instead of serving a stale cached copy.
 
 ## License
 
