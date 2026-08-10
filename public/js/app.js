@@ -371,4 +371,13 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
       // Not fatal — the app still works fully online without it.
     });
   });
+
+  // When a new service worker takes over, reload once so the page isn't
+  // left running the previous version's JS against newer HTML.
+  let reloadedForUpdate = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloadedForUpdate) return;
+    reloadedForUpdate = true;
+    window.location.reload();
+  });
 }
