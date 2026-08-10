@@ -28,7 +28,6 @@ const durationButtons = document.querySelectorAll('.duration-btn');
 const musicSelect = document.getElementById('music-select');
 const voiceSelect = document.getElementById('voice-select');
 const voicePreviewBtn = document.getElementById('voice-preview-btn');
-const voiceHint = document.getElementById('voice-hint');
 const deviceVoiceRow = document.getElementById('device-voice-row');
 const deviceVoiceSelect = document.getElementById('device-voice-select');
 const audioNote = document.getElementById('audio-note');
@@ -324,15 +323,12 @@ function previewCurrentVoice() {
   }
 }
 
+// The OS voice list only matters when "Device voice" is selected, so that
+// second dropdown stays hidden otherwise. How the bundled voices work is
+// documented in the README rather than explained in the UI.
 function syncDeviceVoiceRow() {
   if (!deviceVoiceRow) return;
-  const isDevice = voiceSelect && voiceSelect.value === 'device';
-  deviceVoiceRow.hidden = !isDevice;
-  if (voiceHint) {
-    voiceHint.textContent = isDevice
-      ? 'Device voices are provided by your phone or computer, and are often robotic. Install an "Enhanced"/"Natural" voice in your OS settings to improve them.'
-      : 'Built into the app — sounds the same on every device and works offline.';
-  }
+  deviceVoiceRow.hidden = !(voiceSelect && voiceSelect.value === 'device');
 }
 
 function populateVoicePacks() {

@@ -3,7 +3,7 @@
 // SHELL_CACHE is a cache-busting *shell* version, independent of the app's
 // own semver (js/app.js APP_VERSION) — bump it whenever any cached file
 // changes, regardless of whether the user-facing version number moves.
-const SHELL_CACHE = 'quiet-flow-shell-v4';
+const SHELL_CACHE = 'quiet-flow-shell-v5';
 
 // Code + markup. These are served network-first (see below) so a deploy
 // always reaches the user on their next load; the cache is a pure offline
