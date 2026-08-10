@@ -3,3 +3,6 @@ Thumbs.db
 node_modules/
 .wrangler/
 dist/
+
+# Piper voice models used by tools/generate-voice.py (large, re-downloadable)
+tools/.voices/

@@ -9,8 +9,9 @@ A tiny, dependency-free web app for short, guided yoga practices — like Apple 
 - **Pick a length.** 5 / 7 / 10 / 15 minutes.
 - **It builds a flow for you.** Each practice moves through phases — centering, warm-up, standing poses, balance, seated/twists, and a closing relaxation — pulling poses from a small library and sizing each hold to fit the total time. The sequence is shuffled a bit each time, so repeat practices don't feel identical.
 - **A 3-second countdown between poses.** Before each pose starts, a brief "Get ready for &lt;pose&gt;" countdown (3-2-1, with its own soft tick and the upcoming pose already on screen) gives you a moment to get into position.
-- **Audible instructions.** Uses the browser's built-in text-to-speech (Web Speech API) to speak the pose name and cue at the start of each pose — no audio files, no recording, no hosting cost.
-- **Pick your narration voice.** Voice quality comes from whatever the device/OS ships, and the difference between a legacy voice and a neural one is night and day. The app ranks the available voices (neural/"Enhanced"/"Premium"/"Natural" engines first, classic robotic engines and novelty voices last, female-sounding names preferred as a tiebreaker), marks the best one **recommended**, and lets you audition any of them with a **Preview** button. Your choice is remembered.
+- **Audible instructions.** Speaks the pose name and cue at the start of each pose, and announces what's coming during the countdown.
+- **Real neural narration, built in.** Rather than depending on the device's text-to-speech (which is robotic on most phones and on Windows), the app ships pre-generated neural-TTS audio for every line it speaks. Two voices are bundled — **Clara** (clear and steady) and **Amy** (warm and soft) — selectable with a **Preview** button. Identical on every device, works offline, no API key and no per-use cost. "Device voice" remains available as a fallback, and is used automatically if a clip is ever missing.
+- **Left/right balance.** One-sided poses (Warrior I/II, Triangle, Side Angle, Low Lunge, Tree, Eagle, Warrior III, Seated Twist, Cow Face Arms) are always scheduled as a matched pair, so you never stretch one side and skip the other. The mirrored side is deliberately separated by another pose rather than repeated back-to-back, and each side is held ~25s so both fit comfortably.
 - **Optional background music.** None (default), None (exercise title only), Soft Piano, Gentle Strings, or Wind Chimes — a slow, quiet four-chord loop played back three different ways, generated on the fly with the Web Audio API. Runs independently of narration, so both play together, with narration mixed slightly under the music so neither drowns out the other. *Exercise title only* trims the spoken guidance down to just the pose name (the written cue stays on screen).
 - **Minimal visuals.** Each pose has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
 - **Controls.** Pause/Resume, Skip, End, plus an overall progress bar, a compact timer in the top bar once a pose is live, and a per-pose countdown/timer.
@@ -20,7 +21,7 @@ A tiny, dependency-free web app for short, guided yoga practices — like Apple 
 ## Why it's built this way
 
 - **Zero build step, zero dependencies.** Plain HTML/CSS/JS, loaded as ordinary `<script>` tags (not ES modules), so it works whether you double-click `index.html` and open it straight from disk, or serve the folder from any static host. Easy to drop straight into a static site (e.g. matmerten.com) or GitHub Pages.
-- **No copyrighted media.** All illustrations are small original SVGs authored for this project; all narration and background music are generated locally (speech synthesis + Web Audio), not recordings.
+- **No copyrighted media.** All illustrations are small original SVGs authored for this project. Background music is synthesized in the browser (Web Audio). Narration is rendered by [Piper](https://github.com/rhasspy/piper), an open-source neural TTS, from [MIT-licensed voice models](https://huggingface.co/rhasspy/piper-voices) — no voice actor recordings, no per-use licensing.
 - **Responsive for phones.** Portrait keeps the usual stacked card layout. In landscape on a phone (short, wide viewport), the workout screen splits into two columns — the pose image on the left, the name/cue/timer/controls on the right — so a full practice fits without scrolling.
 - **Light/dark mode.** Follows the system's `prefers-color-scheme` automatically — no toggle needed.
 
@@ -35,6 +36,9 @@ public/js/figures.js  A handful of simple stick-figure SVG templates, reused acr
 public/js/workout.js  Builds a timed sequence of poses for a given number of minutes
 public/js/speech.js   Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
 public/js/music.js    Optional procedural background music tracks (Web Audio API)
+public/js/voice.js    Plays the pre-generated narration clips (device TTS fallback)
+public/audio/         Pre-generated neural narration, one folder per voice pack
+tools/generate-voice.py  Build-time script that renders public/audio/ with Piper
 public/js/app.js      Screen/timer/countdown state machine and UI wiring
 public/manifest.json  Web app manifest (installable home-screen app)
 public/sw.js          Service worker: caches the app shell for offline use
@@ -52,10 +56,24 @@ Add an entry to `POSES` in [`public/js/poses.js`](public/js/poses.js):
   sanskrit: 'Optional Sanskrit Name',
   category: 'centering' | 'warmup' | 'standing' | 'balance' | 'seated' | 'relaxation',
   figure: 'one of the keys in public/js/figures.js',
-  duration: 30, // default hold time in seconds
+  duration: 30, // default hold time in seconds (use ~25 for one-sided poses)
+  sided: true,  // OPTIONAL: one-sided pose, auto-scheduled as a left/right pair
   cue: 'What gets spoken and displayed for this pose.',
 }
 ```
+
+After adding or editing a pose, regenerate the narration audio so the
+spoken cue matches:
+
+```bash
+pip install piper-tts imageio-ffmpeg
+python tools/generate-voice.py
+```
+
+The script reads `public/js/poses.js` directly, renders every clip (including
+`left`/`right` variants for one-sided poses) for each bundled voice, names
+files by content hash so edits can't be served stale, and deletes clips that
+are no longer referenced.
 
 The workout generator picks up new poses automatically — no other changes needed. To add a new illustration, add a template to `FIGURES` in `public/js/figures.js`.
 

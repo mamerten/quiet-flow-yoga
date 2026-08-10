@@ -69,7 +69,8 @@ window.POSES = [
     sanskrit: 'Virabhadrasana I',
     category: 'standing',
     figure: 'lungeArmsUp',
-    duration: 35,
+    duration: 25,
+    sided: true,
     cue: 'Step one foot back, bend your front knee, and reach your arms overhead. Square your hips toward the front.',
   },
   {
@@ -78,7 +79,8 @@ window.POSES = [
     sanskrit: 'Virabhadrasana II',
     category: 'standing',
     figure: 'standingArmsOutT',
-    duration: 35,
+    duration: 25,
+    sided: true,
     cue: 'Open your hips to the side, bend your front knee, and stretch your arms out like a T. Gaze over your front hand.',
   },
   {
@@ -87,7 +89,8 @@ window.POSES = [
     sanskrit: 'Utthita Trikonasana',
     category: 'standing',
     figure: 'triangleReach',
-    duration: 30,
+    duration: 25,
+    sided: true,
     cue: 'Straighten your front leg and reach your torso forward and down, one hand toward your shin, the other reaching to the sky.',
   },
   {
@@ -96,7 +99,8 @@ window.POSES = [
     sanskrit: 'Utthita Parsvakonasana',
     category: 'standing',
     figure: 'sideAngleReach',
-    duration: 30,
+    duration: 25,
+    sided: true,
     cue: 'Bend your front knee deeply and rest your forearm on your thigh, reaching your other arm overhead in one long line.',
   },
   {
@@ -114,7 +118,8 @@ window.POSES = [
     sanskrit: 'Anjaneyasana',
     category: 'standing',
     figure: 'lungeArmsUp',
-    duration: 30,
+    duration: 25,
+    sided: true,
     cue: 'Step one foot forward into a deep lunge, sink your hips low, and reach your arms overhead.',
   },
   {
@@ -143,7 +148,8 @@ window.POSES = [
     sanskrit: 'Vrksasana',
     category: 'balance',
     figure: 'balanceOneLeg',
-    duration: 30,
+    duration: 25,
+    sided: true,
     cue: 'Shift your weight onto one foot, rest the other foot on your inner leg, and bring your hands to your heart or reach them overhead.',
   },
   {
@@ -153,6 +159,7 @@ window.POSES = [
     category: 'balance',
     figure: 'balanceOneLeg',
     duration: 25,
+    sided: true,
     cue: 'Cross one leg over the other and wrap your arms around each other in front of you. Sink your hips and find your balance.',
   },
   {
@@ -162,6 +169,7 @@ window.POSES = [
     category: 'balance',
     figure: 'balanceOneLeg',
     duration: 25,
+    sided: true,
     cue: 'Hinge forward on one leg, lifting the other leg behind you until your body forms a T. Reach your arms forward.',
   },
 
@@ -181,7 +189,8 @@ window.POSES = [
     sanskrit: 'Ardha Matsyendrasana',
     category: 'seated',
     figure: 'seatedNeutral',
-    duration: 30,
+    duration: 25,
+    sided: true,
     cue: 'Sit tall, cross one leg over, and gently twist your torso toward that side. Keep lengthening your spine as you turn.',
   },
   {
@@ -200,6 +209,7 @@ window.POSES = [
     category: 'seated',
     figure: 'seatedNeutral',
     duration: 25,
+    sided: true,
     cue: 'Reach one arm overhead and bend it behind your back, and reach the other arm up from below to clasp your hands, or hold a strap.',
   },
   {

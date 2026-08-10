@@ -3,7 +3,7 @@
 // SHELL_CACHE is a cache-busting *shell* version, independent of the app's
 // own semver (js/app.js APP_VERSION) — bump it whenever any cached file
 // changes, regardless of whether the user-facing version number moves.
-const SHELL_CACHE = 'quiet-flow-shell-v3';
+const SHELL_CACHE = 'quiet-flow-shell-v4';
 
 // Code + markup. These are served network-first (see below) so a deploy
 // always reaches the user on their next load; the cache is a pure offline
@@ -19,6 +19,7 @@ const CODE_FILES = [
   './js/workout.js',
   './js/speech.js',
   './js/music.js',
+  './js/voice.js',
   './js/app.js',
 ];
 
@@ -40,6 +41,30 @@ function isCodeRequest(request) {
   return /\.(html|js|css|json)$/i.test(path) || path.endsWith('/');
 }
 
+// Bundled narration voices (see tools/generate-voice.py). Their clips are
+// precached so a practice can run start-to-finish with no connection —
+// otherwise only already-played clips would be available offline.
+const VOICE_PACK_DIRS = ['audio/lessac', 'audio/amy'];
+
+function precacheVoiceAudio(cache) {
+  return Promise.all(VOICE_PACK_DIRS.map((dir) =>
+    fetch(dir + '/manifest.json', { cache: 'reload' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((manifest) => {
+        if (!manifest || !manifest.clips) return null;
+        return cache.put(dir + '/manifest.json', new Response(
+          JSON.stringify(manifest), { headers: { 'Content-Type': 'application/json' } }
+        )).then(() => Promise.all(
+          Object.values(manifest.clips).map((file) =>
+            // Best-effort per clip: one missing file must not fail install.
+            cache.add(dir + '/' + file).catch(() => null)
+          )
+        ));
+      })
+      .catch(() => null)
+  ));
+}
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(SHELL_CACHE)
@@ -47,7 +72,7 @@ self.addEventListener('install', (event) => {
       // can't pick up a stale copy from the browser/CDN cache.
       .then((cache) => cache.addAll(
         SHELL_FILES.map((url) => new Request(url, { cache: 'reload' }))
-      ))
+      ).then(() => precacheVoiceAudio(cache)))
       .then(() => self.skipWaiting())
   );
 });

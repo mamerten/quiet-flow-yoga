@@ -5,7 +5,8 @@ const {
   FIGURES,
   generateWorkout,
   speak,
-  stopSpeaking,
+  narrate,
+  stopNarration,
   chime,
   countdownTick,
   unlockAudio,
@@ -28,6 +29,8 @@ const musicSelect = document.getElementById('music-select');
 const voiceSelect = document.getElementById('voice-select');
 const voicePreviewBtn = document.getElementById('voice-preview-btn');
 const voiceHint = document.getElementById('voice-hint');
+const deviceVoiceRow = document.getElementById('device-voice-row');
+const deviceVoiceSelect = document.getElementById('device-voice-select');
 const audioNote = document.getElementById('audio-note');
 const appVersionEl = document.getElementById('app-version');
 
@@ -93,6 +96,18 @@ function renderFigure(pose) {
   figureHost.innerHTML = `<div class="pose-figure">${FIGURES[pose.figure] || ''}</div>`;
 }
 
+// One-sided poses are shown/spoken with the side, so it's unambiguous which
+// leg or arm is working — and so the mirrored repeat reads as deliberate.
+function poseLabel(seg) {
+  if (!seg.side) return seg.pose.name;
+  return `${seg.pose.name} — ${seg.side === 'left' ? 'Left' : 'Right'} side`;
+}
+
+// Key into the pre-generated audio manifest (see tools/generate-voice.py).
+function clipKey(kind, seg) {
+  return seg.side ? `${kind}-${seg.pose.id}-${seg.side}` : `${kind}-${seg.pose.id}`;
+}
+
 function updateOverallProgress(index, holdElapsed = 0) {
   const elapsedBefore = state.segments.slice(0, index).reduce((s, x) => s + x.duration, 0);
   const pct = ((elapsedBefore + holdElapsed) / state.totalSeconds) * 100;
@@ -110,16 +125,16 @@ function startCountdown(index) {
 
   renderFigure(seg.pose);
   stepLabel.textContent = `Pose ${index + 1} of ${state.segments.length}`;
-  nextLabel.textContent = next ? `Next: ${next.pose.name}` : 'Next: Finish';
+  nextLabel.textContent = next ? `Next: ${poseLabel(next)}` : 'Next: Finish';
 
   holdView.classList.add('hidden');
   countdownView.classList.remove('hidden');
   countdownNumber.textContent = String(state.remaining);
-  countdownNext.textContent = seg.pose.name;
+  countdownNext.textContent = poseLabel(seg);
   topTimer.textContent = ''; // only shown once a pose is actually live
 
   updateOverallProgress(index);
-  speak(`Up next: ${seg.pose.name}`);
+  narrate(clipKey('next', seg), `Up next: ${poseLabel(seg)}`);
 }
 
 // Actively holding the pose: narrate the full cue and start its timer.
@@ -132,7 +147,7 @@ function startHold(index) {
   countdownView.classList.add('hidden');
   holdView.classList.remove('hidden');
 
-  poseName.textContent = seg.pose.name;
+  poseName.textContent = poseLabel(seg);
   poseSanskrit.textContent = seg.pose.sanskrit || '';
   poseCue.textContent = seg.pose.cue;
   poseTimeLeft.textContent = formatTime(state.remaining);
@@ -142,7 +157,11 @@ function startHold(index) {
   chime();
   // "Exercise title only" mode skips the long spoken cue — the written cue
   // stays on screen either way.
-  speak(state.titleOnly ? seg.pose.name : `${seg.pose.name}. ${seg.pose.cue}`);
+  if (state.titleOnly) {
+    narrate(clipKey('name', seg), poseLabel(seg));
+  } else {
+    narrate(clipKey('cue', seg), `${poseLabel(seg)}. ${seg.pose.cue}`);
+  }
 }
 
 function tick() {
@@ -188,12 +207,12 @@ function advance() {
 
 function finishWorkout() {
   clearInterval(state.timerId);
-  stopSpeaking();
+  stopNarration();
   stopMusic();
   releaseWakeLock();
   overallProgressBar.style.width = '100%';
   summaryText.textContent = `Great job — you completed your ${state.totalMinutes}-minute practice (${state.segments.length} poses).`;
-  speak('Great job. You completed your practice. Namaste.');
+  narrate('complete', 'Great job. You completed your practice. Namaste.');
   showScreen(completeScreen);
 }
 
@@ -231,7 +250,7 @@ function togglePause() {
   state.paused = !state.paused;
   if (state.paused) {
     clearInterval(state.timerId);
-    stopSpeaking();
+    stopNarration();
     pauseAllAudio(); // also pauses background music and any chime/tick
     pauseBtn.textContent = 'Resume';
   } else {
@@ -243,7 +262,7 @@ function togglePause() {
 
 function skipSegment() {
   if (!state) return;
-  stopSpeaking();
+  stopNarration();
   if (state.phase === 'countdown') {
     startHold(state.index); // skip straight past the countdown into the pose
   } else {
@@ -254,7 +273,7 @@ function skipSegment() {
 function endWorkout() {
   if (!state) return;
   clearInterval(state.timerId);
-  stopSpeaking();
+  stopNarration();
   stopMusic();
   releaseWakeLock();
   state = null;
@@ -289,61 +308,89 @@ if (musicSelect && window.MUSIC_TRACKS) {
 }
 
 // --- Voice picker ---
-// Web Speech quality depends entirely on which voices the device/OS ships,
-// and the "best available" guess isn't always the one that sounds best to a
-// given person — so the list is offered directly, best-ranked first, with a
-// preview button. The choice persists in localStorage.
+// The app ships real neural-TTS audio (js/voice.js + public/audio/), so the
+// primary picker chooses between those bundled voices. "Device voice" is
+// kept as an escape hatch, and only then does the OS voice list matter — so
+// that second dropdown is revealed conditionally.
 const PREVIEW_TEXT = 'Mountain Pose. Stand tall, and take a deep breath in, and out.';
 
-function populateVoices() {
-  if (!voiceSelect || !window.listVoices) return;
-  const voices = window.listVoices();
-
-  if (!voices.length) {
-    voiceSelect.innerHTML = '<option>Loading voices…</option>';
-    voiceSelect.disabled = true;
-    return;
-  }
-
-  const currentURI = window.getPreferredVoiceURI ? window.getPreferredVoiceURI() : null;
-  voiceSelect.disabled = false;
-  voiceSelect.innerHTML = '';
-
-  voices.forEach((v, i) => {
-    const opt = document.createElement('option');
-    opt.value = v.voiceURI;
-    // The list is already sorted best-first, so flag the top entry as the
-    // recommended default rather than making people guess.
-    opt.textContent = i === 0 ? `${v.name} — recommended` : v.name;
-    voiceSelect.appendChild(opt);
-  });
-
-  if (currentURI) voiceSelect.value = currentURI;
-
-  if (voiceHint) {
-    voiceHint.textContent = voices.length > 1
-      ? 'Some device voices sound far more natural than others — preview a few and pick your favorite.'
-      : 'Only one voice is available on this device.';
+function previewCurrentVoice() {
+  unlockAudio();
+  const packId = voiceSelect ? voiceSelect.value : null;
+  if (packId === 'device') {
+    speak(PREVIEW_TEXT, { voiceURI: deviceVoiceSelect ? deviceVoiceSelect.value : null });
+  } else {
+    window.narrate('preview', PREVIEW_TEXT, { packId });
   }
 }
 
-// Voices load asynchronously; speech.js calls this once they arrive.
-window.onVoicesReady = populateVoices;
-populateVoices();
+function syncDeviceVoiceRow() {
+  if (!deviceVoiceRow) return;
+  const isDevice = voiceSelect && voiceSelect.value === 'device';
+  deviceVoiceRow.hidden = !isDevice;
+  if (voiceHint) {
+    voiceHint.textContent = isDevice
+      ? 'Device voices are provided by your phone or computer, and are often robotic. Install an "Enhanced"/"Natural" voice in your OS settings to improve them.'
+      : 'Built into the app — sounds the same on every device and works offline.';
+  }
+}
+
+function populateVoicePacks() {
+  if (!voiceSelect || !window.VOICE_PACKS) return;
+  voiceSelect.innerHTML = '';
+  window.VOICE_PACKS.forEach((pack) => {
+    const opt = document.createElement('option');
+    opt.value = pack.id;
+    opt.textContent = pack.label;
+    voiceSelect.appendChild(opt);
+  });
+  voiceSelect.value = window.getVoicePackId();
+  syncDeviceVoiceRow();
+}
+
+// Device voices load asynchronously; speech.js calls this once they arrive.
+function populateDeviceVoices() {
+  if (!deviceVoiceSelect || !window.listVoices) return;
+  const voices = window.listVoices();
+  if (!voices.length) {
+    deviceVoiceSelect.innerHTML = '<option>Loading voices…</option>';
+    deviceVoiceSelect.disabled = true;
+    return;
+  }
+  const currentURI = window.getPreferredVoiceURI ? window.getPreferredVoiceURI() : null;
+  deviceVoiceSelect.disabled = false;
+  deviceVoiceSelect.innerHTML = '';
+  voices.forEach((v, i) => {
+    const opt = document.createElement('option');
+    opt.value = v.voiceURI;
+    // Already sorted best-first by speech.js.
+    opt.textContent = i === 0 ? `${v.name} — best available` : v.name;
+    deviceVoiceSelect.appendChild(opt);
+  });
+  if (currentURI) deviceVoiceSelect.value = currentURI;
+}
+
+window.onVoicesReady = populateDeviceVoices;
+populateVoicePacks();
+populateDeviceVoices();
 
 if (voiceSelect) {
   voiceSelect.addEventListener('change', () => {
-    if (window.setPreferredVoice) window.setPreferredVoice(voiceSelect.value);
-    unlockAudio();
-    speak(PREVIEW_TEXT, { voiceURI: voiceSelect.value });
+    window.setVoicePackId(voiceSelect.value);
+    syncDeviceVoiceRow();
+    previewCurrentVoice();
+  });
+}
+
+if (deviceVoiceSelect) {
+  deviceVoiceSelect.addEventListener('change', () => {
+    if (window.setPreferredVoice) window.setPreferredVoice(deviceVoiceSelect.value);
+    previewCurrentVoice();
   });
 }
 
 if (voicePreviewBtn) {
-  voicePreviewBtn.addEventListener('click', () => {
-    unlockAudio();
-    speak(PREVIEW_TEXT, { voiceURI: voiceSelect ? voiceSelect.value : null });
-  });
+  voicePreviewBtn.addEventListener('click', previewCurrentVoice);
 }
 
 if (appVersionEl) appVersionEl.textContent = `v${APP_VERSION}`;
