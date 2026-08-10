@@ -2,7 +2,7 @@
 // version, independent of the app's own semver (js/app.js APP_VERSION) —
 // bump SHELL_CACHE whenever any cached file changes, regardless of
 // whether the user-facing version number moves.
-const SHELL_CACHE = 'quiet-flow-shell-v1';
+const SHELL_CACHE = 'quiet-flow-shell-v2';
 
 const SHELL_FILES = [
   './',

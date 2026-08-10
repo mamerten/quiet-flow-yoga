@@ -30,8 +30,11 @@
 
   const PENTATONIC = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25];
 
+  // `titleOnly: true` also trims narration down to just the pose name (no
+  // full spoken cue) — see NARRATION handling in js/app.js.
   window.MUSIC_TRACKS = [
     { id: 'none', label: 'None (narration only)' },
+    { id: 'none-title', label: 'None (exercise title only)', titleOnly: true },
     { id: 'piano', label: 'Soft Piano' },
     { id: 'strings', label: 'Gentle Strings' },
     { id: 'chimes', label: 'Wind Chimes' },
@@ -140,7 +143,9 @@
 
   window.startMusic = function startMusic(trackId) {
     window.stopMusic();
-    if (!trackId || trackId === 'none') return;
+    // Both 'none' variants are silent — they differ only in how much gets
+    // narrated, which app.js handles.
+    if (!trackId || trackId === 'none' || trackId === 'none-title') return;
     const ctx = window.getAudioContext && window.getAudioContext();
     if (!ctx) return;
     if (ctx.state === 'suspended') ctx.resume();

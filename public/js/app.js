@@ -25,6 +25,9 @@ const completeScreen = document.getElementById('screen-complete');
 
 const durationButtons = document.querySelectorAll('.duration-btn');
 const musicSelect = document.getElementById('music-select');
+const voiceSelect = document.getElementById('voice-select');
+const voicePreviewBtn = document.getElementById('voice-preview-btn');
+const voiceHint = document.getElementById('voice-hint');
 const audioNote = document.getElementById('audio-note');
 const appVersionEl = document.getElementById('app-version');
 
@@ -137,7 +140,9 @@ function startHold(index) {
   topTimer.textContent = formatTime(state.remaining);
 
   chime();
-  speak(`${seg.pose.name}. ${seg.pose.cue}`);
+  // "Exercise title only" mode skips the long spoken cue — the written cue
+  // stays on screen either way.
+  speak(state.titleOnly ? seg.pose.name : `${seg.pose.name}. ${seg.pose.cue}`);
 }
 
 function tick() {
@@ -198,6 +203,7 @@ async function beginWorkout(totalMinutes) {
   const totalSeconds = segments.reduce((s, x) => s + x.duration, 0);
   const wakeLock = await requestWakeLock();
   const musicId = musicSelect ? musicSelect.value : 'none';
+  const track = (window.MUSIC_TRACKS || []).find((t) => t.id === musicId);
 
   state = {
     segments,
@@ -210,6 +216,7 @@ async function beginWorkout(totalMinutes) {
     totalSeconds,
     wakeLock,
     musicId,
+    titleOnly: !!(track && track.titleOnly),
   };
 
   pauseBtn.textContent = 'Pause';
@@ -279,6 +286,64 @@ if (musicSelect && window.MUSIC_TRACKS) {
     musicSelect.appendChild(opt);
   });
   musicSelect.value = 'none';
+}
+
+// --- Voice picker ---
+// Web Speech quality depends entirely on which voices the device/OS ships,
+// and the "best available" guess isn't always the one that sounds best to a
+// given person — so the list is offered directly, best-ranked first, with a
+// preview button. The choice persists in localStorage.
+const PREVIEW_TEXT = 'Mountain Pose. Stand tall, and take a deep breath in, and out.';
+
+function populateVoices() {
+  if (!voiceSelect || !window.listVoices) return;
+  const voices = window.listVoices();
+
+  if (!voices.length) {
+    voiceSelect.innerHTML = '<option>Loading voices…</option>';
+    voiceSelect.disabled = true;
+    return;
+  }
+
+  const currentURI = window.getPreferredVoiceURI ? window.getPreferredVoiceURI() : null;
+  voiceSelect.disabled = false;
+  voiceSelect.innerHTML = '';
+
+  voices.forEach((v, i) => {
+    const opt = document.createElement('option');
+    opt.value = v.voiceURI;
+    // The list is already sorted best-first, so flag the top entry as the
+    // recommended default rather than making people guess.
+    opt.textContent = i === 0 ? `${v.name} — recommended` : v.name;
+    voiceSelect.appendChild(opt);
+  });
+
+  if (currentURI) voiceSelect.value = currentURI;
+
+  if (voiceHint) {
+    voiceHint.textContent = voices.length > 1
+      ? 'Some device voices sound far more natural than others — preview a few and pick your favorite.'
+      : 'Only one voice is available on this device.';
+  }
+}
+
+// Voices load asynchronously; speech.js calls this once they arrive.
+window.onVoicesReady = populateVoices;
+populateVoices();
+
+if (voiceSelect) {
+  voiceSelect.addEventListener('change', () => {
+    if (window.setPreferredVoice) window.setPreferredVoice(voiceSelect.value);
+    unlockAudio();
+    speak(PREVIEW_TEXT, { voiceURI: voiceSelect.value });
+  });
+}
+
+if (voicePreviewBtn) {
+  voicePreviewBtn.addEventListener('click', () => {
+    unlockAudio();
+    speak(PREVIEW_TEXT, { voiceURI: voiceSelect ? voiceSelect.value : null });
+  });
 }
 
 if (appVersionEl) appVersionEl.textContent = `v${APP_VERSION}`;
