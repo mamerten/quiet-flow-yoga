@@ -75,6 +75,13 @@ The script reads `public/js/poses.js` directly, renders every clip (including
 files by content hash so edits can't be served stale, and deletes clips that
 are no longer referenced.
 
+If a pose name ends in a bare Roman numeral (`Warrior I`, `Warrior II`) —
+correct on screen, but TTS reads a lone `I` as the pronoun and `II`/`III` as
+nonsense — both the generator and the device-voice fallback in
+`public/js/app.js` (`spokenPoseName`) convert it to the spoken word (`Warrior
+One`) automatically. No action needed when adding a similarly-named pose;
+keep the two conversion tables in sync if you ever add a `IV`/`V`.
+
 The workout generator picks up new poses automatically — no other changes needed. To add a new illustration, add a template to `FIGURES` in `public/js/figures.js`.
 
 ## Running locally

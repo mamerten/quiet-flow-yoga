@@ -17,7 +17,7 @@ const {
   resumeAllAudio,
 } = window;
 
-const APP_VERSION = '0.1.0';
+const APP_VERSION = '0.1.1';
 const COUNTDOWN_SECONDS = 3;
 
 const homeScreen = document.getElementById('screen-home');
@@ -102,6 +102,20 @@ function poseLabel(seg) {
   return `${seg.pose.name} — ${seg.side === 'left' ? 'Left' : 'Right'} side`;
 }
 
+// Pose names end in a bare Roman numeral by yoga convention (Warrior I/II/
+// III), which is correct on screen but wrong out loud — TTS reads a lone
+// "I" as the pronoun, and "II"/"III" as nonsense. Mirrors spoken_name() in
+// tools/generate-voice.py, which does the same for the pre-generated audio;
+// this copy only matters for the device-voice fallback path.
+const ROMAN_TO_WORD = { I: 'One', II: 'Two', III: 'Three' };
+function spokenPoseName(pose) {
+  return pose.name.replace(/\b(III|II|I)$/, (m) => ROMAN_TO_WORD[m]);
+}
+function spokenLabel(seg) {
+  const name = spokenPoseName(seg.pose);
+  return seg.side ? `${name} — ${seg.side === 'left' ? 'Left' : 'Right'} side` : name;
+}
+
 // Key into the pre-generated audio manifest (see tools/generate-voice.py).
 function clipKey(kind, seg) {
   return seg.side ? `${kind}-${seg.pose.id}-${seg.side}` : `${kind}-${seg.pose.id}`;
@@ -133,7 +147,7 @@ function startCountdown(index) {
   topTimer.textContent = ''; // only shown once a pose is actually live
 
   updateOverallProgress(index);
-  narrate(clipKey('next', seg), `Up next: ${poseLabel(seg)}`);
+  narrate(clipKey('next', seg), `Up next: ${spokenLabel(seg)}`);
 }
 
 // Actively holding the pose: narrate the full cue and start its timer.
@@ -153,14 +167,24 @@ function startHold(index) {
   poseProgressBar.style.width = '100%';
   topTimer.textContent = formatTime(state.remaining);
 
-  chime();
-  // "Exercise title only" mode skips the long spoken cue — the written cue
-  // stays on screen either way.
-  if (state.titleOnly) {
-    narrate(clipKey('name', seg), poseLabel(seg));
-  } else {
-    narrate(clipKey('cue', seg), `${poseLabel(seg)}. ${seg.pose.cue}`);
-  }
+  // Let the "Up next: ..." announcement from the countdown finish playing
+  // before the chime and the cue narration start — otherwise a longer
+  // announcement (a full pose name plus "left/right side") routinely gets
+  // cut off partway through by the chime, since the countdown is a fixed
+  // 3 seconds regardless of how long that sentence takes to say.
+  window.finishNarrationThen(() => {
+    // The wait can outlast this pose (End/Pause/Skip during it) — bail
+    // rather than fire a chime and narration into a state that moved on.
+    if (!state || state.paused || state.index !== index) return;
+    chime();
+    // "Exercise title only" mode skips the long spoken cue — the written
+    // cue stays on screen either way.
+    if (state.titleOnly) {
+      narrate(clipKey('name', seg), spokenLabel(seg));
+    } else {
+      narrate(clipKey('cue', seg), `${spokenLabel(seg)}. ${seg.pose.cue}`);
+    }
+  });
 }
 
 function tick() {
@@ -283,6 +307,13 @@ function endWorkout() {
 
 durationButtons.forEach((btn) => {
   btn.addEventListener('click', () => {
+    // Must run synchronously, before beginWorkout's internal `await`s —
+    // that's what actually grants the mobile browser's audio-playback
+    // unlock. Doing it any later (e.g. inside beginWorkout) is why the
+    // very first narration clip of a practice would silently fail to
+    // play on phones while every clip after it worked fine.
+    if (window.unlockVoiceAudio) window.unlockVoiceAudio();
+    unlockAudio();
     const minutes = Number(btn.dataset.minutes);
     beginWorkout(minutes);
   });
@@ -314,6 +345,7 @@ if (musicSelect && window.MUSIC_TRACKS) {
 const PREVIEW_TEXT = 'Mountain Pose. Stand tall, and take a deep breath in, and out.';
 
 function previewCurrentVoice() {
+  if (window.unlockVoiceAudio) window.unlockVoiceAudio();
   unlockAudio();
   const packId = voiceSelect ? voiceSelect.value : null;
   if (packId === 'device') {

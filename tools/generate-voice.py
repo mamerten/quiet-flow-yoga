@@ -50,6 +50,18 @@ STATIC_LINES = {
     "preview": "Mountain Pose. Stand tall, and take a deep breath in, and out.",
 }
 
+# Pose names end in a bare Roman numeral (Warrior I/II/III) per yoga
+# convention, which is the right way to *display* them but the wrong way
+# to *say* them: TTS reads a lone "I" as the pronoun/letter, and "II"/"III"
+# as nonsense. Instructors say "Warrior One/Two/Three" out loud, so the
+# narration text gets that conversion; the on-screen text (js/app.js
+# poseLabel) is untouched. Keep this in sync with spokenPoseName() there.
+ROMAN_TO_WORD = {"I": "One", "II": "Two", "III": "Three"}
+
+
+def spoken_name(name):
+    return re.sub(r"\b(III|II|I)$", lambda m: ROMAN_TO_WORD[m.group(1)], name)
+
 
 def parse_poses(path):
     """Pull id/name/cue/sided out of poses.js without needing a JS runtime."""
@@ -85,10 +97,11 @@ def build_clips(poses):
     """
     clips = dict(STATIC_LINES)
     for p in poses:
+        name = spoken_name(p["name"])
         variants = [("", "")] if not p["sided"] else [
             ("-left", ", left side"), ("-right", ", right side")]
         for suffix, spoken in variants:
-            label = "%s%s" % (p["name"], spoken)
+            label = "%s%s" % (name, spoken)
             clips["name-%s%s" % (p["id"], suffix)] = label
             clips["next-%s%s" % (p["id"], suffix)] = "Up next: %s" % label
             clips["cue-%s%s" % (p["id"], suffix)] = "%s. %s" % (label, p["cue"])
