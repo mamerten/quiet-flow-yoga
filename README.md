@@ -1,20 +1,24 @@
-# Quiet Flow — Yoga Timer
+# Quiet Flow — Yoga & Calisthenics Timer
 
-A tiny, dependency-free web app for short, guided yoga practices — like Apple Fitness+'s time-based workouts, but yoga-only. Pick 5, 7, 10, or 15 minutes, and it narrates you through a sequence of poses with a simple reference image for each, a 3-2-1 countdown between poses, and optional background sound.
+A tiny, dependency-free web app for short, guided practices — like Apple Fitness+'s time-based workouts. Two modes, picked with a tab on the home screen:
+
+- **Yoga** — instructor-led. Pick 5, 7, 10, or 15 minutes and it walks you through a sequence of poses, each one timed and auto-advancing, with a 3-2-1 countdown between them.
+- **Calisthenics** — self-paced. Same length picker and overall session clock, but *you* decide when to move to the next exercise — say "next", swipe, or tap a button — rather than the app timing each one for you.
 
 **[Live demo →](https://quiet-flow-yoga.matmerten.com)** (also reachable at [quiet-flow-yoga.pages.dev](https://quiet-flow-yoga.pages.dev)) — installable as a home-screen app, and works offline once loaded.
 
 ## What it does
 
-- **Pick a length.** 5 / 7 / 10 / 15 minutes.
-- **It builds a flow for you.** Each practice moves through phases — centering, warm-up, standing poses, balance, seated/twists, and a closing relaxation — pulling poses from a small library and sizing each hold to fit the total time. The sequence is shuffled a bit each time, so repeat practices don't feel identical.
-- **A 3-second countdown between poses.** Before each pose starts, a brief "Get ready for &lt;pose&gt;" countdown (3-2-1, with its own soft tick and the upcoming pose already on screen) gives you a moment to get into position.
-- **Audible instructions.** Speaks the pose name and cue at the start of each pose, and announces what's coming during the countdown.
-- **Real neural narration, built in.** Rather than depending on the device's text-to-speech (which is robotic on most phones and on Windows), the app ships pre-generated neural-TTS audio for every line it speaks. Two voices are bundled — **Clara** (clear and steady) and **Amy** (warm and soft) — selectable with a **Preview** button. Identical on every device, works offline, no API key and no per-use cost. "Device voice" remains available as a fallback, and is used automatically if a clip is ever missing.
-- **Left/right balance.** One-sided poses (Warrior I/II, Triangle, Side Angle, Low Lunge, Tree, Eagle, Warrior III, Seated Twist, Cow Face Arms) are always scheduled as a matched pair, so you never stretch one side and skip the other. The mirrored side is deliberately separated by another pose rather than repeated back-to-back, and each side is held ~25s so both fit comfortably.
-- **Optional background music.** None (default), None (exercise title only), Soft Piano, Gentle Strings, or Wind Chimes — a slow, quiet four-chord loop played back three different ways, generated on the fly with the Web Audio API. Runs independently of narration, so both play together, with narration mixed slightly under the music so neither drowns out the other. *Exercise title only* trims the spoken guidance down to just the pose name (the written cue stays on screen).
-- **Minimal visuals.** Each pose has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
-- **Controls.** Pause/Resume, Skip, End, plus an overall progress bar, a compact timer in the top bar once a pose is live, and a per-pose countdown/timer.
+- **Pick a length.** 5 / 7 / 10 / 15 minutes, in either mode.
+- **Yoga builds a flow for you.** Each practice moves through phases — centering, warm-up, standing poses, balance, seated/twists, and a closing relaxation — pulling poses from a small library and sizing each hold to fit the total time. The sequence is shuffled a bit each time, so repeat practices don't feel identical.
+- **Calisthenics is self-paced, with an overall clock.** No per-exercise timer — the app shows one exercise (name, simple illustration, description) and waits for you. A session-length countdown runs in the top bar throughout and ends the session on its own when it reaches zero, however many exercises you got through. Advance three ways: tap the **Next** button, **swipe** anywhere on the card, or (where supported) say **"next"** out loud with the 🎤 button — see [Browser support notes](#browser-support-notes) for voice reliability across devices.
+- **A 3-second countdown between exercises, in both modes.** A brief "Get ready for &lt;exercise&gt;" countdown (3-2-1, with its own soft tick and the upcoming move already on screen) gives you a moment to get into position before it narrates the full cue.
+- **Audible instructions.** Speaks the pose/exercise name and cue at the start, and announces what's coming during the countdown.
+- **Real neural narration, built in.** Rather than depending on the device's text-to-speech (which is robotic on most phones and on Windows), the app ships pre-generated neural-TTS audio for every line it speaks, in both modes. Two voices are bundled — **Clara** (clear and steady) and **Amy** (warm and soft) — selectable with a **Preview** button. Identical on every device, works offline, no API key and no per-use cost. "Device voice" remains available as a fallback, and is used automatically if a clip is ever missing.
+- **Left/right balance, in both modes.** One-sided poses/exercises (yoga: Warrior I/II, Triangle, Side Angle, Low Lunge, Tree, Eagle, Warrior III, Seated Twist, Cow Face Arms; calisthenics: Reverse Lunge, World's Greatest Stretch, Couch Stretch, Bird Dog, Dead Bug, Side Plank, and others) are always scheduled as a matched pair, so you never work one side and skip the other. The mirrored side is deliberately separated by another move rather than repeated back-to-back.
+- **Optional background music.** None (default), None (exercise title only), Soft Piano, Gentle Strings, or Wind Chimes — a slow, quiet four-chord loop played back three different ways, generated on the fly with the Web Audio API. Runs independently of narration, so both play together, with narration mixed slightly under the music so neither drowns out the other. *Exercise title only* trims the spoken guidance down to just the name (the written cue stays on screen).
+- **Minimal visuals.** Each pose/exercise has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
+- **Controls.** Pause/Resume, Skip (Yoga) / Next (Calisthenics), End, plus an overall progress bar and a compact timer in the top bar.
 - **Version + source link.** A small footer shows the current version and links back to this repo.
 - **Installable, works offline.** A web app manifest + service worker let you add it to your phone's home screen (opens full-screen, no browser chrome) and run a practice with no connection once you've loaded it at least once.
 
@@ -28,26 +32,51 @@ A tiny, dependency-free web app for short, guided yoga practices — like Apple 
 ## Project structure
 
 ```
-wrangler.toml         Cloudflare Pages config (build output = public/)
-public/index.html     Screens: home, active workout, complete
-public/css/style.css  All styling, incl. the phone-landscape split layout and dark mode
-public/js/poses.js    The pose repository (name, cue, category, default duration, figure)
-public/js/figures.js  A handful of simple stick-figure SVG templates, reused across poses
-public/js/workout.js  Builds a timed sequence of poses for a given number of minutes
-public/js/speech.js   Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
-public/js/music.js    Optional procedural background music tracks (Web Audio API)
-public/js/voice.js    Plays the pre-generated narration clips (device TTS fallback)
-public/audio/         Pre-generated neural narration, one folder per voice pack
-tools/generate-voice.py  Build-time script that renders public/audio/ with Piper
-public/js/app.js      Screen/timer/countdown state machine and UI wiring
-public/manifest.json  Web app manifest (installable home-screen app)
-public/sw.js          Service worker: caches the app shell for offline use
-public/icons/         App icons (192/512/512-maskable/apple-touch) + favicon.svg
+wrangler.toml               Cloudflare Pages config (build output = public/)
+public/index.html           Screens: home, active workout, complete
+public/css/style.css        All styling, incl. the phone-landscape split layout and dark mode
+public/js/poses.js          Yoga pose repository (name, cue, category, default duration, figure)
+public/js/workout.js        Builds a timed yoga sequence for a given number of minutes
+public/js/exercises.js      Calisthenics exercise repository (name, cue, surface, figure)
+public/js/calisthenics-workout.js  Self-paced exercise sequencer (see "Calisthenics mode" below)
+public/js/figures.js        Simple stick-figure SVG templates, reused across poses/exercises
+public/js/speech.js         Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
+public/js/music.js          Optional procedural background music tracks (Web Audio API)
+public/js/voice.js          Plays the pre-generated narration clips (device TTS fallback)
+public/js/voice-control.js  Optional "say next" hands-free control (Calisthenics mode; Web Speech SpeechRecognition)
+public/audio/                Pre-generated neural narration, one folder per voice pack
+tools/generate-voice.py     Build-time script that renders public/audio/ with Piper
+public/js/app.js            Screen/timer/countdown state machine and UI wiring
+public/manifest.json        Web app manifest (installable home-screen app)
+public/sw.js                Service worker: caches the app shell for offline use
+public/icons/                App icons (192/512/512-maskable/apple-touch) + favicon.svg
 ```
 
-## Extending the pose library
+## Calisthenics mode
 
-Add an entry to `POSES` in [`public/js/poses.js`](public/js/poses.js):
+Unlike Yoga (instructor-led — each pose is timed and the app advances on its
+own), Calisthenics is self-paced: `js/calisthenics-workout.js` hands out one
+exercise at a time from `js/exercises.js` on request rather than
+pre-building a fixed, timed sequence. There's still an overall session
+clock (same 5/7/10/15-minute picker as Yoga) counting down in the top bar
+throughout — it's just that *you* decide when to move to the next exercise,
+by tapping **Next**, swiping the card, or saying **"next"** — not a timer
+per exercise. The session ends automatically when the overall clock runs
+out, whichever exercise you're on.
+
+The exercise library (`public/js/exercises.js`) is mostly drawn directly
+from what [Markus Kneissl (@markus.moves)](https://www.instagram.com/markus.moves/),
+a no-gym mobility/strength coach, actually teaches — his belly-pooch flow,
+shoulder routine, posture routine, morning mobility flow, bedtime
+hip-release flow, towel routine, and named strength circuit. His content
+doesn't use consistent cute names, so the names/descriptions in this app
+are original. A handful of standard bodyweight staples (Plank Hold,
+Mountain Climber, Couch Stretch, Bird Dog Reach, Side Plank Hold) round out
+the library even though they're not verbatim from a specific post.
+
+## Extending the pose/exercise libraries
+
+Add an entry to `POSES` in [`public/js/poses.js`](public/js/poses.js) (Yoga):
 
 ```js
 {
@@ -62,7 +91,21 @@ Add an entry to `POSES` in [`public/js/poses.js`](public/js/poses.js):
 }
 ```
 
-After adding or editing a pose, regenerate the narration audio so the
+Or to `EXERCISES` in [`public/js/exercises.js`](public/js/exercises.js) (Calisthenics — a deliberately different shape, since it's self-paced and has no fixed hold time):
+
+```js
+{
+  id: 'unique-id',
+  name: 'Exercise Name',
+  figure: 'one of the keys in public/js/figures.js',
+  surface: 'standing' | 'ground', // exactly one — do you need a mat?
+  needsFurniture: true, // OPTIONAL: needs a chair, wall, towel, or similar prop
+  sided: true,           // OPTIONAL: one-sided, auto-scheduled as a left/right pair
+  cue: 'What gets spoken and displayed for this exercise.',
+}
+```
+
+After adding or editing either one, regenerate the narration audio so the
 spoken cue matches:
 
 ```bash
@@ -70,10 +113,11 @@ pip install piper-tts imageio-ffmpeg
 python tools/generate-voice.py
 ```
 
-The script reads `public/js/poses.js` directly, renders every clip (including
-`left`/`right` variants for one-sided poses) for each bundled voice, names
-files by content hash so edits can't be served stale, and deletes clips that
-are no longer referenced.
+The script reads both `public/js/poses.js` and `public/js/exercises.js`
+directly, renders every clip (including `left`/`right` variants for
+one-sided entries) for each bundled voice, names files by content hash so
+edits can't be served stale, and deletes clips that are no longer
+referenced.
 
 If a pose name ends in a bare Roman numeral (`Warrior I`, `Warrior II`) —
 correct on screen, but TTS reads a lone `I` as the pronoun and `II`/`III` as
@@ -82,7 +126,12 @@ nonsense — both the generator and the device-voice fallback in
 One`) automatically. No action needed when adding a similarly-named pose;
 keep the two conversion tables in sync if you ever add a `IV`/`V`.
 
-The workout generator picks up new poses automatically — no other changes needed. To add a new illustration, add a template to `FIGURES` in `public/js/figures.js`.
+Both the Yoga workout generator and the Calisthenics sequencer pick up new
+entries in their respective files automatically — no other changes needed.
+To add a new illustration, add a template to `FIGURES` in
+`public/js/figures.js` (many entries in both libraries reuse the same
+handful of templates rather than each getting a bespoke drawing — that's
+intentional, matching the low level of visual detail elsewhere in the app).
 
 ## Running locally
 
@@ -113,6 +162,7 @@ A manual deploy from your machine is also available: `npm run deploy` (requires 
 ## Browser support notes
 
 - **Narration** normally needs no browser support at all: the bundled Clara and Amy voices are plain audio files, so they sound identical everywhere and work offline. Only the optional **Device voice** setting uses the [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) (Chrome, Edge, Safari; partial in Firefox), and only that mode depends on which voices the OS ships — those are frequently robotic. To improve them, install a better voice at the OS level and it will appear in the Device voice list: iOS/iPadOS *Settings → Accessibility → Spoken Content → Voices* (download an **Enhanced** or **Premium** voice); Android *Settings → Accessibility → Text-to-speech* (use **Google Speech Services**); Windows *Settings → Time & language → Speech* (add a **Natural** voice — the stock David/Zira/Mark voices are the old robotic engine). If neither audio nor speech is available, the on-screen written cue still guides the practice.
+- **Voice control ("say next")**, Calisthenics mode only, uses [SpeechRecognition](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition) — solid in Chrome/Edge (desktop and Android) and supported in Safari (as `webkitSpeechRecognition`) since iOS/iPadOS 14.5; Firefox ships it disabled behind a flag. Where it's unsupported the 🎤 button is hidden entirely rather than shown broken — swiping or tapping **Next** always works everywhere, mic or no mic. It needs a mic-permission prompt (must be started from a tap) and auto-restarts itself if the browser silently stops listening after a pause in speech, which several mobile browsers do even in continuous mode.
 - **Keep-awake** uses the [Screen Wake Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API) where available, so the screen doesn't dim mid-practice; it degrades gracefully where unsupported.
 - **Offline/installable** requires a Service Worker, which needs `http(s)` — it's skipped (silently, no error) when opening `index.html` straight from disk via `file://`. Bump `SHELL_CACHE` in `public/sw.js` whenever a cached file changes, so returning visitors pick up the update instead of serving a stale cached copy.
 

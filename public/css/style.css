@@ -86,6 +86,32 @@ h1 {
   line-height: 1.5;
 }
 
+.mode-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--track-bg);
+  border-radius: 999px;
+  padding: 4px;
+  margin: 0 0 18px;
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mode-tab.active {
+  background: var(--sage);
+  color: white;
+}
+
 .duration-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -272,6 +298,10 @@ h1 {
   font-size: 0.9rem;
 }
 
+.sanskrit:empty {
+  margin: 0; /* calisthenics exercises have no Sanskrit name to show */
+}
+
 .cue {
   min-height: 3.6em;
   line-height: 1.5;
@@ -360,6 +390,22 @@ h1 {
 .control-btn.wide {
   width: 100%;
   margin-top: 10px;
+}
+
+#voice-control-btn {
+  margin-bottom: 10px;
+}
+
+#voice-control-btn.listening {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: white;
+  animation: mic-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes mic-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
 }
 
 .complete-actions {

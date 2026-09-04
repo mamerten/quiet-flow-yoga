@@ -6,3 +6,5 @@ dist/
 
 # Piper voice models used by tools/generate-voice.py (large, re-downloadable)
 tools/.voices/
+__pycache__/
+*.pyc

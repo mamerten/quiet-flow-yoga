@@ -25,6 +25,8 @@ const workoutScreen = document.getElementById('screen-workout');
 const completeScreen = document.getElementById('screen-complete');
 
 const durationButtons = document.querySelectorAll('.duration-btn');
+const modeTabs = document.querySelectorAll('.mode-tab');
+const homeTagline = document.getElementById('home-tagline');
 const musicSelect = document.getElementById('music-select');
 const voiceSelect = document.getElementById('voice-select');
 const voicePreviewBtn = document.getElementById('voice-preview-btn');
@@ -39,8 +41,11 @@ const holdView = document.getElementById('hold-view');
 const poseName = document.getElementById('pose-name');
 const poseSanskrit = document.getElementById('pose-sanskrit');
 const poseCue = document.getElementById('pose-cue');
+const poseProgressRow = document.getElementById('pose-progress-row');
 const poseTimeLeft = document.getElementById('pose-time-left');
 const poseProgressBar = document.getElementById('pose-progress-bar');
+const advanceHint = document.getElementById('advance-hint');
+const voiceControlBtn = document.getElementById('voice-control-btn');
 
 const countdownView = document.getElementById('countdown-view');
 const countdownNumber = document.getElementById('countdown-number');
@@ -60,7 +65,38 @@ const homeBtn = document.getElementById('home-btn');
 
 // state.phase is 'countdown' (the brief pause before a pose) or 'hold'
 // (actively in the pose). One shared 1-second interval drives both.
-let state = null; // { segments, index, remaining, phase, paused, timerId, totalMinutes, totalSeconds, wakeLock, musicId }
+//
+// state.mode is 'yoga' or 'calisthenics' — see README for how the two
+// differ. Yoga: state.segments is a fixed, fully precomputed array and
+// state.totalSeconds is its sum; poses auto-advance when state.remaining
+// (this pose's remaining hold time) hits 0. Calisthenics: state.sequencer
+// (js/calisthenics-workout.js) generates exercises on demand, so
+// state.segments grows lazily via ensureSegment() as you advance through
+// it yourself (button/voice/swipe) — nothing auto-advances. Instead
+// state.sessionRemaining is an overall session clock that counts down
+// throughout and ends the session on its own when it reaches 0.
+let state = null;
+
+let currentMode = 'yoga';
+
+const HOME_TAGLINES = {
+  yoga: "A short, guided yoga practice. Pick a length and press start — I'll walk you through it.",
+  calisthenics: 'A short calisthenics session, at your own pace. Pick a length, then say "next", swipe, or tap Next whenever you\'re ready to move on.',
+};
+
+function setMode(mode) {
+  currentMode = mode;
+  modeTabs.forEach((tab) => {
+    const isActive = tab.dataset.mode === mode;
+    tab.classList.toggle('active', isActive);
+    tab.setAttribute('aria-selected', String(isActive));
+  });
+  if (homeTagline) homeTagline.textContent = HOME_TAGLINES[mode] || '';
+}
+
+modeTabs.forEach((tab) => {
+  tab.addEventListener('click', () => setMode(tab.dataset.mode));
+});
 
 function showScreen(screen) {
   [homeScreen, workoutScreen, completeScreen].forEach((s) => s.classList.add('hidden'));
@@ -121,7 +157,27 @@ function clipKey(kind, seg) {
   return seg.side ? `${kind}-${seg.pose.id}-${seg.side}` : `${kind}-${seg.pose.id}`;
 }
 
+// Calisthenics only: state.segments is filled lazily, one pull from the
+// sequencer at a time, as rendering code asks to look at index `i` (the
+// current exercise, or the next one for the "Next: ..." preview). A no-op
+// in yoga mode, where segments are already fully precomputed.
+function ensureSegment(i) {
+  if (!state || state.mode !== 'calisthenics') return;
+  while (state.segments.length <= i) {
+    const next = state.sequencer.next();
+    if (!next) break; // the exercise pool is empty — shouldn't happen
+    state.segments.push(next);
+  }
+}
+
 function updateOverallProgress(index, holdElapsed = 0) {
+  if (state.mode === 'calisthenics') {
+    // No fixed pose count to divide by — track session time elapsed instead.
+    const elapsed = state.sessionSeconds - state.sessionRemaining;
+    const pct = (elapsed / state.sessionSeconds) * 100;
+    overallProgressBar.style.width = `${Math.min(Math.max(pct, 0), 100)}%`;
+    return;
+  }
   const elapsedBefore = state.segments.slice(0, index).reduce((s, x) => s + x.duration, 0);
   const pct = ((elapsedBefore + holdElapsed) / state.totalSeconds) * 100;
   overallProgressBar.style.width = `${Math.min(Math.max(pct, 0), 100)}%`;
@@ -130,6 +186,8 @@ function updateOverallProgress(index, holdElapsed = 0) {
 // Brief pause before a pose starts: shows a 3-2-1 countdown and previews
 // the pose image so there's time to get into position.
 function startCountdown(index) {
+  ensureSegment(index);
+  ensureSegment(index + 1); // for the "Next: ..." preview below
   const seg = state.segments[index];
   const next = state.segments[index + 1];
 
@@ -137,14 +195,18 @@ function startCountdown(index) {
   state.remaining = COUNTDOWN_SECONDS;
 
   renderFigure(seg.pose);
-  stepLabel.textContent = `Pose ${index + 1} of ${state.segments.length}`;
+  stepLabel.textContent = state.mode === 'calisthenics'
+    ? `Exercise ${index + 1}`
+    : `Pose ${index + 1} of ${state.segments.length}`;
   nextLabel.textContent = next ? `Next: ${poseLabel(next)}` : 'Next: Finish';
 
   holdView.classList.add('hidden');
   countdownView.classList.remove('hidden');
   countdownNumber.textContent = String(state.remaining);
   countdownNext.textContent = poseLabel(seg);
-  topTimer.textContent = ''; // only shown once a pose is actually live
+  // Yoga: nothing to show yet until the pose actually starts. Calisthenics:
+  // the overall session clock keeps running right through the countdown.
+  topTimer.textContent = state.mode === 'calisthenics' ? formatTime(state.sessionRemaining) : '';
 
   updateOverallProgress(index);
   narrate(clipKey('next', seg), `Up next: ${spokenLabel(seg)}`);
@@ -165,7 +227,12 @@ function startHold(index) {
   poseCue.textContent = seg.pose.cue;
   poseTimeLeft.textContent = formatTime(state.remaining);
   poseProgressBar.style.width = '100%';
-  topTimer.textContent = formatTime(state.remaining);
+  // Yoga: this pose's own countdown. Calisthenics: no per-exercise timer —
+  // keep showing the overall session clock (poseProgressRow is hidden
+  // there entirely; see setupWorkoutUIForMode).
+  topTimer.textContent = state.mode === 'calisthenics'
+    ? formatTime(state.sessionRemaining)
+    : formatTime(state.remaining);
 
   // Let the "Up next: ..." announcement from the countdown finish playing
   // before the chime and the cue narration start — otherwise a longer
@@ -189,6 +256,12 @@ function startHold(index) {
 
 function tick() {
   if (!state) return;
+
+  if (state.mode === 'calisthenics') {
+    tickCalisthenics();
+    return;
+  }
+
   state.remaining -= 1;
 
   if (state.phase === 'countdown') {
@@ -214,6 +287,31 @@ function tick() {
   }
 }
 
+// Calisthenics: the countdown still runs the same 3-2-1 as yoga, but once
+// an exercise goes "live" there's no per-exercise timer at all — you
+// decide when to move on. The only thing that ticks on its own is the
+// overall session clock, which ends the session when it runs out
+// regardless of which exercise you're on.
+function tickCalisthenics() {
+  if (state.phase === 'countdown') {
+    state.remaining -= 1;
+    if (state.remaining > 0) {
+      countdownNumber.textContent = String(state.remaining);
+      countdownTick();
+    } else {
+      startHold(state.index);
+    }
+  }
+
+  state.sessionRemaining -= 1;
+  topTimer.textContent = formatTime(Math.max(state.sessionRemaining, 0));
+  updateOverallProgress(state.index);
+
+  if (state.sessionRemaining <= 0) {
+    finishWorkout();
+  }
+}
+
 function startTimer() {
   clearInterval(state.timerId);
   state.timerId = setInterval(tick, 1000);
@@ -221,7 +319,11 @@ function startTimer() {
 
 function advance() {
   state.index += 1;
-  if (state.index >= state.segments.length) {
+  // Yoga: segments are a fixed list — running past the end means the
+  // practice is over. Calisthenics: segments grow on demand (ensureSegment,
+  // called from startCountdown below), so this is never the end condition
+  // there — only the session clock (tickCalisthenics) ends the session.
+  if (state.mode !== 'calisthenics' && state.index >= state.segments.length) {
     finishWorkout();
     return;
   }
@@ -232,22 +334,45 @@ function finishWorkout() {
   clearInterval(state.timerId);
   stopNarration();
   stopMusic();
+  stopVoiceControlIfActive();
   releaseWakeLock();
   overallProgressBar.style.width = '100%';
-  summaryText.textContent = `Great job — you completed your ${state.totalMinutes}-minute practice (${state.segments.length} poses).`;
-  narrate('complete', 'Great job. You completed your practice. Namaste.');
+  if (state.mode === 'calisthenics') {
+    const count = state.index + 1;
+    summaryText.textContent = `Great job — you completed your ${state.totalMinutes}-minute session (${count} exercise${count === 1 ? '' : 's'}).`;
+    narrate('complete-calisthenics', 'Great job. You completed your session.');
+  } else {
+    summaryText.textContent = `Great job — you completed your ${state.totalMinutes}-minute practice (${state.segments.length} poses).`;
+    narrate('complete', 'Great job. You completed your practice. Namaste.');
+  }
   showScreen(completeScreen);
 }
 
+// Shared music-track lookup: begin*Workout() both need to know whether the
+// picked track is a "title only" one (see js/music.js MUSIC_TRACKS).
+function currentTitleOnly() {
+  const musicId = musicSelect ? musicSelect.value : 'none';
+  const track = (window.MUSIC_TRACKS || []).find((t) => t.id === musicId);
+  return !!(track && track.titleOnly);
+}
+
 async function beginWorkout(totalMinutes) {
+  if (currentMode === 'calisthenics') {
+    await beginCalisthenicsWorkout(totalMinutes);
+  } else {
+    await beginYogaWorkout(totalMinutes);
+  }
+}
+
+async function beginYogaWorkout(totalMinutes) {
   unlockAudio();
   const segments = generateWorkout(totalMinutes);
   const totalSeconds = segments.reduce((s, x) => s + x.duration, 0);
   const wakeLock = await requestWakeLock();
   const musicId = musicSelect ? musicSelect.value : 'none';
-  const track = (window.MUSIC_TRACKS || []).find((t) => t.id === musicId);
 
   state = {
+    mode: 'yoga',
     segments,
     index: 0,
     remaining: 0,
@@ -258,14 +383,68 @@ async function beginWorkout(totalMinutes) {
     totalSeconds,
     wakeLock,
     musicId,
-    titleOnly: !!(track && track.titleOnly),
+    titleOnly: currentTitleOnly(),
   };
 
-  pauseBtn.textContent = 'Pause';
+  setupWorkoutUIForMode();
   showScreen(workoutScreen);
   startMusic(musicId); // independent of narration — both play together
   startCountdown(0);
   startTimer();
+}
+
+// Calisthenics is self-paced (see README): rather than a fixed,
+// precomputed sequence, state.sequencer hands out one exercise at a time
+// as you ask for it (ensureSegment, called from startCountdown), and only
+// an overall session clock (state.sessionRemaining) runs on its own.
+async function beginCalisthenicsWorkout(totalMinutes) {
+  unlockAudio();
+  const sequencer = window.createCalisthenicsSequencer();
+  const first = sequencer.next();
+  if (!first) return; // no exercises defined — shouldn't happen
+  const wakeLock = await requestWakeLock();
+  const musicId = musicSelect ? musicSelect.value : 'none';
+  const sessionSeconds = Math.round(totalMinutes * 60);
+
+  state = {
+    mode: 'calisthenics',
+    sequencer,
+    segments: [first],
+    index: 0,
+    remaining: 0,
+    phase: 'countdown',
+    paused: false,
+    timerId: null,
+    totalMinutes,
+    sessionSeconds,
+    sessionRemaining: sessionSeconds,
+    wakeLock,
+    musicId,
+    titleOnly: currentTitleOnly(),
+  };
+
+  setupWorkoutUIForMode();
+  showScreen(workoutScreen);
+  startMusic(musicId);
+  startCountdown(0);
+  startTimer();
+}
+
+// Shows/hides the bits of the workout screen that only make sense in one
+// mode: yoga's per-pose countdown bar vs. calisthenics' "advance whenever
+// you're ready" hint and voice-control button.
+function setupWorkoutUIForMode() {
+  const isCalisthenics = state.mode === 'calisthenics';
+  if (poseProgressRow) poseProgressRow.classList.toggle('hidden', isCalisthenics);
+  if (advanceHint) advanceHint.classList.toggle('hidden', !isCalisthenics);
+  if (voiceControlBtn) {
+    const showMic = isCalisthenics && window.voiceControlSupported;
+    voiceControlBtn.hidden = !showMic;
+    voiceControlBtn.classList.toggle('hidden', !showMic);
+  }
+  skipBtn.textContent = isCalisthenics ? 'Next ▶' : 'Skip';
+  pauseBtn.textContent = 'Pause';
+  resetVoiceControlButton();
 }
 
 function togglePause() {
@@ -274,6 +453,7 @@ function togglePause() {
   if (state.paused) {
     clearInterval(state.timerId);
     stopNarration();
+    stopVoiceControlIfActive();
     pauseAllAudio(); // also pauses background music and any chime/tick
     pauseBtn.textContent = 'Resume';
   } else {
@@ -283,6 +463,10 @@ function togglePause() {
   }
 }
 
+// The primary "move on" action — the Skip button in yoga, the Next button
+// in calisthenics (same button, different label; see setupWorkoutUIForMode)
+// — and also what the voice-control "next" command and the swipe gesture
+// both trigger in calisthenics mode.
 function skipSegment() {
   if (!state) return;
   stopNarration();
@@ -298,6 +482,7 @@ function endWorkout() {
   clearInterval(state.timerId);
   stopNarration();
   stopMusic();
+  stopVoiceControlIfActive();
   releaseWakeLock();
   state = null;
   showScreen(homeScreen);
@@ -326,6 +511,84 @@ restartBtn.addEventListener('click', () => {
   showScreen(homeScreen);
 });
 homeBtn.addEventListener('click', () => showScreen(homeScreen));
+
+// --- Calisthenics: voice control ("say next") ---
+// js/voice-control.js does the actual SpeechRecognition work; this is just
+// the button/state glue. Support varies by browser (see that file), so the
+// button is hidden entirely (setupWorkoutUIForMode) where it's unsupported
+// — swipe and the Next button always work regardless.
+function resetVoiceControlButton() {
+  if (!voiceControlBtn) return;
+  voiceControlBtn.textContent = '🎤 Listen for "next"';
+  voiceControlBtn.classList.remove('listening');
+}
+
+function stopVoiceControlIfActive() {
+  if (window.isVoiceControlActive && window.isVoiceControlActive()) {
+    window.stopVoiceControl();
+  }
+  resetVoiceControlButton();
+}
+
+if (voiceControlBtn) {
+  voiceControlBtn.addEventListener('click', () => {
+    if (window.isVoiceControlActive && window.isVoiceControlActive()) {
+      stopVoiceControlIfActive();
+      return;
+    }
+    if (window.unlockVoiceAudio) window.unlockVoiceAudio();
+    const started = window.startVoiceControl(() => {
+      if (state && state.mode === 'calisthenics' && !state.paused) {
+        skipSegment();
+      }
+    });
+    if (started) {
+      voiceControlBtn.textContent = '🎤 Listening… say "next"';
+      voiceControlBtn.classList.add('listening');
+    } else {
+      voiceControlBtn.textContent = 'Voice control unavailable';
+      setTimeout(resetVoiceControlButton, 2000);
+    }
+  });
+}
+
+// Called by voice-control.js if the mic permission prompt is denied.
+window.onVoiceControlDenied = () => {
+  resetVoiceControlButton();
+  if (voiceControlBtn) {
+    voiceControlBtn.textContent = 'Mic permission denied';
+    setTimeout(resetVoiceControlButton, 2500);
+  }
+};
+
+// --- Calisthenics: swipe to advance ---
+// A generous swipe (either direction) anywhere on the workout card moves
+// to the next exercise — the same action as the Next button/voice command.
+(function setupSwipeGesture() {
+  const workoutCard = document.querySelector('.workout-card');
+  if (!workoutCard) return;
+  let startX = null;
+  let startY = null;
+
+  workoutCard.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+  }, { passive: true });
+
+  workoutCard.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    startX = null;
+    startY = null;
+    const isHorizontalSwipe = Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5;
+    if (isHorizontalSwipe && state && state.mode === 'calisthenics' && !state.paused) {
+      skipSegment();
+    }
+  }, { passive: true });
+})();
 
 if (musicSelect && window.MUSIC_TRACKS) {
   window.MUSIC_TRACKS.forEach((track) => {

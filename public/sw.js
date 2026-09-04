@@ -3,7 +3,7 @@
 // SHELL_CACHE is a cache-busting *shell* version, independent of the app's
 // own semver (js/app.js APP_VERSION) — bump it whenever any cached file
 // changes, regardless of whether the user-facing version number moves.
-const SHELL_CACHE = 'quiet-flow-shell-v6';
+const SHELL_CACHE = 'quiet-flow-shell-v7';
 
 // Code + markup. These are served network-first (see below) so a deploy
 // always reaches the user on their next load; the cache is a pure offline
@@ -17,9 +17,12 @@ const CODE_FILES = [
   './js/figures.js',
   './js/poses.js',
   './js/workout.js',
+  './js/exercises.js',
+  './js/calisthenics-workout.js',
   './js/speech.js',
   './js/music.js',
   './js/voice.js',
+  './js/voice-control.js',
   './js/app.js',
 ];
 

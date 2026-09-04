@@ -4,10 +4,10 @@ Pre-generates the app's narration audio with a local neural TTS (Piper),
 so every device hears the same natural-sounding voice instead of whatever
 robotic engine the OS happens to ship.
 
-The clip list is derived from public/js/poses.js, so the audio can never
-drift out of sync with the pose library. Output goes to public/audio/ as
-mono Opus-in-WebM (tiny, and supported everywhere the app runs), plus a
-manifest.json mapping clip key -> filename.
+The clip list is derived from public/js/poses.js and public/js/exercises.js,
+so the audio can never drift out of sync with either library. Output goes
+to public/audio/ as mono Opus-in-WebM (tiny, and supported everywhere the
+app runs), plus a manifest.json mapping clip key -> filename.
 
 This is a BUILD-TIME tool. It is not shipped to the browser and the app
 has no runtime dependency on Python, Piper, or ffmpeg.
@@ -32,6 +32,7 @@ import tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 POSES_JS = os.path.join(ROOT, "public", "js", "poses.js")
+EXERCISES_JS = os.path.join(ROOT, "public", "js", "exercises.js")
 AUDIO_ROOT = os.path.join(ROOT, "public", "audio")
 
 # Voice packs shipped with the app. Ids must match window.VOICE_PACKS in
@@ -44,9 +45,12 @@ VOICE_PACKS = {
 # >1.0 slows delivery down; a yoga cue read at default speed sounds rushed.
 DEFAULT_LENGTH_SCALE = 1.15
 
-# Fixed lines the app speaks that don't come from the pose library.
+# Fixed lines the app speaks that don't come from the pose/exercise
+# libraries. Yoga and Calisthenics get their own sign-off ("Namaste" is a
+# yoga thing, not a calisthenics one).
 STATIC_LINES = {
     "complete": "Great job. You completed your practice. Namaste.",
+    "complete-calisthenics": "Great job. You completed your session.",
     "preview": "Mountain Pose. Stand tall, and take a deep breath in, and out.",
 }
 
@@ -63,12 +67,13 @@ def spoken_name(name):
     return re.sub(r"\b(III|II|I)$", lambda m: ROMAN_TO_WORD[m.group(1)], name)
 
 
-def parse_poses(path):
-    """Pull id/name/cue/sided out of poses.js without needing a JS runtime."""
+def parse_entries(path):
+    """Pull id/name/cue/sided out of poses.js or exercises.js — both use
+    the same field names, so one parser covers both without a JS runtime."""
     with open(path, encoding="utf-8") as f:
         src = f.read()
 
-    poses = []
+    entries = []
     # Each entry looks like: { id: '...', name: '...', ..., cue: '...' }
     for block in re.findall(r"\{[^{}]*?\bid:\s*'[^']+'[^{}]*?\}", src, re.S):
         def field(key):
@@ -80,23 +85,26 @@ def parse_poses(path):
 
         pid, name, cue = field("id"), field("name"), field("cue")
         if pid and name and cue:
-            poses.append({
+            entries.append({
                 "id": pid,
                 "name": name,
                 "cue": cue,
                 "sided": bool(re.search(r"\bsided:\s*true", block)),
             })
-    return poses
+    return entries
 
 
-def build_clips(poses):
-    """Map of clip key -> text to speak. Keys match what js/voice.js asks for.
+def build_clips(entries):
+    """Map of clip key -> text to speak. Keys match what js/voice.js asks
+    for (see clipKey() in js/app.js) — works the same whether `entries`
+    came from poses.js or exercises.js, since both use id/name/cue/sided.
 
-    One-sided poses get left/right variants so the narration actually tells
-    you which side you're working — the whole point of mirroring them.
+    One-sided entries get left/right variants so the narration actually
+    tells you which side you're working — the whole point of mirroring
+    them.
     """
     clips = dict(STATIC_LINES)
-    for p in poses:
+    for p in entries:
         name = spoken_name(p["name"])
         variants = [("", "")] if not p["sided"] else [
             ("-left", ", left side"), ("-right", ", right side")]
@@ -188,13 +196,23 @@ def main():
                     help="re-render clips even if they already exist")
     args = ap.parse_args()
 
-    poses = parse_poses(POSES_JS)
+    poses = parse_entries(POSES_JS)
     if not poses:
         sys.exit("No poses parsed from %s" % POSES_JS)
-    clips = build_clips(poses)
-    sided = sum(1 for p in poses if p["sided"])
-    print("%d poses (%d one-sided) -> %d clips per voice"
-          % (len(poses), sided, len(clips)))
+    exercises = parse_entries(EXERCISES_JS)
+    if not exercises:
+        sys.exit("No exercises parsed from %s" % EXERCISES_JS)
+
+    collisions = {p["id"] for p in poses} & {e["id"] for e in exercises}
+    if collisions:
+        sys.exit("id(s) used in both poses.js and exercises.js: %s"
+                 % ", ".join(sorted(collisions)))
+
+    entries = poses + exercises
+    clips = build_clips(entries)
+    sided = sum(1 for p in entries if p["sided"])
+    print("%d poses + %d exercises (%d one-sided) -> %d clips per voice"
+          % (len(poses), len(exercises), sided, len(clips)))
 
     os.makedirs(args.data_dir, exist_ok=True)
     os.makedirs(AUDIO_ROOT, exist_ok=True)

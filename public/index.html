@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Quiet Flow — Yoga Timer</title>
-  <meta name="description" content="Short, guided yoga practices with audible instructions and simple visual cues. Pick 5, 7, 10, or 15 minutes." />
+  <meta name="description" content="Short, guided yoga and calisthenics practices with audible instructions and simple visual cues. Pick 5, 7, 10, or 15 minutes." />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef2ec" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#10140f" />
 
@@ -26,7 +26,13 @@
     <section id="screen-home" class="screen">
       <div class="card">
         <h1>Quiet Flow</h1>
-        <p class="tagline">A short, guided yoga practice. Pick a length and press start — I'll walk you through it.</p>
+
+        <div class="mode-toggle" role="tablist" aria-label="Practice type">
+          <button type="button" class="mode-tab active" data-mode="yoga" role="tab" aria-selected="true">Yoga</button>
+          <button type="button" class="mode-tab" data-mode="calisthenics" role="tab" aria-selected="false">Calisthenics</button>
+        </div>
+
+        <p class="tagline" id="home-tagline">A short, guided yoga practice. Pick a length and press start — I'll walk you through it.</p>
 
         <div class="duration-grid">
           <button class="duration-btn" data-minutes="5">
@@ -99,11 +105,19 @@
               <h2 id="pose-name">Pose</h2>
               <p id="pose-sanskrit" class="sanskrit"></p>
               <p id="pose-cue" class="cue" aria-live="polite"></p>
-              <div class="pose-progress">
-                <div id="pose-progress-bar" class="pose-progress-bar"></div>
+              <!-- Yoga: auto-advancing per-pose countdown. Hidden in
+                   Calisthenics mode, which is self-paced (see README). -->
+              <div id="pose-progress-row">
+                <div class="pose-progress">
+                  <div id="pose-progress-bar" class="pose-progress-bar"></div>
+                </div>
+                <div id="pose-time-left" class="time-left">0:00</div>
               </div>
-              <div id="pose-time-left" class="time-left">0:00</div>
+              <!-- Calisthenics: no timer to watch — say when you're ready. -->
+              <p id="advance-hint" class="note hidden">Tap Next, swipe, or say "next" when you're ready to move on.</p>
             </div>
+
+            <button id="voice-control-btn" type="button" class="control-btn wide hidden" hidden>🎤 Listen for "next"</button>
 
             <div class="controls">
               <button id="pause-btn" class="control-btn">Pause</button>
@@ -140,8 +154,11 @@
   <script src="js/figures.js"></script>
   <script src="js/poses.js"></script>
   <script src="js/workout.js"></script>
+  <script src="js/exercises.js"></script>
+  <script src="js/calisthenics-workout.js"></script>
   <script src="js/speech.js"></script>
   <script src="js/voice.js"></script>
+  <script src="js/voice-control.js"></script>
   <script src="js/music.js"></script>
   <script src="js/app.js"></script>
 </body>
