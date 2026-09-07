@@ -94,7 +94,7 @@ def parse_entries(path):
     return entries
 
 
-def build_clips(entries):
+def build_clips(entries, include_next=True):
     """Map of clip key -> text to speak. Keys match what js/voice.js asks
     for (see clipKey() in js/app.js) — works the same whether `entries`
     came from poses.js or exercises.js, since both use id/name/cue/sided.
@@ -102,8 +102,14 @@ def build_clips(entries):
     One-sided entries get left/right variants so the narration actually
     tells you which side you're working — the whole point of mirroring
     them.
+
+    `include_next` controls whether "Up next: ..." clips are generated.
+    Yoga auto-advances on a timer, so hearing what's coming next during the
+    countdown is useful there. Calisthenics is self-paced — you just pressed
+    Next yourself — so that pre-announcement is redundant with the cue that
+    plays a moment later; pass False for exercises.js to skip generating it.
     """
-    clips = dict(STATIC_LINES)
+    clips = {}
     for p in entries:
         name = spoken_name(p["name"])
         variants = [("", "")] if not p["sided"] else [
@@ -111,7 +117,8 @@ def build_clips(entries):
         for suffix, spoken in variants:
             label = "%s%s" % (name, spoken)
             clips["name-%s%s" % (p["id"], suffix)] = label
-            clips["next-%s%s" % (p["id"], suffix)] = "Up next: %s" % label
+            if include_next:
+                clips["next-%s%s" % (p["id"], suffix)] = "Up next: %s" % label
             clips["cue-%s%s" % (p["id"], suffix)] = "%s. %s" % (label, p["cue"])
     return clips
 
@@ -209,9 +216,12 @@ def main():
                  % ", ".join(sorted(collisions)))
 
     entries = poses + exercises
-    clips = build_clips(entries)
+    clips = dict(STATIC_LINES)
+    clips.update(build_clips(poses, include_next=True))
+    clips.update(build_clips(exercises, include_next=False))
     sided = sum(1 for p in entries if p["sided"])
-    print("%d poses + %d exercises (%d one-sided) -> %d clips per voice"
+    print("%d poses + %d exercises (%d one-sided) -> %d clips per voice "
+          "(no 'next' clips for exercises — Calisthenics is self-paced)"
           % (len(poses), len(exercises), sided, len(clips)))
 
     os.makedirs(args.data_dir, exist_ok=True)

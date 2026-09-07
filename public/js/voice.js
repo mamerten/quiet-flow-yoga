@@ -16,7 +16,6 @@
   window.VOICE_PACKS = [
     { id: 'lessac', label: 'Clara — clear and steady', dir: 'audio/lessac' },
     { id: 'amy', label: 'Amy — warm and soft', dir: 'audio/amy' },
-    { id: 'device', label: 'Device voice', dir: null },
   ];
 
   const manifests = {}; // packId -> { clips: {key: filename} }

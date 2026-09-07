@@ -159,19 +159,19 @@ h1 {
   padding: 14px;
 }
 
-.music-row {
+.form-row {
   margin-bottom: 20px;
   text-align: left;
 }
 
-.music-row label {
+.field-label {
   display: block;
   font-size: 0.85rem;
   color: var(--text-soft);
   margin-bottom: 8px;
 }
 
-.music-row select {
+.form-row select {
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
@@ -179,6 +179,26 @@ h1 {
   background: var(--card);
   color: var(--text);
   font-size: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.checkbox-label + .checkbox-label {
+  margin-top: 8px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--sage);
+  flex: 0 0 auto;
 }
 
 .voice-input-row {
@@ -189,7 +209,7 @@ h1 {
 
 .voice-input-row select {
   flex: 1;
-  width: auto; /* override .music-row select's 100% so the flex row lays out */
+  width: auto; /* override .form-row select's 100% so the flex row lays out */
   min-width: 0; /* let the select shrink instead of overflowing the card */
 }
 

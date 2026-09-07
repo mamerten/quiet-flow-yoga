@@ -372,4 +372,18 @@ window.FIGURES = {
     LINE(50, 74, 40, 132) +
     LINE(50, 74, 60, 132)
   ),
+
+  // C25 — seated, one leg bent in front with the foot out to one side and
+  // the other bent back on the opposite side, forming a "Z" with the legs;
+  // hands pressing down beside the hips to lift (Z-Sit Lift). Deliberately
+  // asymmetric, unlike seatedNeutral's mirrored cross-legged shape.
+  zSit: svg(
+    HEAD(46, 30) +
+    LINE(46, 38, 50, 78) +
+    LINE(36, 44, 58, 40) +
+    LINE(36, 44, 28, 76) +
+    LINE(58, 40, 68, 74) +
+    POLY('50,78 76,80 90,60') +
+    POLY('50,78 24,90 12,114')
+  ),
 };

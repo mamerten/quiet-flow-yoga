@@ -6,11 +6,12 @@
 // *sequencer* you pull one exercise from at a time, for as long as the
 // session lasts.
 //
-// One-sided exercises still get the same left/right fairness treatment as
-// yoga: the mirrored side is deferred a couple of exercises rather than
-// repeated immediately, and it's guaranteed to eventually appear.
-
-const CALISTHENICS_SIDE_GAP = 1;
+// One-sided exercises: since you (not a timer) decide when to move on, the
+// mirrored side comes back-to-back — left, then immediately right the next
+// time you ask for the next exercise — rather than deferred and interspersed
+// with something else the way yoga does it. That's the natural "user
+// controlled" reading of a sided exercise here: do as many reps as you want
+// on one side, then move to the other side yourself, on your own signal.
 
 function shuffleExercises(arr) {
   const a = arr.slice();
@@ -23,44 +24,41 @@ function shuffleExercises(arr) {
 
 /**
  * Returns a sequencer with a `.next()` method that yields one
- * {pose, side, duration: null} segment per call, cycling through
- * window.EXERCISES indefinitely (reshuffling once exhausted, never
+ * {pose, side, duration: null} segment per call, cycling through the
+ * eligible exercises indefinitely (reshuffling once exhausted, never
  * repeating the immediately-previous exercise back to back). `duration` is
- * always null — Calisthenics mode has no fixed hold time; it's here only
- * so a segment has the same shape as a yoga one for the shared rendering
- * code in app.js.
+ * always null — Calisthenics mode has no fixed hold time; it's here only so
+ * a segment has the same shape as a yoga one for the shared rendering code
+ * in app.js.
+ *
+ * `filter` narrows which exercises are eligible, based on the equipment
+ * toggles on the home screen (js/app.js):
+ *   hasMat        default true. false excludes surface: 'ground' exercises
+ *                 (sitting or kneeling on a bare floor).
+ *   hasFurniture  default true. false excludes needsFurniture exercises
+ *                 (a chair, step, wall, towel, or book).
  */
-window.createCalisthenicsSequencer = function createCalisthenicsSequencer() {
-  const all = window.EXERCISES || [];
+window.createCalisthenicsSequencer = function createCalisthenicsSequencer(filter) {
+  const hasMat = !filter || filter.hasMat !== false;
+  const hasFurniture = !filter || filter.hasFurniture !== false;
+  const all = (window.EXERCISES || []).filter((e) =>
+    (hasMat || e.surface !== 'ground') && (hasFurniture || !e.needsFurniture)
+  );
   let pool = shuffleExercises(all);
   let i = 0;
   let lastId = null;
-  let emitted = 0;
-  const pending = []; // [{ exercise, dueAt }] second sides awaiting their turn
-
-  function emit(exercise, side) {
-    emitted++;
-    lastId = exercise.id;
-    return { pose: exercise, side: side || null, duration: null };
-  }
-
-  function dueNow() {
-    for (let k = 0; k < pending.length; k++) {
-      if (emitted >= pending[k].dueAt) {
-        const { exercise } = pending[k];
-        pending.splice(k, 1);
-        return emit(exercise, 'right');
-      }
-    }
-    return null;
-  }
+  let pendingRightSide = null; // sided exercise whose right side comes next
 
   return {
     next() {
       if (all.length === 0) return null;
 
-      const due = dueNow();
-      if (due) return due;
+      if (pendingRightSide) {
+        const exercise = pendingRightSide;
+        pendingRightSide = null;
+        lastId = exercise.id;
+        return { pose: exercise, side: 'right', duration: null };
+      }
 
       if (i >= pool.length) {
         pool = shuffleExercises(all);
@@ -76,13 +74,13 @@ window.createCalisthenicsSequencer = function createCalisthenicsSequencer() {
         exercise = pool[i];
         i++;
       }
+      lastId = exercise.id;
 
       if (exercise.sided) {
-        const seg = emit(exercise, 'left');
-        pending.push({ exercise, dueAt: emitted + CALISTHENICS_SIDE_GAP });
-        return seg;
+        pendingRightSide = exercise; // due on the very next call, immediately
+        return { pose: exercise, side: 'left', duration: null };
       }
-      return emit(exercise);
+      return { pose: exercise, side: null, duration: null };
     },
   };
 };

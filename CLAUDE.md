@@ -1,7 +1,8 @@
-# Quiet Flow — Yoga Timer
+# Quiet Flow — Yoga & Calisthenics Timer
 
-Guided yoga practice web app (Apple Fitness-style time-based workouts, yoga-only).
-Full details live in [README.md](README.md); this file is quick orientation for working in the codebase.
+Guided practice web app (Apple Fitness-style time-based workouts), two modes: instructor-led
+Yoga and self-paced Calisthenics. Full details live in [README.md](README.md); this file is
+quick orientation for working in the codebase.
 
 ## Stack & structure
 
@@ -9,19 +10,21 @@ Static site, zero build step, zero JS dependencies. Plain `<script>` tags (not E
 it also runs opened directly from disk (`file://`).
 
 ```
-public/index.html     Screens: home, active workout, complete
-public/css/style.css  All styling — phone-landscape split layout, light/dark mode
-public/js/poses.js    Pose repository (name, cue, category, duration, figure, sided)
-public/js/figures.js  Stick-figure SVG templates, reused across poses
-public/js/workout.js  Builds a timed pose sequence for N minutes; left/right pairing logic
-public/js/voice.js    Plays pre-generated narration clips; device-TTS fallback
-public/js/speech.js   Device text-to-speech + chime/tick sounds (Web Speech / Web Audio)
-public/js/music.js    Procedural background music (Web Audio)
-public/js/app.js      Screen/timer/countdown state machine, UI wiring
-public/audio/         Pre-generated neural narration, one folder per voice pack
+public/index.html               Screens: home, active workout, complete
+public/css/style.css            All styling — phone-landscape split layout, light/dark mode
+public/js/poses.js               Yoga pose repository (name, cue, category, duration, figure, sided)
+public/js/workout.js             Builds a timed pose sequence for N minutes; left/right pairing logic
+public/js/exercises.js           Calisthenics exercise repository (name, cue, surface, needsFurniture, sided)
+public/js/calisthenics-workout.js  Self-paced exercise sequencer (equipment filter, immediate L/R pairing)
+public/js/figures.js             Stick-figure SVG templates, reused across poses/exercises
+public/js/voice.js               Plays pre-generated narration clips; silent device-TTS fallback
+public/js/speech.js              Device text-to-speech + chime/tick sounds (Web Speech / Web Audio)
+public/js/voice-control.js       "Say next" hands-free control, Calisthenics only (SpeechRecognition)
+public/js/app.js                 Screen/timer/countdown state machine, UI wiring
+public/audio/                    Pre-generated neural narration, one folder per voice pack
 public/manifest.json + public/sw.js   PWA: installable, offline-capable
-tools/generate-voice.py   Build-time script — renders public/audio/ via Piper (not shipped to browser)
-wrangler.toml          Cloudflare Pages config (build output = public/)
+tools/generate-voice.py          Build-time script — renders public/audio/ via Piper (not shipped to browser)
+wrangler.toml                    Cloudflare Pages config (build output = public/)
 ```
 
 ## Commands
@@ -59,6 +62,10 @@ or returning visitors keep serving a stale version.
 - **Versioning**: version lives in `package.json` + `public/js/app.js` (`APP_VERSION`) + git tags.
   Bump only when explicitly asked — this project has previously stayed pinned at one version
   across many feature commits by request.
-- **No copyrighted media**: illustrations are original SVGs, music is synthesized (Web Audio),
-  narration is rendered locally by Piper (open-source, MIT-licensed voices) — see README's
-  "Why it's built this way" for the reasoning.
+- **No copyrighted media**: illustrations are original SVGs, narration is rendered locally by
+  Piper (open-source, MIT-licensed voices) — see README's "Why it's built this way" for the reasoning.
+- **Calisthenics is self-paced, Yoga is timed** — don't assume patterns from one apply to the
+  other. Calisthenics has no per-exercise duration, no spoken "up next" during the countdown
+  (redundant when you just pressed Next yourself), immediate back-to-back left/right pairing,
+  and an equipment filter (`hasMat`/`hasFurniture`, from the home-screen toggles) that narrows
+  the pool in `createCalisthenicsSequencer()`.

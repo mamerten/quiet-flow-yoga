@@ -231,7 +231,7 @@ window.EXERCISES = [
   {
     id: 'z-sit-lift',
     name: 'Z-Sit Lift',
-    figure: 'seatedNeutral',
+    figure: 'zSit',
     surface: 'ground',
     cue: 'Sit with one leg bent in front and one bent out to the side in a Z shape. Press your hands down and lift your hips slightly.',
   },

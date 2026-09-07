@@ -13,10 +13,11 @@ A tiny, dependency-free web app for short, guided practices — like Apple Fitne
 - **Yoga builds a flow for you.** Each practice moves through phases — centering, warm-up, standing poses, balance, seated/twists, and a closing relaxation — pulling poses from a small library and sizing each hold to fit the total time. The sequence is shuffled a bit each time, so repeat practices don't feel identical.
 - **Calisthenics is self-paced, with an overall clock.** No per-exercise timer — the app shows one exercise (name, simple illustration, description) and waits for you. A session-length countdown runs in the top bar throughout and ends the session on its own when it reaches zero, however many exercises you got through. Advance three ways: tap the **Next** button, **swipe** anywhere on the card, or (where supported) say **"next"** out loud with the 🎤 button — see [Browser support notes](#browser-support-notes) for voice reliability across devices.
 - **A 3-second countdown between exercises, in both modes.** A brief "Get ready for &lt;exercise&gt;" countdown (3-2-1, with its own soft tick and the upcoming move already on screen) gives you a moment to get into position before it narrates the full cue.
-- **Audible instructions.** Speaks the pose/exercise name and cue at the start, and announces what's coming during the countdown.
-- **Real neural narration, built in.** Rather than depending on the device's text-to-speech (which is robotic on most phones and on Windows), the app ships pre-generated neural-TTS audio for every line it speaks, in both modes. Two voices are bundled — **Clara** (clear and steady) and **Amy** (warm and soft) — selectable with a **Preview** button. Identical on every device, works offline, no API key and no per-use cost. "Device voice" remains available as a fallback, and is used automatically if a clip is ever missing.
-- **Left/right balance, in both modes.** One-sided poses/exercises (yoga: Warrior I/II, Triangle, Side Angle, Low Lunge, Tree, Eagle, Warrior III, Seated Twist, Cow Face Arms; calisthenics: Reverse Lunge, World's Greatest Stretch, Couch Stretch, Bird Dog, Dead Bug, Side Plank, and others) are always scheduled as a matched pair, so you never work one side and skip the other. The mirrored side is deliberately separated by another move rather than repeated back-to-back.
-- **Optional background music.** None (default), None (exercise title only), Soft Piano, Gentle Strings, or Wind Chimes — a slow, quiet four-chord loop played back three different ways, generated on the fly with the Web Audio API. Runs independently of narration, so both play together, with narration mixed slightly under the music so neither drowns out the other. *Exercise title only* trims the spoken guidance down to just the name (the written cue stays on screen).
+- **Audible instructions.** Speaks the pose/exercise name and cue at the start. In Yoga, which auto-advances on its own, it also announces what's coming during the countdown; Calisthenics skips that pre-announcement — you just chose to move on, so it goes straight from the countdown into naming and cueing the exercise.
+- **Real neural narration, built in.** Rather than depending on the device's text-to-speech (which is robotic on most phones and on Windows), the app ships pre-generated neural-TTS audio for every line it speaks, in both modes. Two voices are bundled — **Clara** (clear and steady) and **Amy** (warm and soft) — selectable with a **Preview** button. Identical on every device, works offline, no API key and no per-use cost. The device's own text-to-speech is used silently as an automatic fallback if a clip is ever missing — not something you choose, just a safety net.
+- **Name only.** A checkbox next to the voice picker trims the spoken guidance down to just the pose/exercise name, skipping the full cue (the written cue stays on screen either way). Works the same in both modes.
+- **Left/right balance, in both modes.** One-sided poses/exercises (yoga: Warrior I/II, Triangle, Side Angle, Low Lunge, Tree, Eagle, Warrior III, Seated Twist, Cow Face Arms; calisthenics: Reverse Lunge, World's Greatest Stretch, Couch Stretch, Bird Dog, Dead Bug, Side Plank, Chair Step-Up, and others) are always scheduled as a matched pair, so you never work one side and skip the other. In Yoga, which is timed, the mirrored side is deliberately separated by another pose rather than repeated back-to-back. In Calisthenics, since you're the one deciding when to move on, the mirrored side comes immediately after instead: finish one side, hit Next, and the very next exercise is the other side of the same move (e.g. "Chair Step-Up — Left side" then "Chair Step-Up — Right side").
+- **Calisthenics equipment filter.** Two toggles on the home screen — *I have a mat* and *I have a step, chair, or other prop* — persisted between sessions (both default on). With no mat, ground-surface exercises (anything sitting or kneeling on the floor) are excluded entirely; with no prop, anything needing a chair, step, wall, towel, or book is excluded. Every entry in `public/js/exercises.js` is flagged for both.
 - **Minimal visuals.** Each pose/exercise has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
 - **Controls.** Pause/Resume, Skip (Yoga) / Next (Calisthenics), End, plus an overall progress bar and a compact timer in the top bar.
 - **Version + source link.** A small footer shows the current version and links back to this repo.
@@ -25,7 +26,7 @@ A tiny, dependency-free web app for short, guided practices — like Apple Fitne
 ## Why it's built this way
 
 - **Zero build step, zero dependencies.** Plain HTML/CSS/JS, loaded as ordinary `<script>` tags (not ES modules), so it works whether you double-click `index.html` and open it straight from disk, or serve the folder from any static host. Easy to drop straight into a static site (e.g. matmerten.com) or GitHub Pages.
-- **No copyrighted media.** All illustrations are small original SVGs authored for this project. Background music is synthesized in the browser (Web Audio). Narration is rendered by [Piper](https://github.com/rhasspy/piper), an open-source neural TTS, from [MIT-licensed voice models](https://huggingface.co/rhasspy/piper-voices) — no voice actor recordings, no per-use licensing.
+- **No copyrighted media.** All illustrations are small original SVGs authored for this project. Narration is rendered by [Piper](https://github.com/rhasspy/piper), an open-source neural TTS, from [MIT-licensed voice models](https://huggingface.co/rhasspy/piper-voices) — no voice actor recordings, no per-use licensing.
 - **Responsive for phones.** Portrait keeps the usual stacked card layout. In landscape on a phone (short, wide viewport), the workout screen splits into two columns — the pose image on the left, the name/cue/timer/controls on the right — so a full practice fits without scrolling.
 - **Light/dark mode.** Follows the system's `prefers-color-scheme` automatically — no toggle needed.
 
@@ -41,8 +42,7 @@ public/js/exercises.js      Calisthenics exercise repository (name, cue, surface
 public/js/calisthenics-workout.js  Self-paced exercise sequencer (see "Calisthenics mode" below)
 public/js/figures.js        Simple stick-figure SVG templates, reused across poses/exercises
 public/js/speech.js         Text-to-speech, chime/tick sounds, and the shared AudioContext (Web Speech / Web Audio API)
-public/js/music.js          Optional procedural background music tracks (Web Audio API)
-public/js/voice.js          Plays the pre-generated narration clips (device TTS fallback)
+public/js/voice.js          Plays the pre-generated narration clips (silent device-TTS fallback)
 public/js/voice-control.js  Optional "say next" hands-free control (Calisthenics mode; Web Speech SpeechRecognition)
 public/audio/                Pre-generated neural narration, one folder per voice pack
 tools/generate-voice.py     Build-time script that renders public/audio/ with Piper
@@ -62,7 +62,13 @@ clock (same 5/7/10/15-minute picker as Yoga) counting down in the top bar
 throughout — it's just that *you* decide when to move to the next exercise,
 by tapping **Next**, swiping the card, or saying **"next"** — not a timer
 per exercise. The session ends automatically when the overall clock runs
-out, whichever exercise you're on.
+out, whichever exercise you're on. Because pacing is self-controlled, the
+countdown skips the spoken "up next" line yoga uses (see [What it does](#what-it-does))
+and one-sided exercises pair left/right back-to-back rather than deferred.
+
+Two toggles on the home screen — *I have a mat* and *I have a step, chair,
+or other prop* — filter which exercises the sequencer can hand out; see
+`createCalisthenicsSequencer()` in `public/js/calisthenics-workout.js`.
 
 The exercise library (`public/js/exercises.js`) is mostly drawn directly
 from what [Markus Kneissl (@markus.moves)](https://www.instagram.com/markus.moves/),
@@ -98,8 +104,8 @@ Or to `EXERCISES` in [`public/js/exercises.js`](public/js/exercises.js) (Calisth
   id: 'unique-id',
   name: 'Exercise Name',
   figure: 'one of the keys in public/js/figures.js',
-  surface: 'standing' | 'ground', // exactly one — do you need a mat?
-  needsFurniture: true, // OPTIONAL: needs a chair, wall, towel, or similar prop
+  surface: 'standing' | 'ground', // exactly one — gated by the "I have a mat" toggle
+  needsFurniture: true, // OPTIONAL: chair/wall/towel/etc — gated by the "I have a step..." toggle
   sided: true,           // OPTIONAL: one-sided, auto-scheduled as a left/right pair
   cue: 'What gets spoken and displayed for this exercise.',
 }
@@ -161,7 +167,7 @@ A manual deploy from your machine is also available: `npm run deploy` (requires 
 
 ## Browser support notes
 
-- **Narration** normally needs no browser support at all: the bundled Clara and Amy voices are plain audio files, so they sound identical everywhere and work offline. Only the optional **Device voice** setting uses the [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) (Chrome, Edge, Safari; partial in Firefox), and only that mode depends on which voices the OS ships — those are frequently robotic. To improve them, install a better voice at the OS level and it will appear in the Device voice list: iOS/iPadOS *Settings → Accessibility → Spoken Content → Voices* (download an **Enhanced** or **Premium** voice); Android *Settings → Accessibility → Text-to-speech* (use **Google Speech Services**); Windows *Settings → Time & language → Speech* (add a **Natural** voice — the stock David/Zira/Mark voices are the old robotic engine). If neither audio nor speech is available, the on-screen written cue still guides the practice.
+- **Narration** normally needs no browser support at all: the bundled Clara and Amy voices are plain audio files, so they sound identical everywhere and work offline. If a clip is ever missing or fails to play, the app falls back silently to the device's own [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) voice (Chrome, Edge, Safari; partial in Firefox) — this isn't a setting you pick, just a safety net so narration doesn't go silent. If neither audio nor speech is available, the on-screen written cue still guides the practice.
 - **Voice control ("say next")**, Calisthenics mode only, uses [SpeechRecognition](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition) — solid in Chrome/Edge (desktop and Android) and supported in Safari (as `webkitSpeechRecognition`) since iOS/iPadOS 14.5; Firefox ships it disabled behind a flag. Where it's unsupported the 🎤 button is hidden entirely rather than shown broken — swiping or tapping **Next** always works everywhere, mic or no mic. It needs a mic-permission prompt (must be started from a tap) and auto-restarts itself if the browser silently stops listening after a pause in speech, which several mobile browsers do even in continuous mode.
 - **Keep-awake** uses the [Screen Wake Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API) where available, so the screen doesn't dim mid-practice; it degrades gracefully where unsupported.
 - **Offline/installable** requires a Service Worker, which needs `http(s)` — it's skipped (silently, no error) when opening `index.html` straight from disk via `file://`. Bump `SHELL_CACHE` in `public/sw.js` whenever a cached file changes, so returning visitors pick up the update instead of serving a stale cached copy.

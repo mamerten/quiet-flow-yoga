@@ -4,7 +4,7 @@
     {
       "name": "yoga-app",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "serve", ".", "-p", "5183"],
+      "runtimeArgs": ["--yes", "serve", "public", "-p", "5183"],
       "port": 5183
     }
   ]

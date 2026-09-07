@@ -13,14 +13,14 @@ function ensureAudioCtx() {
   return audioCtx;
 }
 
-// Shared AudioContext, reused by music.js so background sound, the chime,
-// and the countdown tick all live on one audio graph — this is also what
-// lets narration and music play at the same time (they're independent
-// Web APIs, speechSynthesis vs. Web Audio, so neither blocks the other).
+// Shared AudioContext, so the chime and the countdown tick both live on one
+// audio graph — this is also what lets device speech and Web Audio sounds
+// play at the same time (they're independent APIs, so neither blocks the
+// other).
 window.getAudioContext = ensureAudioCtx;
 
 // Suspending/resuming the AudioContext pauses every sound running on it
-// (music, chime, tick) in one call — used when the practice is paused.
+// (chime, tick) in one call — used when the practice is paused.
 window.pauseAllAudio = function pauseAllAudio() {
   const ctx = ensureAudioCtx();
   if (ctx && ctx.state === 'running') ctx.suspend();
@@ -147,8 +147,8 @@ window.speechAvailable = function speechAvailable() {
   return 'speechSynthesis' in window;
 };
 
-// Narration is mixed slightly under full volume so background music (see
-// js/music.js) reads clearly alongside it rather than being drowned out.
+// Narration is mixed slightly under full volume rather than played at 100% —
+// a touch gentler on the ear over a full practice.
 const NARRATION_VOLUME = 0.8;
 
 // Slightly slower and a touch lower than default — even a good neural voice

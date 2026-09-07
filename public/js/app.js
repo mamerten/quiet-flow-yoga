@@ -1,18 +1,15 @@
 // FIGURES, generateWorkout, and the audio helpers are attached to `window`
-// by figures.js / workout.js / speech.js / music.js, which load before
+// by figures.js / workout.js / speech.js / voice.js, which load before
 // this file.
 const {
   FIGURES,
   generateWorkout,
-  speak,
   narrate,
   stopNarration,
   chime,
   countdownTick,
   unlockAudio,
   speechAvailable,
-  startMusic,
-  stopMusic,
   pauseAllAudio,
   resumeAllAudio,
 } = window;
@@ -27,11 +24,12 @@ const completeScreen = document.getElementById('screen-complete');
 const durationButtons = document.querySelectorAll('.duration-btn');
 const modeTabs = document.querySelectorAll('.mode-tab');
 const homeTagline = document.getElementById('home-tagline');
-const musicSelect = document.getElementById('music-select');
 const voiceSelect = document.getElementById('voice-select');
 const voicePreviewBtn = document.getElementById('voice-preview-btn');
-const deviceVoiceRow = document.getElementById('device-voice-row');
-const deviceVoiceSelect = document.getElementById('device-voice-select');
+const titleOnlyCheckbox = document.getElementById('title-only-toggle');
+const equipmentRow = document.getElementById('equipment-row');
+const matToggle = document.getElementById('mat-toggle');
+const furnitureToggle = document.getElementById('furniture-toggle');
 const audioNote = document.getElementById('audio-note');
 const appVersionEl = document.getElementById('app-version');
 
@@ -92,6 +90,9 @@ function setMode(mode) {
     tab.setAttribute('aria-selected', String(isActive));
   });
   if (homeTagline) homeTagline.textContent = HOME_TAGLINES[mode] || '';
+  // Equipment (mat/step-up) only matters for filtering Calisthenics
+  // exercises — yoga poses aren't flagged for surface/furniture at all.
+  if (equipmentRow) equipmentRow.classList.toggle('hidden', mode !== 'calisthenics');
 }
 
 modeTabs.forEach((tab) => {
@@ -209,7 +210,13 @@ function startCountdown(index) {
   topTimer.textContent = state.mode === 'calisthenics' ? formatTime(state.sessionRemaining) : '';
 
   updateOverallProgress(index);
-  narrate(clipKey('next', seg), `Up next: ${spokenLabel(seg)}`);
+  // Yoga auto-advances, so hearing what's coming during the countdown is
+  // useful. Calisthenics is self-paced — you just pressed Next yourself,
+  // and the name is right there on screen — so a spoken "Up next" is
+  // redundant with the cue that plays a moment later in startHold().
+  if (state.mode !== 'calisthenics') {
+    narrate(clipKey('next', seg), `Up next: ${spokenLabel(seg)}`);
+  }
 }
 
 // Actively holding the pose: narrate the full cue and start its timer.
@@ -333,7 +340,6 @@ function advance() {
 function finishWorkout() {
   clearInterval(state.timerId);
   stopNarration();
-  stopMusic();
   stopVoiceControlIfActive();
   releaseWakeLock();
   overallProgressBar.style.width = '100%';
@@ -348,12 +354,21 @@ function finishWorkout() {
   showScreen(completeScreen);
 }
 
-// Shared music-track lookup: begin*Workout() both need to know whether the
-// picked track is a "title only" one (see js/music.js MUSIC_TRACKS).
+// "Name only" narration toggle, shared by both modes: skips the full
+// spoken cue and just says the pose/exercise name (the written cue stays
+// on screen either way). begin*Workout() both read this when building state.
 function currentTitleOnly() {
-  const musicId = musicSelect ? musicSelect.value : 'none';
-  const track = (window.MUSIC_TRACKS || []).find((t) => t.id === musicId);
-  return !!(track && track.titleOnly);
+  return !!(titleOnlyCheckbox && titleOnlyCheckbox.checked);
+}
+
+// Calisthenics-only equipment toggles — see createCalisthenicsSequencer()
+// in js/calisthenics-workout.js for how these filter the exercise pool.
+function currentHasMat() {
+  return matToggle ? matToggle.checked : true;
+}
+
+function currentHasFurniture() {
+  return furnitureToggle ? furnitureToggle.checked : true;
 }
 
 async function beginWorkout(totalMinutes) {
@@ -369,7 +384,6 @@ async function beginYogaWorkout(totalMinutes) {
   const segments = generateWorkout(totalMinutes);
   const totalSeconds = segments.reduce((s, x) => s + x.duration, 0);
   const wakeLock = await requestWakeLock();
-  const musicId = musicSelect ? musicSelect.value : 'none';
 
   state = {
     mode: 'yoga',
@@ -382,13 +396,11 @@ async function beginYogaWorkout(totalMinutes) {
     totalMinutes,
     totalSeconds,
     wakeLock,
-    musicId,
     titleOnly: currentTitleOnly(),
   };
 
   setupWorkoutUIForMode();
   showScreen(workoutScreen);
-  startMusic(musicId); // independent of narration — both play together
   startCountdown(0);
   startTimer();
 }
@@ -399,11 +411,13 @@ async function beginYogaWorkout(totalMinutes) {
 // an overall session clock (state.sessionRemaining) runs on its own.
 async function beginCalisthenicsWorkout(totalMinutes) {
   unlockAudio();
-  const sequencer = window.createCalisthenicsSequencer();
+  const sequencer = window.createCalisthenicsSequencer({
+    hasMat: currentHasMat(),
+    hasFurniture: currentHasFurniture(),
+  });
   const first = sequencer.next();
   if (!first) return; // no exercises defined — shouldn't happen
   const wakeLock = await requestWakeLock();
-  const musicId = musicSelect ? musicSelect.value : 'none';
   const sessionSeconds = Math.round(totalMinutes * 60);
 
   state = {
@@ -419,13 +433,11 @@ async function beginCalisthenicsWorkout(totalMinutes) {
     sessionSeconds,
     sessionRemaining: sessionSeconds,
     wakeLock,
-    musicId,
     titleOnly: currentTitleOnly(),
   };
 
   setupWorkoutUIForMode();
   showScreen(workoutScreen);
-  startMusic(musicId);
   startCountdown(0);
   startTimer();
 }
@@ -454,7 +466,7 @@ function togglePause() {
     clearInterval(state.timerId);
     stopNarration();
     stopVoiceControlIfActive();
-    pauseAllAudio(); // also pauses background music and any chime/tick
+    pauseAllAudio(); // also pauses the shared chime/tick AudioContext
     pauseBtn.textContent = 'Resume';
   } else {
     resumeAllAudio();
@@ -481,7 +493,6 @@ function endWorkout() {
   if (!state) return;
   clearInterval(state.timerId);
   stopNarration();
-  stopMusic();
   stopVoiceControlIfActive();
   releaseWakeLock();
   state = null;
@@ -590,40 +601,19 @@ window.onVoiceControlDenied = () => {
   }, { passive: true });
 })();
 
-if (musicSelect && window.MUSIC_TRACKS) {
-  window.MUSIC_TRACKS.forEach((track) => {
-    const opt = document.createElement('option');
-    opt.value = track.id;
-    opt.textContent = track.label;
-    musicSelect.appendChild(opt);
-  });
-  musicSelect.value = 'none';
-}
-
 // --- Voice picker ---
-// The app ships real neural-TTS audio (js/voice.js + public/audio/), so the
-// primary picker chooses between those bundled voices. "Device voice" is
-// kept as an escape hatch, and only then does the OS voice list matter — so
-// that second dropdown is revealed conditionally.
+// The app ships real neural-TTS audio (js/voice.js + public/audio/) in two
+// packs, Clara and Amy. Device text-to-speech is no longer a user-facing
+// choice, but js/voice.js still falls back to it automatically (silently)
+// if a clip is ever missing or fails to play, so narration never goes
+// fully silent.
 const PREVIEW_TEXT = 'Mountain Pose. Stand tall, and take a deep breath in, and out.';
 
 function previewCurrentVoice() {
   if (window.unlockVoiceAudio) window.unlockVoiceAudio();
   unlockAudio();
   const packId = voiceSelect ? voiceSelect.value : null;
-  if (packId === 'device') {
-    speak(PREVIEW_TEXT, { voiceURI: deviceVoiceSelect ? deviceVoiceSelect.value : null });
-  } else {
-    window.narrate('preview', PREVIEW_TEXT, { packId });
-  }
-}
-
-// The OS voice list only matters when "Device voice" is selected, so that
-// second dropdown stays hidden otherwise. How the bundled voices work is
-// documented in the README rather than explained in the UI.
-function syncDeviceVoiceRow() {
-  if (!deviceVoiceRow) return;
-  deviceVoiceRow.hidden = !(voiceSelect && voiceSelect.value === 'device');
+  window.narrate('preview', PREVIEW_TEXT, { packId });
 }
 
 function populateVoicePacks() {
@@ -636,52 +626,62 @@ function populateVoicePacks() {
     voiceSelect.appendChild(opt);
   });
   voiceSelect.value = window.getVoicePackId();
-  syncDeviceVoiceRow();
 }
 
-// Device voices load asynchronously; speech.js calls this once they arrive.
-function populateDeviceVoices() {
-  if (!deviceVoiceSelect || !window.listVoices) return;
-  const voices = window.listVoices();
-  if (!voices.length) {
-    deviceVoiceSelect.innerHTML = '<option>Loading voices…</option>';
-    deviceVoiceSelect.disabled = true;
-    return;
-  }
-  const currentURI = window.getPreferredVoiceURI ? window.getPreferredVoiceURI() : null;
-  deviceVoiceSelect.disabled = false;
-  deviceVoiceSelect.innerHTML = '';
-  voices.forEach((v, i) => {
-    const opt = document.createElement('option');
-    opt.value = v.voiceURI;
-    // Already sorted best-first by speech.js.
-    opt.textContent = i === 0 ? `${v.name} — best available` : v.name;
-    deviceVoiceSelect.appendChild(opt);
-  });
-  if (currentURI) deviceVoiceSelect.value = currentURI;
-}
-
-window.onVoicesReady = populateDeviceVoices;
 populateVoicePacks();
-populateDeviceVoices();
 
 if (voiceSelect) {
   voiceSelect.addEventListener('change', () => {
     window.setVoicePackId(voiceSelect.value);
-    syncDeviceVoiceRow();
-    previewCurrentVoice();
-  });
-}
-
-if (deviceVoiceSelect) {
-  deviceVoiceSelect.addEventListener('change', () => {
-    if (window.setPreferredVoice) window.setPreferredVoice(deviceVoiceSelect.value);
     previewCurrentVoice();
   });
 }
 
 if (voicePreviewBtn) {
   voicePreviewBtn.addEventListener('click', previewCurrentVoice);
+}
+
+// --- "Name only" narration toggle + Calisthenics equipment toggles ---
+// All three are simple booleans persisted in localStorage so you don't
+// have to re-answer every time you open the app.
+function loadBoolPref(key, defaultValue) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw === null ? defaultValue : raw === 'true';
+  } catch (e) {
+    return defaultValue;
+  }
+}
+
+function saveBoolPref(key, value) {
+  try {
+    localStorage.setItem(key, String(value));
+  } catch (e) {
+    // Storage unavailable — the choice still applies for this session.
+  }
+}
+
+if (titleOnlyCheckbox) {
+  titleOnlyCheckbox.checked = loadBoolPref('quietflow.titleOnly', false);
+  titleOnlyCheckbox.addEventListener('change', () => {
+    saveBoolPref('quietflow.titleOnly', titleOnlyCheckbox.checked);
+  });
+}
+
+// Both default to true (assume available) — the toggles are for the
+// exception, not the common case: no mat, or nowhere to prop a foot up.
+if (matToggle) {
+  matToggle.checked = loadBoolPref('quietflow.hasMat', true);
+  matToggle.addEventListener('change', () => {
+    saveBoolPref('quietflow.hasMat', matToggle.checked);
+  });
+}
+
+if (furnitureToggle) {
+  furnitureToggle.checked = loadBoolPref('quietflow.hasFurniture', true);
+  furnitureToggle.addEventListener('change', () => {
+    saveBoolPref('quietflow.hasFurniture', furnitureToggle.checked);
+  });
 }
 
 if (appVersionEl) appVersionEl.textContent = `v${APP_VERSION}`;
