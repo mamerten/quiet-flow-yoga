@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Calisthenics exercise reference</title>
+<style>
+  body {
+    font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    margin: 28px 32px 60px;
+    color: #2f3b34;
+    background: #faf7f2;
+  }
+  h1 { margin: 0 0 4px; }
+  .meta { color: #6b7570; font-size: 0.85rem; margin-bottom: 28px; }
+  h2 {
+    margin: 40px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #d7ded9;
+    color: #5f7a68;
+    font-size: 1.1rem;
+  }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th, td {
+    border-bottom: 1px solid #e7ece7;
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 0.9rem;
+  }
+  th {
+    background: #eef2ec;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7570;
+  }
+  tr:hover td { background: #f2f5f1; }
+  .fig-cell { width: 84px; }
+  .fig-cell svg { width: 68px; height: 95px; color: #5f7a68; display: block; }
+  .name-cell { width: 230px; }
+  .name-cell .id { display: block; font-size: 0.72rem; color: #9aa39d; font-family: Consolas, monospace; margin-top: 2px; }
+  .sides-cell { width: 70px; color: #6b7570; }
+  .cue-cell { color: #2f3b34; line-height: 1.45; }
+  #warning { display: none; background: #f6dede; color: #7a2d24; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+  <h1>Calisthenics exercise reference</h1>
+  <p class="meta">
+    <span id="count">–</span> exercises, built live from
+    <code>public/js/exercises.js</code> + <code>public/js/figures.js</code> —
+    reopen this page after editing either file to see the update. Grouped
+    the way the equipment filter groups them in the app (mat / step-up
+    toggles). Internal reference only, not part of the shipped site.
+  </p>
+  <div id="warning">Couldn't load the exercise/figure data — open this file from its normal location inside <code>docs/</code> (next to <code>public/</code>), not copied elsewhere.</div>
+  <div id="root"></div>
+
+  <script src="../public/js/figures.js"></script>
+  <script src="../public/js/exercises.js"></script>
+  <script>
+    function sidedLabel(e) {
+      return e.sided ? 'L + R' : '—';
+    }
+
+    function groupOf(e) {
+      if (e.needsFurniture) return 'Needs a chair, step, wall, towel, or book';
+      if (e.surface === 'ground') return 'Ground / mat, no equipment';
+      return 'Standing, no equipment';
+    }
+
+    function render() {
+      const exercises = window.EXERCISES || [];
+      const figures = window.FIGURES || {};
+      if (!exercises.length) {
+        document.getElementById('warning').style.display = 'block';
+        return;
+      }
+      document.getElementById('count').textContent = exercises.length;
+
+      const groups = {};
+      exercises.forEach((e) => {
+        const g = groupOf(e);
+        (groups[g] = groups[g] || []).push(e);
+      });
+
+      const order = [
+        'Standing, no equipment',
+        'Ground / mat, no equipment',
+        'Needs a chair, step, wall, towel, or book',
+      ];
+
+      const root = document.getElementById('root');
+      order.forEach((groupName) => {
+        const list = groups[groupName];
+        if (!list || !list.length) return;
+
+        const section = document.createElement('section');
+        const h2 = document.createElement('h2');
+        h2.textContent = `${groupName} (${list.length})`;
+        section.appendChild(h2);
+
+        const table = document.createElement('table');
+        table.innerHTML = '<thead><tr><th>Figure</th><th>Name</th><th>Sides</th><th>Cue</th></tr></thead>';
+        const tbody = document.createElement('tbody');
+
+        list.forEach((e) => {
+          const tr = document.createElement('tr');
+          const figSvg = figures[e.figure] || '<em>missing figure: ' + e.figure + '</em>';
+
+          const figTd = document.createElement('td');
+          figTd.className = 'fig-cell';
+          figTd.innerHTML = figSvg;
+
+          const nameTd = document.createElement('td');
+          nameTd.className = 'name-cell';
+          nameTd.innerHTML = `<strong>${e.name}</strong><span class="id">${e.id}</span>`;
+
+          const sidesTd = document.createElement('td');
+          sidesTd.className = 'sides-cell';
+          sidesTd.textContent = sidedLabel(e);
+
+          const cueTd = document.createElement('td');
+          cueTd.className = 'cue-cell';
+          cueTd.textContent = e.cue;
+
+          tr.append(figTd, nameTd, sidesTd, cueTd);
+          tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+        section.appendChild(table);
+        root.appendChild(section);
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>
