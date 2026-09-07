@@ -9,14 +9,18 @@
 // Pull-Down, Book Balance Walk), his morning mobility flow (Beast
 // Kickthrough, World's Greatest Stretch, Scorpion Heel Taps, 90/90
 // Switch), his bedtime hip-release flow (Lying Knee Drops, Windshield
-// Wipers, Heel-to-Toe Rock), his towel routine (High Pull Down,
-// Straight-Arm Pull, Front Raise, Arm Circles), and his named strength
-// circuit (push-ups, jump squats, dips, reverse lunges, wall sits). His
-// content doesn't use consistent cute names, so names/descriptions here
-// are original, written for this app. A handful (Plank Hold, Mountain
-// Climber, Couch Stretch, Bird Dog Reach, Side Plank Hold) are standard
-// bodyweight staples that fit his style and content but aren't verbatim
-// from a specific post — everything else is.
+// Wipers, Heel-to-Toe Rock, and a Dead Hang), his towel routine (High
+// Pull Down, Straight-Arm Pull, Front Raise, Arm Circles), his named
+// strength circuit (push-ups, jump squats, dips, reverse lunges, wall
+// sits), and his "5 tests for longevity" post (Sit-to-Stand No Hands,
+// Single-Leg Balance, Standing Toe Touch — grip strength and sit-and-reach
+// from that same list didn't translate to a distinct bodyweight move and
+// were skipped). His content doesn't use consistent cute names — none of
+// this is his own naming, including where noted below — so names/
+// descriptions here are original, written for this app. A handful (Plank
+// Hold, Mountain Climber, Couch Stretch, Bird Dog Reach, Side Plank Hold,
+// Squat Fold) are standard bodyweight staples that fit his style and
+// content but aren't verbatim from a specific post — everything else is.
 //
 // Schema (deliberately different from poses.js — see README):
 //   id             unique string
@@ -25,8 +29,15 @@
 //   figure         key into FIGURES (js/figures.js)
 //   surface        'standing' | 'ground' — exactly one. Whether you need a
 //                  mat (ground) or just floor space (standing).
-//   needsFurniture optional: true if a simple prop is required — a chair,
-//                  a wall, a towel, even a book. Independent of `surface`.
+//   needsFurniture optional: true if a portable prop is required — a chair,
+//                  step, towel, or book — something you might not have on
+//                  hand. Gated by the "I have a step, chair, or other prop"
+//                  toggle. Independent of `surface`.
+//   needsWall      optional: true if it's done against a wall. Kept
+//                  separate from needsFurniture and NOT gated by that
+//                  toggle — a wall isn't something you carry around like a
+//                  chair, and assuming one's nearby is a safe bet the same
+//                  way floor space is assumed for `surface: 'standing'`.
 //   sided          optional: true if it's done once per side (auto-paired
 //                  left/right by js/calisthenics-workout.js)
 //
@@ -76,9 +87,31 @@ window.EXERCISES = [
   {
     id: 'collarbone-look-up',
     name: 'Collarbone Look-Up',
-    figure: 'standingNeutral',
+    figure: 'collarboneLookUp',
     surface: 'standing',
-    cue: 'Find your collarbone with your fingers, keep your ribs down, and look up smoothly. Unloads a stiff, forward-jutted neck.',
+    cue: 'Cross one arm over and rest your fingers on the opposite collarbone, keep your ribs down, and look up and to that side. Unloads a stiff, forward-jutted neck.',
+  },
+  {
+    id: 'single-leg-balance',
+    name: 'Single-Leg Balance Hold',
+    figure: 'balanceOneLeg',
+    surface: 'standing',
+    sided: true,
+    cue: 'Lift one foot off the floor and hold your balance, arms out for control. Once you feel steady, try closing your eyes.',
+  },
+  {
+    id: 'standing-toe-touch',
+    name: 'Standing Toe Touch',
+    figure: 'standingForwardFold',
+    surface: 'standing',
+    cue: 'Fold forward from your hips and reach for your toes, knees soft. A simple check-in for your hamstrings and low back.',
+  },
+  {
+    id: 'squat-fold',
+    name: 'Squat Fold',
+    figure: 'squatFold',
+    surface: 'standing',
+    cue: 'From standing, fold forward and plant your hands on the floor, then bend your knees to sink into a deep squat without letting go. Straighten back up and repeat.',
   },
   {
     id: 'hands-behind-pulldown',
@@ -90,16 +123,23 @@ window.EXERCISES = [
 
   // --- Ground / mat ---
   {
+    id: 'sit-to-stand',
+    name: 'Sit-to-Stand, No Hands',
+    figure: 'sitToStand',
+    surface: 'ground',
+    cue: 'From sitting on the floor, cross your arms over your chest and stand straight up — no hands, no rocking. Sit back down with the same control.',
+  },
+  {
     id: 'plank-hold',
     name: 'Plank Hold',
-    figure: 'tabletop',
+    figure: 'plank',
     surface: 'ground',
     cue: 'Hold a straight line from head to heels, forearms or hands under your shoulders. Keep your hips level.',
   },
   {
     id: 'push-up-flow',
-    name: 'Push-Up Flow',
-    figure: 'tabletop',
+    name: 'Push-Up',
+    figure: 'pushUp',
     surface: 'ground',
     cue: 'Lower your chest toward the floor and press back up, keeping your body in one straight line.',
   },
@@ -121,10 +161,10 @@ window.EXERCISES = [
   {
     id: 'couch-stretch',
     name: 'Couch Stretch',
-    figure: 'lungeArmsUp',
+    figure: 'couchStretch',
     surface: 'ground',
     sided: true,
-    cue: 'Sink your hips forward and down in a deep kneeling lunge, opening the front of your hip. Breathe into it.',
+    cue: 'Prop your back shin up behind you — against a wall or a couch, the pose’s namesake — so that knee is fully bent, then sink your hips forward and down. A deep stretch through the front of the hip and thigh.',
   },
   {
     id: 'bird-dog',
@@ -181,7 +221,7 @@ window.EXERCISES = [
   {
     id: 'scapular-pushup',
     name: 'Scapular Push-Up',
-    figure: 'tabletop',
+    figure: 'plank',
     surface: 'ground',
     cue: 'From a plank, keep your arms straight and push the floor away, letting your shoulder blades spread apart, then release.',
   },
@@ -197,28 +237,28 @@ window.EXERCISES = [
     id: 'w-slide',
     name: 'W-Slide',
     figure: 'armsGoalpost',
-    surface: 'ground',
+    surface: 'standing',
     cue: 'Arms in a W at your sides, slide them up overhead into a Y, then back down to a W. Keep your low back settled.',
   },
   {
     id: 'l-pull',
     name: 'L-Pull',
     figure: 'armsGoalpost',
-    surface: 'ground',
+    surface: 'standing',
     cue: 'Elbows bent by your ribs, pull your hands back and squeeze your shoulder blades together. Slow and controlled.',
   },
   {
     id: 't-raise',
     name: 'T-Raise',
     figure: 'armsGoalpost',
-    surface: 'ground',
+    surface: 'standing',
     cue: 'Arms out to the sides in a T, lift them slightly and squeeze between your shoulder blades. Small, controlled range.',
   },
   {
     id: 'y-raise',
     name: 'Y-Raise',
     figure: 'standingArmsUp',
-    surface: 'ground',
+    surface: 'standing',
     cue: 'Arms overhead in a Y shape, lift them slightly using your lower shoulder blade muscles. Keep your neck relaxed.',
   },
   {
@@ -312,7 +352,7 @@ window.EXERCISES = [
     name: 'Wall Sit Hold',
     figure: 'wallSit',
     surface: 'standing',
-    needsFurniture: true,
+    needsWall: true,
     cue: 'Back flat against a wall, slide down until your thighs are parallel to the floor, knees at 90 degrees. Hold.',
   },
   {
@@ -326,7 +366,7 @@ window.EXERCISES = [
   {
     id: 'towel-high-pulldown',
     name: 'Towel High Pull Down',
-    figure: 'towelPull',
+    figure: 'towelPullOverhead',
     surface: 'standing',
     needsFurniture: true,
     cue: 'Hold a towel overhead with tension between your hands, and pull it down behind your head and back up.',
@@ -355,6 +395,14 @@ window.EXERCISES = [
     surface: 'standing',
     needsFurniture: true,
     cue: 'Hold a towel with tension between your hands and trace big, slow circles in the air, both directions.',
+  },
+  {
+    id: 'dead-hang',
+    name: 'Dead Hang',
+    figure: 'deadHang',
+    surface: 'standing',
+    needsFurniture: true,
+    cue: 'Hang from a sturdy bar or door-frame pull-up bar, arms straight, shoulders relaxed. Let your spine decompress.',
   },
 ];
 

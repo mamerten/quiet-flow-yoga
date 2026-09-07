@@ -57,13 +57,35 @@ window.FIGURES = {
     LINE(50, 74, 60, 132)
   ),
 
-  // T5 — tabletop, side view (Cat-Cow, Plank)
+  // T5 — tabletop, side view: hands AND knees, both "legs" roughly
+  // vertical (Cat-Cow) — NOT a plank; see `plank` below for the
+  // straight-line-off-the-floor shape.
   tabletop: svg(
     HEAD(18, 58, 7) +
     LINE(26, 60, 72, 58) +
     LINE(28, 62, 28, 98) +
     LINE(72, 58, 72, 98) +
     LINE(72, 98, 92, 96)
+  ),
+
+  // T5b — plank, side view: one straight diagonal line from head to
+  // heels, held up by a single vertical support arm (Plank Hold,
+  // Scapular Push-Up — anything done with straight arms, elevated).
+  plank: svg(
+    HEAD(14, 58, 7) +
+    LINE(21, 60, 88, 68) +
+    LINE(21, 60, 21, 92) +
+    LINE(88, 68, 96, 60)
+  ),
+
+  // T5c — push-up, side view: the same head-to-heels line as `plank` but
+  // lower overall, with a bent, flared elbow instead of a straight
+  // support arm — the down-phase of a push-up (Push-Up).
+  pushUp: svg(
+    HEAD(13, 72, 7) +
+    LINE(20, 76, 88, 84) +
+    POLY('20,76 12,90 20,102') +
+    LINE(88, 84, 96, 76)
   ),
 
   // T6 — downward dog, side view, inverted V
@@ -81,6 +103,18 @@ window.FIGURES = {
     LINE(50, 34, 62, 8) +
     POLY('50,74 35,100 30,132') +
     LINE(50, 74, 80, 130)
+  ),
+
+  // T7b — kneeling lunge with the back shin propped straight up behind,
+  // foot high near the hip — the exaggerated deep knee bend that's the
+  // whole point of a Couch Stretch, distinct from lungeArmsUp's ordinary
+  // low lunge with the back leg simply stepped back and straight.
+  couchStretch: svg(
+    HEAD(50, 25) +
+    LINE(50, 32, 50, 75) +
+    LINE(50, 32, 68, 85) +
+    POLY('50,75 70,90 78,118') +
+    POLY('50,75 30,95 15,55')
   ),
 
   // T8 — kneeling, folded forward (Child's Pose)
@@ -159,16 +193,33 @@ window.FIGURES = {
 
   // --- Calisthenics figures (public/js/exercises.js) ---
 
-  // C1 — standing, deep knee bend, arms reaching forward for balance
+  // C1 — standing, deep knee bend with the hips dropped close to the
+  // floor and knees splayed wide (level with or above the hips, the way
+  // an actual deep/ATG squat looks), arms reaching forward for balance
   // (Deep Squat Hold)
   deepSquat: svg(
-    HEAD(50, 18) +
-    LINE(50, 26, 50, 80) +
-    LINE(38, 34, 62, 34) +
-    LINE(38, 34, 30, 58) +
-    LINE(62, 34, 70, 58) +
-    POLY('50,80 30,105 35,132') +
-    POLY('50,80 70,105 65,132')
+    HEAD(50, 30) +
+    LINE(50, 38, 50, 100) +
+    LINE(38, 44, 62, 44) +
+    LINE(38, 44, 20, 66) +
+    LINE(62, 44, 80, 66) +
+    POLY('50,100 25,92 22,130') +
+    POLY('50,100 75,92 78,130')
+  ),
+
+  // C26 — standing, one arm crossed over the chest with fingers at the
+  // opposite collarbone, head tilted up and toward that side (Collarbone
+  // Look-Up) — distinct from standingNeutral's straight-ahead, arms-down
+  // posture.
+  collarboneLookUp: svg(
+    LINE(50, 26, 50, 74) +
+    LINE(38, 30, 62, 30) +
+    HEAD(64, 10) +
+    LINE(50, 26, 64, 18) +
+    LINE(38, 30, 32, 62) +
+    LINE(62, 30, 40, 34) +
+    LINE(50, 74, 40, 132) +
+    LINE(50, 74, 60, 132)
   ),
 
   // C6 — plank with one knee driven up under the torso (Mountain Climber)
@@ -345,7 +396,9 @@ window.FIGURES = {
   ),
 
   // C23 — standing, arms extended forward gripping a towel held taut
-  // between the hands. Reused for all four towel exercises.
+  // between the hands. Reused for the front-facing towel exercises
+  // (Straight-Arm Pull, Front Raise, Arm Circles) — not High Pull Down,
+  // which starts overhead; see towelPullOverhead below.
   towelPull: svg(
     HEAD(50, 18) +
     LINE(50, 26, 50, 72) +
@@ -353,6 +406,20 @@ window.FIGURES = {
     LINE(38, 30, 25, 50) +
     LINE(62, 30, 75, 50) +
     LINE(25, 50, 75, 50) +
+    LINE(50, 72, 40, 132) +
+    LINE(50, 72, 60, 132)
+  ),
+
+  // C23b — standing, both arms straight overhead gripping a towel held
+  // taut, matching High Pull Down's actual starting position (Towel High
+  // Pull Down).
+  towelPullOverhead: svg(
+    HEAD(50, 18) +
+    LINE(50, 26, 50, 72) +
+    LINE(38, 30, 62, 30) +
+    LINE(38, 30, 28, 10) +
+    LINE(62, 30, 72, 10) +
+    LINE(28, 10, 72, 10) +
     LINE(50, 72, 40, 132) +
     LINE(50, 72, 60, 132)
   ),
@@ -371,6 +438,45 @@ window.FIGURES = {
     LINE(62, 32, 68, 58) +
     LINE(50, 74, 40, 132) +
     LINE(50, 74, 60, 132)
+  ),
+
+  // C27 — seated on the floor, arms crossed over the chest (deliberately
+  // not touching the ground), legs folded to sit — the starting position
+  // for standing up without using your hands (Sit-to-Stand, No Hands).
+  sitToStand: svg(
+    HEAD(50, 30) +
+    LINE(50, 38, 50, 78) +
+    LINE(40, 45, 60, 50) +
+    LINE(60, 45, 40, 50) +
+    LINE(50, 78, 25, 92) +
+    LINE(25, 92, 48, 98) +
+    LINE(50, 78, 78, 92) +
+    LINE(78, 92, 52, 98)
+  ),
+
+  // C28 — hanging from a horizontal overhead bar, arms straight, body
+  // relaxed (Dead Hang).
+  deadHang: svg(
+    LINE(30, 8, 70, 8) +
+    HEAD(50, 22) +
+    LINE(50, 30, 50, 78) +
+    LINE(50, 30, 35, 8) +
+    LINE(50, 30, 65, 8) +
+    LINE(50, 78, 42, 130) +
+    LINE(50, 78, 58, 130)
+  ),
+
+  // C29 — squatting low with the torso folded all the way down and hands
+  // planted on the floor between wide, bent knees (Squat Fold) — distinct
+  // from deepSquat's upright torso and standingForwardFold's straight legs.
+  squatFold: svg(
+    HEAD(46, 106, 7) +
+    LINE(50, 70, 48, 96) +
+    LINE(40, 98, 56, 98) +
+    LINE(40, 98, 38, 118) +
+    LINE(56, 98, 58, 118) +
+    POLY('50,70 30,92 32,128') +
+    POLY('50,70 70,92 68,128')
   ),
 
   // C25 — seated, one leg bent in front with the foot out to one side and

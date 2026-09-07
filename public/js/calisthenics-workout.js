@@ -36,7 +36,9 @@ function shuffleExercises(arr) {
  *   hasMat        default true. false excludes surface: 'ground' exercises
  *                 (sitting or kneeling on a bare floor).
  *   hasFurniture  default true. false excludes needsFurniture exercises
- *                 (a chair, step, wall, towel, or book).
+ *                 (a chair, step, towel, or book — something you carry
+ *                 around, unlike a wall, which needsWall exercises assume
+ *                 is available regardless of this toggle).
  */
 window.createCalisthenicsSequencer = function createCalisthenicsSequencer(filter) {
   const hasMat = !filter || filter.hasMat !== false;
