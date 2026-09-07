@@ -18,7 +18,7 @@ A tiny, dependency-free web app for short, guided practices — like Apple Fitne
 - **Name only.** A checkbox next to the voice picker trims the spoken guidance down to just the pose/exercise name, skipping the full cue (the written cue stays on screen either way). Works the same in both modes.
 - **Left/right balance, in both modes.** One-sided poses/exercises (yoga: Warrior I/II, Triangle, Side Angle, Low Lunge, Tree, Eagle, Warrior III, Seated Twist, Cow Face Arms; calisthenics: Reverse Lunge, World's Greatest Stretch, Couch Stretch, Bird Dog, Dead Bug, Side Plank, Chair Step-Up, and others) are always scheduled as a matched pair, so you never work one side and skip the other. In Yoga, which is timed, the mirrored side is deliberately separated by another pose rather than repeated back-to-back. In Calisthenics, since you're the one deciding when to move on, the mirrored side comes immediately after instead: finish one side, hit Next, and the very next exercise is the other side of the same move (e.g. "Chair Step-Up — Left side" then "Chair Step-Up — Right side").
 - **Calisthenics equipment filter.** Two toggles on the home screen — *I have a mat* and *I have a step, chair, or other prop* — persisted between sessions (both default on). With no mat, ground-surface exercises (anything sitting or kneeling on the floor) are excluded entirely; with no prop, anything needing a chair, step, wall, towel, or book is excluded. Every entry in `public/js/exercises.js` is flagged for both.
-- **Minimal visuals.** Each pose/exercise has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio.
+- **Minimal visuals.** Each pose/exercise has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio. A handful of Calisthenics exercises that are a repeated motion rather than a held position (Jump Squat, Push-Up, W-Slide, Squat Fold, Standing Toe Touch) show 2-4 frames that auto-cycle like a flip book instead of one static frame — see "Animated figures" below.
 - **Controls.** Pause/Resume, Skip (Yoga) / Next (Calisthenics), End, plus an overall progress bar and a compact timer in the top bar.
 - **Version + source link.** A small footer shows the current version and links back to this repo.
 - **Installable, works offline.** A web app manifest + service worker let you add it to your phone's home screen (opens full-screen, no browser chrome) and run a practice with no connection once you've loaded it at least once.
@@ -138,6 +138,27 @@ To add a new illustration, add a template to `FIGURES` in
 `public/js/figures.js` (many entries in both libraries reuse the same
 handful of templates rather than each getting a bespoke drawing — that's
 intentional, matching the low level of visual detail elsewhere in the app).
+
+### Animated figures
+
+Most `FIGURES` entries are a single static `svg(...)`. For exercises that
+are a repeated motion rather than a held position, wrap 2-4 frames (each
+written the same way a single `svg()` call's argument is) in
+`animatedFigure([...])` instead:
+
+```js
+jumpSquatFlow: animatedFigure([
+  HEAD(50, 30) + LINE(50, 38, 50, 78) /* ...crouch... */,
+  HEAD(50, 20) + LINE(50, 28, 50, 68) /* ...airborne... */,
+]),
+```
+
+This renders as a `<div class="figure-frames">` containing all the frames
+stacked on top of each other, auto-cycling via pure CSS (`.figure-frames`
+in `public/css/style.css`) — no JS timer, and nothing in `app.js` needs to
+know or care whether a figure is static or animated. Keep frame count to
+2-4 (that's all the CSS defines keyframes for) and keep coordinates in the
+same rough scale/position across frames so the cycle doesn't jump jarringly.
 
 ## Running locally
 

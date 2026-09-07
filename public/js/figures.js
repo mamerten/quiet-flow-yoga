@@ -12,6 +12,16 @@ function svg(inner) {
   return `<svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">${inner}</svg>`;
 }
 
+// Wraps 2-4 frames (each written the same way a single svg() call's inner
+// content is) into one auto-cycling "flip book" for exercises that are a
+// repeated motion rather than a held position — Jump Squat actually
+// jumping, Push-Up going up and down, W-Slide sliding between its two
+// named shapes. The cycling itself is pure CSS (see .figure-frames in
+// style.css), so this needs no JS timer and nothing in app.js changes.
+function animatedFigure(frames) {
+  return `<div class="figure-frames frames-${frames.length}">${frames.map(svg).join('')}</div>`;
+}
+
 window.FIGURES = {
   // T1 — standing, arms relaxed at sides (Mountain)
   standingNeutral: svg(
@@ -57,6 +67,37 @@ window.FIGURES = {
     LINE(50, 74, 60, 132)
   ),
 
+  // T4b — 3-frame flip book: standing tall, hinging forward partway, then
+  // folded all the way down reaching for the toes (Calisthenics' Standing
+  // Toe Touch — a distinct entry from standingForwardFold above so
+  // editing one doesn't affect the other, even though the final frame
+  // matches it). Legs stay straight throughout, unlike squatFoldFlow.
+  toeTouchFlow: animatedFigure([
+    // standing
+    HEAD(50, 18) +
+      LINE(50, 26, 50, 74) +
+      LINE(50, 30, 40, 55) +
+      LINE(50, 30, 60, 55) +
+      LINE(50, 74, 40, 132) +
+      LINE(50, 74, 60, 132),
+    // hinging, legs still straight
+    HEAD(48, 90, 7) +
+      LINE(50, 74, 48, 98) +
+      LINE(40, 100, 56, 100) +
+      LINE(40, 100, 37, 118) +
+      LINE(56, 100, 58, 118) +
+      LINE(50, 74, 40, 132) +
+      LINE(50, 74, 60, 132),
+    // full fold, reaching the toes
+    HEAD(46, 112, 7) +
+      LINE(50, 74, 48, 100) +
+      LINE(40, 102, 56, 102) +
+      LINE(40, 102, 35, 128) +
+      LINE(56, 102, 58, 128) +
+      LINE(50, 74, 40, 132) +
+      LINE(50, 74, 60, 132),
+  ]),
+
   // T5 — tabletop, side view: hands AND knees, both "legs" roughly
   // vertical (Cat-Cow) — NOT a plank; see `plank` below for the
   // straight-line-off-the-floor shape.
@@ -75,18 +116,25 @@ window.FIGURES = {
     HEAD(14, 58, 7) +
     LINE(21, 60, 88, 68) +
     LINE(21, 60, 21, 92) +
-    LINE(88, 68, 96, 60)
+    LINE(88, 68, 96, 76)
   ),
 
-  // T5c — push-up, side view: the same head-to-heels line as `plank` but
-  // lower overall, with a bent, flared elbow instead of a straight
-  // support arm — the down-phase of a push-up (Push-Up).
-  pushUp: svg(
+  // T5c — 2-frame flip book: the same straight-line-off-the-floor shape
+  // as `plank`, alternating with a lower, bent-elbow shape — the actual
+  // up/down motion of a rep (Push-Up), rather than either single frame
+  // on its own.
+  pushUpFlow: animatedFigure([
+    // up (straight support arm, same shape as `plank`)
+    HEAD(14, 58, 7) +
+      LINE(21, 60, 88, 68) +
+      LINE(21, 60, 21, 92) +
+      LINE(88, 68, 96, 76),
+    // down (bent, flared elbow, lower overall)
     HEAD(13, 72, 7) +
-    LINE(20, 76, 88, 84) +
-    POLY('20,76 12,90 20,102') +
-    LINE(88, 84, 96, 76)
-  ),
+      LINE(20, 76, 88, 84) +
+      POLY('20,76 12,90 20,102') +
+      LINE(88, 84, 96, 92),
+  ]),
 
   // T6 — downward dog, side view, inverted V
   downdog: svg(
@@ -156,12 +204,27 @@ window.FIGURES = {
     LINE(40, 75, 45, 90)
   ),
 
-  // T12 — balancing on one leg (Tree, Eagle, Warrior III)
+  // T12 — balancing on one leg, arms reaching up near the head (Tree,
+  // Eagle, Warrior III). NOT used for the plain Single-Leg Balance Hold
+  // test in Calisthenics — see balanceArmsOut below for that.
   balanceOneLeg: svg(
     HEAD(50, 18) +
     LINE(50, 26, 50, 74) +
     LINE(50, 32, 42, 10) +
     LINE(50, 32, 58, 10) +
+    LINE(50, 74, 50, 132) +
+    POLY('50,74 65,95 45,90')
+  ),
+
+  // T12b — balancing on one leg, arms out level with the shoulders for
+  // stability (Single-Leg Balance Hold) — distinct from balanceOneLeg,
+  // whose arms reach up by the head, which doesn't match a plain balance
+  // test.
+  balanceArmsOut: svg(
+    HEAD(50, 18) +
+    LINE(50, 26, 50, 74) +
+    LINE(50, 32, 20, 30) +
+    LINE(50, 32, 80, 30) +
     LINE(50, 74, 50, 132) +
     POLY('50,74 65,95 45,90')
   ),
@@ -207,17 +270,18 @@ window.FIGURES = {
     POLY('50,100 75,92 78,130')
   ),
 
-  // C26 — standing, one arm crossed over the chest with fingers at the
-  // opposite collarbone, head tilted up and toward that side (Collarbone
-  // Look-Up) — distinct from standingNeutral's straight-ahead, arms-down
-  // posture.
+  // C26 — standing, one arm bent across the chest with the hand landing
+  // at the opposite collarbone, head tilted up and toward that side
+  // (Collarbone Look-Up) — the head stays close to and clearly attached
+  // to the neck (a subtler tilt than the first attempt at this figure,
+  // which read as a floating, disconnected head).
   collarboneLookUp: svg(
     LINE(50, 26, 50, 74) +
     LINE(38, 30, 62, 30) +
-    HEAD(64, 10) +
-    LINE(50, 26, 64, 18) +
-    LINE(38, 30, 32, 62) +
-    LINE(62, 30, 40, 34) +
+    LINE(50, 26, 58, 16) +
+    HEAD(58, 16) +
+    POLY('62,30 46,36 38,30') +
+    LINE(38, 30, 30, 62) +
     LINE(50, 74, 40, 132) +
     LINE(50, 74, 60, 132)
   ),
@@ -336,31 +400,44 @@ window.FIGURES = {
     LINE(45, 80, 45, 130)
   ),
 
-  // C18 — airborne, knees tucked mid-jump, arms swung up (Jump Squat)
-  jumpSquat: svg(
+  // C18 — 2-frame flip book: loaded crouch, then airborne with knees
+  // tucked and arms swung up (Jump Squat) — an actual jumping motion
+  // reads much better animated than as one static frame.
+  jumpSquatFlow: animatedFigure([
+    // crouch / load
+    HEAD(50, 30) +
+      LINE(50, 38, 50, 78) +
+      LINE(50, 42, 35, 55) +
+      LINE(50, 42, 65, 55) +
+      POLY('50,78 30,90 32,120') +
+      POLY('50,78 70,90 68,120'),
+    // airborne
     HEAD(50, 20) +
-    LINE(50, 28, 50, 68) +
-    LINE(50, 32, 30, 15) +
-    LINE(50, 32, 70, 15) +
-    POLY('50,68 38,85 42,105') +
-    POLY('50,68 62,85 58,105')
-  ),
+      LINE(50, 28, 50, 68) +
+      LINE(50, 32, 30, 15) +
+      LINE(50, 32, 70, 15) +
+      POLY('50,68 38,85 42,105') +
+      POLY('50,68 62,85 58,105'),
+  ]),
 
-  // C19 — standing, one leg stepped back into a lunge (Reverse Lunge)
+  // C19 — side view, standing with one leg stepped back into a lunge:
+  // front leg bent (hip-knee-foot), back leg extended straight behind —
+  // legs going in two clearly opposite horizontal directions, the way an
+  // actual side-on lunge looks (Reverse Lunge). The previous version drew
+  // the torso/arms as if facing the camera while only the legs were
+  // side-on, which read as neither view.
   reverseLunge: svg(
     HEAD(50, 18) +
-    LINE(50, 26, 50, 72) +
-    LINE(38, 30, 62, 30) +
-    LINE(38, 30, 34, 55) +
-    LINE(62, 30, 66, 55) +
-    POLY('50,72 45,100 48,130') +
-    LINE(50, 72, 85, 125)
+    LINE(50, 26, 50, 70) +
+    LINE(50, 30, 38, 52) +
+    POLY('50,70 68,90 74,128') +
+    LINE(50, 70, 22, 118)
   ),
 
   // C20 — standing, elbows bent and lifted level with the shoulders, a
-  // goalpost/W arm shape. Reused for the several small shoulder-mobility
-  // moves that only really differ in rep tempo, not silhouette (Elbow
-  // Lift Hold, W-Slide, L-Pull, T-Raise).
+  // goalpost/W arm shape. Reused for the small shoulder-mobility moves
+  // that only really differ in rep tempo, not silhouette (Elbow Lift
+  // Hold, L-Pull). Also the "W" half of wSlideFlow below.
   armsGoalpost: svg(
     HEAD(50, 18) +
     LINE(50, 26, 50, 72) +
@@ -370,6 +447,28 @@ window.FIGURES = {
     LINE(50, 72, 40, 132) +
     LINE(50, 72, 60, 132)
   ),
+
+  // C20b — 2-frame flip book alternating armsGoalpost's bent-elbow "W"
+  // shape with standingArmsUp's straight-arm-overhead "Y" shape — W-Slide
+  // is literally named for sliding between these two positions.
+  wSlideFlow: animatedFigure([
+    // W
+    HEAD(50, 18) +
+      LINE(50, 26, 50, 72) +
+      LINE(38, 32, 62, 32) +
+      POLY('38,32 30,32 28,14') +
+      POLY('62,32 70,32 72,14') +
+      LINE(50, 72, 40, 132) +
+      LINE(50, 72, 60, 132),
+    // Y
+    HEAD(50, 16) +
+      LINE(50, 24, 50, 74) +
+      LINE(38, 30, 62, 30) +
+      LINE(38, 30, 30, 10) +
+      LINE(62, 30, 70, 10) +
+      LINE(50, 74, 40, 132) +
+      LINE(50, 74, 60, 132),
+  ]),
 
   // C21 — standing, arms reaching behind and down, hands meeting behind
   // the lower back (Hands-Behind-Back Pull-Down)
@@ -466,18 +565,35 @@ window.FIGURES = {
     LINE(50, 78, 58, 130)
   ),
 
-  // C29 — squatting low with the torso folded all the way down and hands
-  // planted on the floor between wide, bent knees (Squat Fold) — distinct
-  // from deepSquat's upright torso and standingForwardFold's straight legs.
-  squatFold: svg(
+  // C29 — 3-frame flip book: standing tall, hinging forward with the
+  // knees starting to bend, then fully folded with hands planted on the
+  // floor between wide, bent knees (Squat Fold) — the actual fold-and-
+  // squat motion, not just its end position.
+  squatFoldFlow: animatedFigure([
+    // standing
+    HEAD(50, 18) +
+      LINE(50, 26, 50, 74) +
+      LINE(50, 30, 40, 55) +
+      LINE(50, 30, 60, 55) +
+      LINE(50, 74, 40, 132) +
+      LINE(50, 74, 60, 132),
+    // hinging, knees starting to bend
+    HEAD(44, 78, 7) +
+      LINE(50, 50, 46, 84) +
+      LINE(40, 86, 52, 86) +
+      LINE(40, 86, 36, 110) +
+      LINE(52, 86, 54, 110) +
+      LINE(50, 50, 38, 128) +
+      LINE(50, 50, 62, 128),
+    // full fold, hands on the floor between wide, bent knees
     HEAD(46, 106, 7) +
-    LINE(50, 70, 48, 96) +
-    LINE(40, 98, 56, 98) +
-    LINE(40, 98, 38, 118) +
-    LINE(56, 98, 58, 118) +
-    POLY('50,70 30,92 32,128') +
-    POLY('50,70 70,92 68,128')
-  ),
+      LINE(50, 70, 48, 96) +
+      LINE(40, 98, 56, 98) +
+      LINE(40, 98, 38, 118) +
+      LINE(56, 98, 58, 118) +
+      POLY('50,70 30,92 32,128') +
+      POLY('50,70 70,92 68,128'),
+  ]),
 
   // C25 — seated, one leg bent in front with the foot out to one side and
   // the other bent back on the opposite side, forming a "Z" with the legs;

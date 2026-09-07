@@ -65,7 +65,7 @@ window.EXERCISES = [
   {
     id: 'jump-squat',
     name: 'Jump Squat',
-    figure: 'jumpSquat',
+    figure: 'jumpSquatFlow',
     surface: 'standing',
     cue: 'Squat down, then explode up into a jump, swinging your arms up with you. Land soft and go straight into the next one.',
   },
@@ -94,7 +94,7 @@ window.EXERCISES = [
   {
     id: 'single-leg-balance',
     name: 'Single-Leg Balance Hold',
-    figure: 'balanceOneLeg',
+    figure: 'balanceArmsOut',
     surface: 'standing',
     sided: true,
     cue: 'Lift one foot off the floor and hold your balance, arms out for control. Once you feel steady, try closing your eyes.',
@@ -102,14 +102,14 @@ window.EXERCISES = [
   {
     id: 'standing-toe-touch',
     name: 'Standing Toe Touch',
-    figure: 'standingForwardFold',
+    figure: 'toeTouchFlow',
     surface: 'standing',
     cue: 'Fold forward from your hips and reach for your toes, knees soft. A simple check-in for your hamstrings and low back.',
   },
   {
     id: 'squat-fold',
     name: 'Squat Fold',
-    figure: 'squatFold',
+    figure: 'squatFoldFlow',
     surface: 'standing',
     cue: 'From standing, fold forward and plant your hands on the floor, then bend your knees to sink into a deep squat without letting go. Straighten back up and repeat.',
   },
@@ -139,7 +139,7 @@ window.EXERCISES = [
   {
     id: 'push-up-flow',
     name: 'Push-Up',
-    figure: 'pushUp',
+    figure: 'pushUpFlow',
     surface: 'ground',
     cue: 'Lower your chest toward the floor and press back up, keeping your body in one straight line.',
   },
@@ -236,7 +236,7 @@ window.EXERCISES = [
   {
     id: 'w-slide',
     name: 'W-Slide',
-    figure: 'armsGoalpost',
+    figure: 'wSlideFlow',
     surface: 'standing',
     cue: 'Arms in a W at your sides, slide them up overhead into a Y, then back down to a W. Keep your low back settled.',
   },
@@ -250,7 +250,7 @@ window.EXERCISES = [
   {
     id: 't-raise',
     name: 'T-Raise',
-    figure: 'armsGoalpost',
+    figure: 'standingArmsOutT',
     surface: 'standing',
     cue: 'Arms out to the sides in a T, lift them slightly and squeeze between your shoulder blades. Small, controlled range.',
   },

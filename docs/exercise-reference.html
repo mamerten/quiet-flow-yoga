@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <title>Calisthenics exercise reference</title>
+<!-- The real app stylesheet, for .pose-figure (the "breathing" animation)
+     and .figure-frames (the flip-book animation on Jump Squat, Push-Up,
+     etc.) — loaded first so the local <style> below still wins on anything
+     it also sets (colors, table layout), matching this page's own look. -->
+<link rel="stylesheet" href="../public/css/style.css" />
 <style>
   body {
     font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
@@ -36,6 +41,11 @@
   }
   tr:hover td { background: #f2f5f1; }
   .fig-cell { width: 84px; }
+  /* Explicit size on the wrapper the app itself renders (.pose-figure) so
+     percentage-sized children — a plain svg, or the stacked svgs inside
+     an animated .figure-frames — have a definite box to fill/absolute-
+     position within. */
+  .fig-cell .pose-figure { display: block; width: 68px; height: 95px; }
   .fig-cell svg { width: 68px; height: 95px; color: #5f7a68; display: block; }
   .name-cell { width: 230px; }
   .name-cell .id { display: block; font-size: 0.72rem; color: #9aa39d; font-family: Consolas, monospace; margin-top: 2px; }
@@ -64,7 +74,7 @@
     }
 
     function groupOf(e) {
-      if (e.needsFurniture) return 'Needs a chair, step, wall, towel, or book';
+      if (e.needsFurniture) return 'Needs a chair, step, or other prop';
       if (e.surface === 'ground') return 'Ground / mat, no equipment';
       return 'Standing, no equipment';
     }
@@ -106,11 +116,15 @@
 
         list.forEach((e) => {
           const tr = document.createElement('tr');
+          // Same wrapper app.js's renderFigure() uses — gets us the
+          // "breathing" hold animation and, for a handful of exercises,
+          // the auto-cycling flip-book animation (js/figures.js
+          // animatedFigure()) for free, with no separate logic here.
           const figSvg = figures[e.figure] || '<em>missing figure: ' + e.figure + '</em>';
 
           const figTd = document.createElement('td');
           figTd.className = 'fig-cell';
-          figTd.innerHTML = figSvg;
+          figTd.innerHTML = `<div class="pose-figure">${figSvg}</div>`;
 
           const nameTd = document.createElement('td');
           nameTd.className = 'name-cell';
