@@ -9,18 +9,21 @@
 // Pull-Down, Book Balance Walk), his morning mobility flow (Beast
 // Kickthrough, World's Greatest Stretch, Scorpion Heel Taps, 90/90
 // Switch), his bedtime hip-release flow (Lying Knee Drops, Windshield
-// Wipers, Heel-to-Toe Rock, and a Dead Hang), his towel routine (High
-// Pull Down, Straight-Arm Pull, Front Raise, Arm Circles), his named
-// strength circuit (push-ups, jump squats, dips, reverse lunges, wall
-// sits), and his "5 tests for longevity" post (Sit-to-Stand No Hands,
-// Single-Leg Balance, Standing Toe Touch — grip strength and sit-and-reach
-// from that same list didn't translate to a distinct bodyweight move and
-// were skipped). His content doesn't use consistent cute names — none of
-// this is his own naming, including where noted below — so names/
-// descriptions here are original, written for this app. A handful (Plank
-// Hold, Mountain Climber, Couch Stretch, Bird Dog Reach, Side Plank Hold,
-// Squat Fold) are standard bodyweight staples that fit his style and
-// content but aren't verbatim from a specific post — everything else is.
+// Wipers, and a Dead Hang — a third move from that flow, "heel-to-toe
+// rock", was dropped: as described it was indistinguishable in practice
+// from the other two, and the name collides with an unrelated standing
+// balance drill), his towel routine (High Pull Down, Straight-Arm Pull,
+// Front Raise, Arm Circles), his named strength circuit (push-ups, jump
+// squats, dips, reverse lunges, wall sits), and his "5 tests for
+// longevity" post (Sit-to-Stand No Hands, Single-Leg Balance, Standing
+// Toe Touch — grip strength and sit-and-reach from that same list didn't
+// translate to a distinct bodyweight move and were skipped). His content
+// doesn't use consistent cute names — none of this is his own naming,
+// including where noted below — so names/descriptions here are original,
+// written for this app. A handful (Plank Hold, Mountain Climber, Couch
+// Stretch, Bird Dog Reach, Side Plank Hold, Squat Fold) are standard
+// bodyweight staples that fit his style and content but aren't verbatim
+// from a specific post — everything else is.
 //
 // Schema (deliberately different from poses.js — see README):
 //   id             unique string
@@ -58,7 +61,7 @@ window.EXERCISES = [
   {
     id: 'reverse-hunchback',
     name: 'Reverse Hunchback',
-    figure: 'standingArmsUp',
+    figure: 'armsBehindBack',
     surface: 'standing',
     cue: 'Clasp your hands behind you and lift your arms, opening your chest. Great for undoing a day at the desk.',
   },
@@ -153,10 +156,10 @@ window.EXERCISES = [
   {
     id: 'worlds-greatest-stretch',
     name: "World's Greatest Stretch",
-    figure: 'kneelTwist',
+    figure: 'worldsGreatestFlow',
     surface: 'ground',
     sided: true,
-    cue: 'From a deep kneeling lunge, rotate your torso and open one arm toward the ceiling. Move slow enough to control the range.',
+    cue: 'From a deep kneeling lunge — front foot planted, back knee down — place both hands inside your front foot. Rotate your torso and reach the arm on the same side as your back knee straight up toward the ceiling, following it with your eyes. Move slow enough to control the range.',
   },
   {
     id: 'couch-stretch',
@@ -228,10 +231,9 @@ window.EXERCISES = [
   {
     id: 'prone-w-rotation',
     name: 'Prone W-Rotation',
-    figure: 'lyingFront',
+    figure: 'proneWTop',
     surface: 'ground',
-    sided: true,
-    cue: 'Lie on your stomach, arms in a W shape. Rotate one forearm up toward your ear, then back down. Switch sides.',
+    cue: 'Lie on your stomach, arms in a W shape, thumbs up toward the ceiling. Rotate one forearm up toward your ear, then the other, alternating side to side.',
   },
   {
     id: 'w-slide',
@@ -243,7 +245,7 @@ window.EXERCISES = [
   {
     id: 'l-pull',
     name: 'L-Pull',
-    figure: 'armsGoalpost',
+    figure: 'armsElbowsAtRibs',
     surface: 'standing',
     cue: 'Elbows bent by your ribs, pull your hands back and squeeze your shoulder blades together. Slow and controlled.',
   },
@@ -264,7 +266,7 @@ window.EXERCISES = [
   {
     id: 'crab-lift',
     name: 'Crab Lift',
-    figure: 'lyingBack',
+    figure: 'crabLiftFlow',
     surface: 'ground',
     cue: 'From an L-sit, hands by your hips, press down and lift your hips up into a crab position. Lower with control and repeat.',
   },
@@ -286,15 +288,15 @@ window.EXERCISES = [
   {
     id: 'scorpion-heel-taps',
     name: 'Scorpion Heel Taps',
-    figure: 'lyingFront',
+    figure: 'scorpionTwist',
     surface: 'ground',
     sided: true,
-    cue: 'Lie on your stomach, arms out to the sides. Swing one heel up and across toward the opposite hand, then reset.',
+    cue: 'Lie on your stomach, arms out to the sides. Swing one heel as far as you can, up and across towards the hand, then reset.',
   },
   {
     id: 'ninety-ninety-switch',
     name: '90/90 Switch',
-    figure: 'seatedNeutral',
+    figure: 'zSit',
     surface: 'ground',
     cue: 'Sit with both knees bent at 90 degrees, one in front and one to the side. Rotate your knees to switch which leg is which.',
   },
@@ -311,13 +313,6 @@ window.EXERCISES = [
     figure: 'lyingKneesBent',
     surface: 'ground',
     cue: 'Lie on your back, knees bent and together. Slowly sway both knees side to side like a windshield wiper.',
-  },
-  {
-    id: 'heel-to-toe-rock',
-    name: 'Heel-to-Toe Rock',
-    figure: 'lyingKneesBent',
-    surface: 'ground',
-    cue: 'Lie on your back, feet flat and hip-width apart. Slowly rock your knees and feet in and out, heels to toes.',
   },
 
   // --- Needs a chair, wall, towel, or book ---

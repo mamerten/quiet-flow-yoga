@@ -9,13 +9,26 @@
      it also sets (colors, table layout), matching this page's own look. -->
 <link rel="stylesheet" href="../public/css/style.css" />
 <style>
+  /* style.css (imported above) is written for the app's own single
+     centered card — its `body` rule makes body a centered flexbox and
+     its `h1` rule colors/sizes the app's hero heading. Neither applies to
+     this long scrollable reference page, so every property it sets that
+     this page doesn't want gets reset explicitly here rather than left to
+     cascade order — silently relying on "the local rule comes later" only
+     covers properties BOTH rules set; anything style.css sets that this
+     block doesn't (display, min-height, padding, on `body`) would
+     otherwise leak straight through, which is what broke this page's
+     layout the first time this stylesheet got imported. */
   body {
+    display: block;
+    min-height: 0;
+    padding: 0;
     font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
     margin: 28px 32px 60px;
     color: #2f3b34;
     background: #faf7f2;
   }
-  h1 { margin: 0 0 4px; }
+  h1 { margin: 0 0 4px; font-size: 1.8rem; font-weight: 700; color: #2f3b34; }
   .meta { color: #6b7570; font-size: 0.85rem; margin-bottom: 28px; }
   h2 {
     margin: 40px 0 10px;
@@ -73,11 +86,23 @@
       return e.sided ? 'L + R' : '—';
     }
 
-    function groupOf(e) {
-      if (e.needsFurniture) return 'Needs a chair, step, or other prop';
-      if (e.surface === 'ground') return 'Ground / mat, no equipment';
-      return 'Standing, no equipment';
+    // Stable keys for grouping/ordering, separate from their display text
+    // (GROUP_LABELS below) — a prose label used as the join key between
+    // two places (as a previous version of this file did) is one typo
+    // away from a group silently rendering nothing, which is exactly
+    // what happened here once before.
+    function groupKey(e) {
+      if (e.needsFurniture) return 'furniture';
+      if (e.surface === 'ground') return 'ground';
+      return 'standing';
     }
+
+    const GROUP_LABELS = {
+      standing: 'Standing, no equipment',
+      ground: 'Ground / mat, no equipment',
+      furniture: 'Needs a chair, step, or other prop',
+    };
+    const GROUP_ORDER = ['standing', 'ground', 'furniture'];
 
     function render() {
       const exercises = window.EXERCISES || [];
@@ -90,24 +115,18 @@
 
       const groups = {};
       exercises.forEach((e) => {
-        const g = groupOf(e);
-        (groups[g] = groups[g] || []).push(e);
+        const k = groupKey(e);
+        (groups[k] = groups[k] || []).push(e);
       });
 
-      const order = [
-        'Standing, no equipment',
-        'Ground / mat, no equipment',
-        'Needs a chair, step, wall, towel, or book',
-      ];
-
       const root = document.getElementById('root');
-      order.forEach((groupName) => {
-        const list = groups[groupName];
+      GROUP_ORDER.forEach((key) => {
+        const list = groups[key];
         if (!list || !list.length) return;
 
         const section = document.createElement('section');
         const h2 = document.createElement('h2');
-        h2.textContent = `${groupName} (${list.length})`;
+        h2.textContent = `${GROUP_LABELS[key]} (${list.length})`;
         section.appendChild(h2);
 
         const table = document.createElement('table');

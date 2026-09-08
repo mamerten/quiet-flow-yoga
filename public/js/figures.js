@@ -165,13 +165,17 @@ window.FIGURES = {
     POLY('50,75 30,95 15,55')
   ),
 
-  // T8 — kneeling, folded forward (Child's Pose)
+  // T8 — kneeling, sitting back on the heels with the torso folded all
+  // the way forward and one arm stretched out along the floor (Child's
+  // Pose, Kneeling Rest) — a clear grounded base (hips down near the
+  // heels) with the back arching up and over to a head that's close to
+  // the floor, rather than a shape that reads as cut off partway through.
   kneelingFold: svg(
-    HEAD(22, 85, 7) +
-    LINE(30, 88, 65, 95) +
-    LINE(30, 88, 8, 92) +
-    LINE(65, 95, 75, 120) +
-    LINE(65, 95, 55, 122)
+    LINE(20, 108, 20, 128) +
+    LINE(20, 108, 55, 85) +
+    LINE(55, 85, 70, 108) +
+    HEAD(74, 112, 7) +
+    LINE(55, 85, 95, 92)
   ),
 
   // T9 — seated, cross-legged (Easy Seat, Forward Fold, Twist, Butterfly, Cow Face)
@@ -196,12 +200,57 @@ window.FIGURES = {
     LINE(75, 45, 85, 50)
   ),
 
+  // C32 — 2-frame flip book: an L-sit (sitting tall, legs straight out in
+  // front, hands planted by the hips), then the crab-lift position itself
+  // (hands planted behind, hips pressed up into a tabletop bridge, knees
+  // bent, feet flat ahead) — the starting point and the actual lift, not
+  // just one or the other (Crab Lift).
+  crabLiftFlow: animatedFigure([
+    // L-sit
+    HEAD(25, 60, 7) +
+      LINE(25, 68, 25, 90) +
+      LINE(25, 68, 15, 92) +
+      LINE(25, 90, 90, 86),
+    // crab lift
+    HEAD(25, 62, 7) +
+      LINE(15, 100, 30, 68) +
+      LINE(30, 68, 65, 75) +
+      POLY('65,75 72,95 92,100'),
+  ]),
+
   // T11 — lying on stomach, chest lifted (Cobra)
   lyingFront: svg(
     HEAD(25, 68, 7) +
     LINE(32, 72, 70, 90) +
     LINE(70, 90, 95, 92) +
     LINE(40, 75, 45, 90)
+  ),
+
+  // C30 — bird's-eye view, lying face down, arms bent in a "W" (elbows
+  // out to the sides, hands tucked back up near the ears) — Prone
+  // W-Rotation is fundamentally about arm shape and rotation relative to
+  // the body, which a side view can't show nearly as clearly as looking
+  // straight down at it does.
+  proneWTop: svg(
+    HEAD(50, 20) +
+    LINE(50, 30, 50, 100) +
+    LINE(35, 40, 65, 40) +
+    LINE(35, 40, 20, 42) +
+    LINE(20, 42, 30, 18) +
+    LINE(65, 40, 80, 42) +
+    LINE(80, 42, 70, 18)
+  ),
+
+  // C31 — side view, lying face down with a dramatic twist: one leg bent
+  // and swung high up and back over the body toward the opposite hand —
+  // the actual "scorpion" shape this is named for, distinct from a plain
+  // lying-flat position with just a subtle bend.
+  scorpionTwist: svg(
+    HEAD(18, 72, 7) +
+    LINE(25, 74, 65, 82) +
+    LINE(25, 74, 8, 60) +
+    LINE(25, 74, 10, 92) +
+    POLY('65,82 78,50 45,25')
   ),
 
   // T12 — balancing on one leg, arms reaching up near the head (Tree,
@@ -295,16 +344,32 @@ window.FIGURES = {
     LINE(72, 58, 94, 96)
   ),
 
-  // C7 — kneeling lunge with the torso rotated and one arm opening
-  // upward (World's Greatest Lunge)
-  kneelTwist: svg(
-    HEAD(50, 20) +
-    LINE(50, 28, 50, 70) +
-    LINE(50, 34, 30, 50) +
-    LINE(50, 34, 75, 10) +
-    POLY('50,70 35,100 30,132') +
-    LINE(50, 70, 80, 128)
-  ),
+  // C7 — 3-frame flip book, all sharing the same kneeling-lunge base
+  // (front foot planted, back knee down): hands on the floor, mid-rise,
+  // then fully rotated with one arm reaching for the ceiling (World's
+  // Greatest Stretch) — showing the actual rotation reads far better
+  // than any single frame of it, and being visibly a kneeling lunge
+  // throughout was the other specific complaint about the old figure.
+  worldsGreatestFlow: animatedFigure([
+    // hands on the floor
+    HEAD(60, 55, 7) +
+      LINE(50, 72, 62, 62) +
+      LINE(62, 62, 72, 95) +
+      POLY('50,72 68,85 76,112') +
+      LINE(50, 72, 28, 98),
+    // mid-rise
+    HEAD(62, 45, 7) +
+      LINE(50, 72, 62, 55) +
+      LINE(62, 55, 78, 60) +
+      POLY('50,72 68,85 76,112') +
+      LINE(50, 72, 28, 98),
+    // fully rotated, arm reaching for the ceiling
+    HEAD(65, 30, 7) +
+      LINE(50, 72, 65, 40) +
+      LINE(65, 40, 85, 15) +
+      POLY('50,72 68,85 76,112') +
+      LINE(50, 72, 28, 98),
+  ]),
 
   // C8 — hands and knees, opposite arm reaching forward and opposite
   // leg reaching back (Bird Dog Reach)
@@ -444,6 +509,20 @@ window.FIGURES = {
     LINE(38, 32, 62, 32) +
     POLY('38,32 30,32 28,14') +
     POLY('62,32 70,32 72,14') +
+    LINE(50, 72, 40, 132) +
+    LINE(50, 72, 60, 132)
+  ),
+
+  // C20c — standing, elbows bent and tucked down at rib height with hands
+  // pulled back toward the torso — distinct from armsGoalpost's elbows-
+  // at-shoulder-height shape, which doesn't match L-Pull's "elbows bent
+  // by your ribs" (a much lower position).
+  armsElbowsAtRibs: svg(
+    HEAD(50, 18) +
+    LINE(50, 26, 50, 72) +
+    LINE(38, 32, 62, 32) +
+    POLY('38,32 32,55 46,58') +
+    POLY('62,32 68,55 54,58') +
     LINE(50, 72, 40, 132) +
     LINE(50, 72, 60, 132)
   ),
