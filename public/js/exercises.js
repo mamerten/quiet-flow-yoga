@@ -27,7 +27,15 @@
 // from a specific post. Two more (Squat and Twist, Lunge Reach and Twist)
 // come from a separate source entirely — a Primal Instinct Instagram
 // mobility-flow reel — plus one built from a photo of a kneeling
-// toe/ankle isometric hold (Toe Flexor Hold). Everything else is Markus's.
+// toe/ankle isometric hold (Toe Flexor Hold).
+//
+// A later pass (Pull-Up, Hollow Body Hold, Superman Hold, Calf Raises,
+// Curtsy Lunge, Bear Crawl, Cat-Cow, Burpee) filled in gaps the library
+// otherwise had no coverage for at all — pulling strength, calf/ankle
+// work, lateral lunging, locomotion, a core "anti-pair" beyond Plank Hold,
+// and (oddly, given how foundational it is) Cat-Cow — rather than being
+// sourced from any one place; these are standard, widely-taught bodyweight
+// moves. Everything else in the file is Markus's.
 //
 // Schema (deliberately different from poses.js — see README):
 //   id             unique string
@@ -133,6 +141,21 @@ window.EXERCISES = [
     figure: 'squatTwistFlow',
     surface: 'standing',
     cue: 'Sink into a squat, then rotate your torso and reach one arm up toward the ceiling, following it with your eyes. Return to the squat and switch sides.',
+  },
+  {
+    id: 'calf-raises',
+    name: 'Calf Raises',
+    figure: 'calfRaise',
+    surface: 'standing',
+    cue: 'Rise up onto the balls of your feet as high as you can, then lower with control. Small range, steady pace.',
+  },
+  {
+    id: 'curtsy-lunge',
+    name: 'Curtsy Lunge',
+    figure: 'curtsyLunge',
+    surface: 'standing',
+    sided: true,
+    cue: 'Step one leg behind and across the other, like a curtsy, bending both knees. Push through your front heel to return.',
   },
 
   // --- Ground / mat ---
@@ -368,6 +391,41 @@ window.EXERCISES = [
     surface: 'ground',
     cue: 'Kneel with your back foot\'s toes tucked under, weight pressing into the ball of that foot, front knee bent and hands on the floor. Hold still and breathe.',
   },
+  {
+    id: 'cat-cow-mobility',
+    name: 'Cat-Cow',
+    figure: 'tabletop',
+    surface: 'ground',
+    cue: 'On hands and knees, arch your back and look up, then round your spine and tuck your chin. Slow and steady, following your breath.',
+  },
+  {
+    id: 'hollow-body-hold',
+    name: 'Hollow Body Hold',
+    figure: 'hollowBodyHold',
+    surface: 'ground',
+    cue: 'Lie on your back, arms overhead and legs straight. Press your lower back into the floor and lift your shoulders and legs slightly off the ground. Hold.',
+  },
+  {
+    id: 'superman-hold',
+    name: 'Superman Hold',
+    figure: 'supermanHold',
+    surface: 'ground',
+    cue: 'Lie on your stomach, arms reaching forward. Lift your arms, chest, and legs off the floor at the same time. Hold, then release.',
+  },
+  {
+    id: 'bear-crawl',
+    name: 'Bear Crawl',
+    figure: 'bearCrawl',
+    surface: 'ground',
+    cue: 'On hands and feet, knees hovering just off the floor, hips low. Hold the position, or crawl forward a few steps and back.',
+  },
+  {
+    id: 'burpee',
+    name: 'Burpee',
+    figure: 'burpeeFlow',
+    surface: 'ground',
+    cue: 'Squat down and place your hands on the floor, jump or step your feet back into a plank, then jump them back in and explode up into a jump.',
+  },
 
   // --- Needs a chair, wall, towel, or book ---
   {
@@ -452,6 +510,14 @@ window.EXERCISES = [
     surface: 'standing',
     needsFurniture: true,
     cue: 'Hang from a sturdy bar or door-frame pull-up bar, arms straight, shoulders relaxed. Let your spine decompress.',
+  },
+  {
+    id: 'pull-up',
+    name: 'Pull-Up',
+    figure: 'pullUpFlow',
+    surface: 'standing',
+    needsFurniture: true,
+    cue: 'Hang from a bar with arms straight, then pull your chin up and over the bar, elbows driving down and back. Lower with control.',
   },
 ];
 

@@ -886,4 +886,116 @@ window.FIGURES = {
       POLY('48,78 65,88 72,115') +
       LINE(48, 78, 25, 105),
   ]),
+
+  // C41 — 2-frame flip book on the same bar as deadHang: hanging with
+  // straight arms, then pulled up with bent elbows and the chin near the
+  // bar — the actual pull, not just the passive hang (Pull-Up).
+  pullUpFlow: animatedFigure([
+    // hanging
+    LINE(30, 8, 70, 8) +
+      HEAD(50, 22) +
+      LINE(50, 30, 50, 78) +
+      LINE(50, 30, 35, 8) +
+      LINE(50, 30, 65, 8) +
+      LINE(50, 78, 42, 130) +
+      LINE(50, 78, 58, 130),
+    // pulled up, chin near the bar
+    LINE(30, 8, 70, 8) +
+      HEAD(50, 16) +
+      LINE(50, 24, 50, 70) +
+      POLY('50,24 30,20 35,8') +
+      POLY('50,24 70,20 65,8') +
+      LINE(50, 70, 42, 122) +
+      LINE(50, 70, 58, 122),
+  ]),
+
+  // C42 — lying on the back, shoulders and legs both lifted slightly off
+  // the floor in a shallow curve, arms reaching overhead — an isometric
+  // hold, not a rep, so a single frame like Plank Hold or Wall Sit Hold
+  // (Hollow Body Hold).
+  hollowBodyHold: svg(
+    HEAD(15, 75, 7) +
+    LINE(22, 78, 15, 60) +
+    LINE(22, 78, 65, 78) +
+    LINE(65, 78, 92, 65)
+  ),
+
+  // C43 — lying on the stomach, arms and legs both lifted off the floor
+  // at the same time — the mirror-image extension to hollowBodyHold's
+  // flexion, both ends lifted while the middle stays down (Superman Hold).
+  supermanHold: svg(
+    HEAD(20, 55, 7) +
+    LINE(26, 58, 15, 40) +
+    LINE(26, 58, 70, 62) +
+    LINE(70, 62, 95, 45)
+  ),
+
+  // C44 — standing, ordinary posture but drawn up on the balls of the
+  // feet (a short angled foot segment instead of a flat vertical line to
+  // the ground) — the heel-raise itself is too small a range to animate
+  // meaningfully, so this shows the up position directly (Calf Raises).
+  calfRaise: svg(
+    HEAD(50, 16) +
+    LINE(50, 24, 50, 74) +
+    LINE(38, 30, 34, 66) +
+    LINE(62, 30, 66, 66) +
+    LINE(50, 74, 40, 128) +
+    LINE(40, 128, 48, 132) +
+    LINE(50, 74, 60, 128) +
+    LINE(60, 128, 52, 132)
+  ),
+
+  // C45 — standing, one leg crossing behind and to the side of the other
+  // (like a curtsy) rather than straight back — the lateral/crossing path
+  // that distinguishes this from every other lunge in the file, which all
+  // step straight forward or back (Curtsy Lunge).
+  curtsyLunge: svg(
+    HEAD(50, 18) +
+    LINE(50, 26, 50, 70) +
+    LINE(38, 30, 62, 30) +
+    LINE(38, 30, 34, 55) +
+    LINE(62, 30, 66, 55) +
+    LINE(50, 70, 42, 130) +
+    POLY('50,70 75,95 85,125')
+  ),
+
+  // C46 — hands and feet on the floor, hips low but knees held just off
+  // the ground (unlike tabletop's knees-down base), with one reaching arm
+  // suggesting the crawling motion — a held "ready" position rather than
+  // an animated crawl, the same treatment mountainClimber and
+  // beastKickthrough (reused mountainClimber) already get despite also
+  // being reps (Bear Crawl).
+  bearCrawl: svg(
+    HEAD(16, 56, 7) +
+    LINE(24, 58, 70, 54) +
+    LINE(26, 60, 18, 92) +
+    LINE(70, 54, 82, 90) +
+    LINE(45, 56, 38, 40)
+  ),
+
+  // C47 — 3-frame flip book built entirely from shapes already used
+  // elsewhere in this file: the same forward-lean squat as
+  // squatTwistFlow's first frame, the plank, and jumpSquatFlow's airborne
+  // frame — because a burpee actually is a squat, a plank, and a jump,
+  // chained together (Burpee).
+  burpeeFlow: animatedFigure([
+    // squat, hands to the floor
+    HEAD(45, 45, 7) +
+      LINE(50, 52, 48, 85) +
+      LINE(50, 55, 65, 75) +
+      POLY('48,85 30,80 25,110') +
+      POLY('48,85 65,80 70,110'),
+    // plank
+    HEAD(14, 58, 7) +
+      LINE(21, 60, 88, 68) +
+      LINE(21, 60, 21, 92) +
+      LINE(88, 68, 96, 76),
+    // jump, arms overhead
+    HEAD(50, 20) +
+      LINE(50, 28, 50, 68) +
+      LINE(50, 32, 30, 15) +
+      LINE(50, 32, 70, 15) +
+      POLY('50,68 38,85 42,105') +
+      POLY('50,68 62,85 58,105'),
+  ]),
 };
