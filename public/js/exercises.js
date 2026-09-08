@@ -21,7 +21,7 @@
 // doesn't use consistent cute names — none of this is his own naming,
 // including where noted below — so names/descriptions here are original,
 // written for this app. A handful (Plank Hold, Mountain Climber, Couch
-// Stretch, Bird Dog Reach, Side Plank Hold, Squat Fold) are standard
+// Stretch, Bird Dog, Side Plank Hold, Squat Fold) are standard
 // bodyweight staples that fit his style and content but aren't verbatim
 // from a specific post — everything else is.
 //
@@ -75,7 +75,7 @@ window.EXERCISES = [
   {
     id: 'reverse-lunge',
     name: 'Reverse Lunge',
-    figure: 'reverseLunge',
+    figure: 'reverseLungeFlow',
     surface: 'standing',
     sided: true,
     cue: 'Step one foot back and lower into a lunge, front knee tracking over your foot. Push through your front heel to return.',
@@ -171,7 +171,7 @@ window.EXERCISES = [
   },
   {
     id: 'bird-dog',
-    name: 'Bird Dog Reach',
+    name: 'Bird Dog',
     figure: 'birdDog',
     surface: 'ground',
     sided: true,
@@ -180,7 +180,7 @@ window.EXERCISES = [
   {
     id: 'glute-bridge',
     name: 'Glute Bridge',
-    figure: 'lyingBack',
+    figure: 'gluteBridge',
     surface: 'ground',
     cue: 'Lie on your back, feet flat, and lift your hips toward the ceiling, squeezing your glutes at the top.',
   },
@@ -252,7 +252,7 @@ window.EXERCISES = [
   {
     id: 't-raise',
     name: 'T-Raise',
-    figure: 'standingArmsOutT',
+    figure: 'standingTArms',
     surface: 'standing',
     cue: 'Arms out to the sides in a T, lift them slightly and squeeze between your shoulder blades. Small, controlled range.',
   },
@@ -369,7 +369,7 @@ window.EXERCISES = [
   {
     id: 'towel-straight-arm-pull',
     name: 'Towel Straight-Arm Pull',
-    figure: 'towelPull',
+    figure: 'towelPullAcrossFlow',
     surface: 'standing',
     needsFurniture: true,
     sided: true,

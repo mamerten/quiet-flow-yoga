@@ -56,6 +56,20 @@ window.FIGURES = {
     LINE(50, 74, 85, 132)
   ),
 
+  // T3b — standing, arms out to a T, ordinary hip-width standing legs —
+  // NOT the wide warrior-style stance of standingArmsOutT above, which
+  // doesn't belong on T-Raise (a shoulder-blade squeeze, not a wide-
+  // legged pose — its cue never mentions a stance at all).
+  standingTArms: svg(
+    HEAD(50, 16) +
+    LINE(50, 24, 50, 74) +
+    LINE(38, 30, 62, 30) +
+    LINE(38, 30, 10, 30) +
+    LINE(62, 30, 90, 30) +
+    LINE(50, 74, 40, 132) +
+    LINE(50, 74, 60, 132)
+  ),
+
   // T4 — standing forward fold (Uttanasana)
   standingForwardFold: svg(
     HEAD(46, 112, 7) +
@@ -171,11 +185,12 @@ window.FIGURES = {
   // heels) with the back arching up and over to a head that's close to
   // the floor, rather than a shape that reads as cut off partway through.
   kneelingFold: svg(
-    LINE(20, 108, 20, 128) +
-    LINE(20, 108, 55, 85) +
-    LINE(55, 85, 70, 108) +
-    HEAD(74, 112, 7) +
-    LINE(55, 85, 95, 92)
+    LINE(25, 100, 15, 125) +
+    LINE(25, 100, 35, 125) +
+    LINE(25, 100, 55, 75) +
+    LINE(55, 75, 68, 98) +
+    HEAD(72, 100, 7) +
+    LINE(55, 75, 92, 85)
   ),
 
   // T9 — seated, cross-legged (Easy Seat, Forward Fold, Twist, Butterfly, Cow Face)
@@ -198,6 +213,19 @@ window.FIGURES = {
     LINE(22, 70, 15, 85) +
     LINE(70, 70, 75, 45) +
     LINE(75, 45, 85, 50)
+  ),
+
+  // C33 — lying on the back at the top of a bridge: shoulders resting on
+  // the floor, one straight unbroken line all the way from shoulder
+  // through the hip to the knee (the actual point of a bridge — torso and
+  // thighs in one line), then the shin dropping straight down to a foot
+  // flat on the floor (Glute Bridge) — distinct from lyingBack, which
+  // bends sharply at the hip and doesn't read as a bridge.
+  gluteBridge: svg(
+    HEAD(12, 90, 7) +
+    LINE(18, 92, 78, 52) +
+    LINE(78, 52, 85, 95) +
+    LINE(18, 92, 3, 88)
   ),
 
   // C32 — 2-frame flip book: an L-sit (sitting tall, legs straight out in
@@ -233,7 +261,9 @@ window.FIGURES = {
   // straight down at it does.
   proneWTop: svg(
     HEAD(50, 20) +
-    LINE(50, 30, 50, 100) +
+    LINE(50, 30, 50, 85) +
+    LINE(50, 85, 42, 120) +
+    LINE(50, 85, 58, 120) +
     LINE(35, 40, 65, 40) +
     LINE(35, 40, 20, 42) +
     LINE(20, 42, 30, 18) +
@@ -491,13 +521,25 @@ window.FIGURES = {
   // actual side-on lunge looks (Reverse Lunge). The previous version drew
   // the torso/arms as if facing the camera while only the legs were
   // side-on, which read as neither view.
-  reverseLunge: svg(
+  // C19 — 2-frame flip book: stepping back into the lunge (front knee
+  // lightly bent, back leg still extended, hips relatively high), then
+  // the completed lunge (hips sunk low, front knee bent deeply, back
+  // knee dropped close to the floor) — a rep has a start and a bottom,
+  // not just one or the other (Reverse Lunge).
+  reverseLungeFlow: animatedFigure([
+    // stepping back
     HEAD(50, 18) +
-    LINE(50, 26, 50, 70) +
-    LINE(50, 30, 38, 52) +
-    POLY('50,70 68,90 74,128') +
-    LINE(50, 70, 22, 118)
-  ),
+      LINE(50, 26, 50, 70) +
+      LINE(50, 30, 38, 52) +
+      POLY('50,70 68,90 74,128') +
+      LINE(50, 70, 22, 118),
+    // completed lunge
+    HEAD(50, 38) +
+      LINE(50, 46, 50, 90) +
+      LINE(50, 50, 38, 72) +
+      POLY('50,90 68,100 74,128') +
+      POLY('50,90 30,108 22,128'),
+  ]),
 
   // C20 — standing, elbows bent and lifted level with the shoulders, a
   // goalpost/W arm shape. Reused for the small shoulder-mobility moves
@@ -577,6 +619,33 @@ window.FIGURES = {
   // between the hands. Reused for the front-facing towel exercises
   // (Straight-Arm Pull, Front Raise, Arm Circles) — not High Pull Down,
   // which starts overhead; see towelPullOverhead below.
+  // C23c — 2-frame flip book: the towel held taut up and out to one side,
+  // then pulled down and across to the opposite hip — the actual motion,
+  // since a single static frame (it was reusing towelPull's forward-reach
+  // shape, which doesn't match this move's diagonal path at all) can't
+  // show a pull that moves from one place to another (Towel Straight-Arm
+  // Pull).
+  towelPullAcrossFlow: animatedFigure([
+    // held up and out
+    HEAD(50, 18) +
+      LINE(50, 26, 50, 72) +
+      LINE(38, 30, 62, 30) +
+      LINE(38, 30, 55, 10) +
+      LINE(62, 30, 85, 15) +
+      LINE(55, 10, 85, 15) +
+      LINE(50, 72, 40, 132) +
+      LINE(50, 72, 60, 132),
+    // pulled down and across to the opposite hip
+    HEAD(50, 18) +
+      LINE(50, 26, 50, 72) +
+      LINE(38, 30, 62, 30) +
+      LINE(38, 30, 20, 60) +
+      LINE(62, 30, 45, 75) +
+      LINE(20, 60, 45, 75) +
+      LINE(50, 72, 40, 132) +
+      LINE(50, 72, 60, 132),
+  ]),
+
   towelPull: svg(
     HEAD(50, 18) +
     LINE(50, 26, 50, 72) +
