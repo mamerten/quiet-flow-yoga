@@ -604,9 +604,8 @@ window.FIGURES = {
   ),
 
   // C22 — lying on back, knees bent (one pair drawn slightly offset for
-  // visual interest). Reused for the lying hip-mobility family that all
-  // share this base position (Lying Knee Drops, Windshield Wipers,
-  // Heel-to-Toe Rock).
+  // visual interest). Reused for the lying hip-mobility pair that shares
+  // this base position (Lying Knee Drops, Windshield Wipers).
   lyingKneesBent: svg(
     HEAD(15, 70, 7) +
     LINE(22, 70, 55, 70) +
@@ -756,4 +755,135 @@ window.FIGURES = {
     POLY('50,78 76,80 90,60') +
     POLY('50,78 24,90 12,114')
   ),
+
+  // C34 — kneeling, one knee bent forward with hands planted on the
+  // floor, the back leg extended behind with its toes tucked under and
+  // pressing into the floor rather than the knee resting down — the
+  // actual weight-bearing point in a toe/ankle isometric hold, distinct
+  // from every other kneeling figure in this file (Toe Flexor Hold).
+  toeFlexorHold: svg(
+    HEAD(68, 42, 7) +
+    LINE(62, 48, 50, 68) +
+    LINE(62, 48, 85, 72) +
+    LINE(50, 68, 30, 82) +
+    LINE(30, 82, 22, 100) +
+    LINE(50, 68, 78, 98)
+  ),
+
+  // C35 — 2-frame flip book: lying on the back, torso crunched with one
+  // knee drawn tight to the chest, alternating with the other half of the
+  // pedaling cycle (torso lower, that same leg extended further out) —
+  // a side view can't show which side is doing what, so this shows the
+  // contraction/extension of the cycle instead, the same way jumpSquatFlow
+  // shows crouch/airborne rather than trying to depict "left vs right"
+  // (Bicycle Crunches).
+  bicycleFlow: animatedFigure([
+    // tight crunch
+    HEAD(25, 50, 7) +
+      LINE(30, 54, 55, 60) +
+      LINE(30, 54, 20, 42) +
+      POLY('55,60 48,45 32,42') +
+      LINE(55, 60, 90, 65),
+    // extended, opposite leg lifting
+    HEAD(18, 60, 7) +
+      LINE(24, 62, 55, 62) +
+      LINE(24, 62, 10, 50) +
+      LINE(55, 62, 92, 55) +
+      POLY('55,62 60,40 75,35'),
+  ]),
+
+  // C36 — 2-frame flip book: lying flat (arms overhead, legs extended),
+  // then folded shut with the torso and knees both lifting to meet in the
+  // middle — the "suitcase" the name is named for closing (Suitcase
+  // Crunches).
+  suitcaseFlow: animatedFigure([
+    // open, lying flat
+    HEAD(12, 68, 7) +
+      LINE(19, 68, 50, 70) +
+      LINE(19, 68, 8, 60) +
+      LINE(50, 70, 92, 68),
+    // closed, torso and knees meeting
+    HEAD(35, 40, 7) +
+      LINE(41, 44, 50, 68) +
+      LINE(41, 44, 55, 30) +
+      POLY('50,68 58,42 70,38'),
+  ]),
+
+  // C37 — 2-frame flip book: seated in a reclined V (knees bent, feet
+  // lifted, torso leaning back), clasped hands swinging from one side to
+  // the other — the actual side-to-side rotation, with the legs/torso
+  // base held fixed across both frames so only the twist itself changes
+  // (Russian Twists).
+  russianTwistFlow: animatedFigure([
+    // twisted right
+    HEAD(42, 50, 7) +
+      LINE(48, 56, 50, 85) +
+      LINE(48, 56, 78, 65) +
+      POLY('50,85 68,80 80,95') +
+      POLY('50,85 32,80 20,95'),
+    // twisted left
+    HEAD(42, 50, 7) +
+      LINE(48, 56, 50, 85) +
+      LINE(48, 56, 18, 65) +
+      POLY('50,85 68,80 80,95') +
+      POLY('50,85 32,80 20,95'),
+  ]),
+
+  // C38 — 2-frame flip book built on the same straight-line-off-the-floor
+  // shape as `plank`: the drawn arm down supporting, alternating with
+  // that same arm lifted and bent, reaching in toward the opposite
+  // shoulder — the tap itself (Shoulder Taps).
+  shoulderTapFlow: animatedFigure([
+    // supporting
+    HEAD(14, 58, 7) +
+      LINE(21, 60, 88, 68) +
+      LINE(21, 60, 21, 92) +
+      LINE(88, 68, 96, 76),
+    // tapping the opposite shoulder
+    HEAD(14, 58, 7) +
+      LINE(21, 60, 88, 68) +
+      POLY('21,60 15,75 35,62') +
+      LINE(88, 68, 96, 76),
+  ]),
+
+  // C39 — 2-frame flip book: the same wide-kneed squat base held fixed
+  // across both frames (as deepSquat's), with the torso swinging from a
+  // forward, hands-down lean up into a full rotation, one arm reaching
+  // for the ceiling — the same "add motion to a static rotation" approach
+  // as worldsGreatestFlow, applied to a squat instead of a kneeling lunge
+  // (Squat and Twist).
+  squatTwistFlow: animatedFigure([
+    // forward lean, hands down
+    HEAD(45, 45, 7) +
+      LINE(50, 52, 48, 85) +
+      LINE(50, 55, 65, 75) +
+      POLY('48,85 30,80 25,110') +
+      POLY('48,85 65,80 70,110'),
+    // rotated up, arm reaching for the ceiling
+    HEAD(65, 25, 7) +
+      LINE(50, 85, 62, 35) +
+      LINE(62, 35, 80, 15) +
+      POLY('50,85 30,80 25,110') +
+      POLY('50,85 65,80 70,110'),
+  ]),
+
+  // C40 — 2-frame flip book: a lunge (front leg bent, back leg extended
+  // straight, held fixed across both frames like reverseLungeFlow's base)
+  // with the torso/arm sweeping through a full arc — down and back near
+  // the floor, then up and around overhead — rather than stopping partway
+  // like worldsGreatestFlow's single rotation (Lunge Reach and Twist).
+  lungeReachFlow: animatedFigure([
+    // reaching down and back
+    HEAD(50, 40, 7) +
+      LINE(50, 47, 48, 78) +
+      LINE(50, 50, 30, 65) +
+      POLY('48,78 65,88 72,115') +
+      LINE(48, 78, 25, 105),
+    // swept up and around overhead
+    HEAD(58, 20, 7) +
+      LINE(50, 78, 55, 35) +
+      LINE(55, 35, 78, 12) +
+      POLY('48,78 65,88 72,115') +
+      LINE(48, 78, 25, 105),
+  ]),
 };

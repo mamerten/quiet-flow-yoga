@@ -21,9 +21,13 @@
 // doesn't use consistent cute names — none of this is his own naming,
 // including where noted below — so names/descriptions here are original,
 // written for this app. A handful (Plank Hold, Mountain Climber, Couch
-// Stretch, Bird Dog, Side Plank Hold, Squat Fold) are standard
+// Stretch, Bird Dog, Side Plank Hold, Squat Fold, Bicycle Crunches,
+// Suitcase Crunches, Russian Twists, Shoulder Taps) are standard
 // bodyweight staples that fit his style and content but aren't verbatim
-// from a specific post — everything else is.
+// from a specific post. Two more (Squat and Twist, Lunge Reach and Twist)
+// come from a separate source entirely — a Primal Instinct Instagram
+// mobility-flow reel — plus one built from a photo of a kneeling
+// toe/ankle isometric hold (Toe Flexor Hold). Everything else is Markus's.
 //
 // Schema (deliberately different from poses.js — see README):
 //   id             unique string
@@ -122,6 +126,13 @@ window.EXERCISES = [
     figure: 'armsBehindBack',
     surface: 'standing',
     cue: 'Lace your fingers behind you and pull your hands down, not up. Opens your shoulders so they stop rounding forward.',
+  },
+  {
+    id: 'squat-twist',
+    name: 'Squat and Twist',
+    figure: 'squatTwistFlow',
+    surface: 'standing',
+    cue: 'Sink into a squat, then rotate your torso and reach one arm up toward the ceiling, following it with your eyes. Return to the squat and switch sides.',
   },
 
   // --- Ground / mat ---
@@ -313,6 +324,49 @@ window.EXERCISES = [
     figure: 'lyingKneesBent',
     surface: 'ground',
     cue: 'Lie on your back, knees bent and together. Slowly sway both knees side to side like a windshield wiper.',
+  },
+  {
+    id: 'bicycle-crunches',
+    name: 'Bicycle Crunches',
+    figure: 'bicycleFlow',
+    surface: 'ground',
+    cue: 'Lie on your back, hands behind your head. Bring one elbow toward the opposite knee while extending the other leg, then switch — a steady pedaling motion.',
+  },
+  {
+    id: 'suitcase-crunches',
+    name: 'Suitcase Crunches',
+    figure: 'suitcaseFlow',
+    surface: 'ground',
+    cue: 'Lie on your back, arms overhead and legs extended. Fold at the waist, bringing your knees and upper body up to meet in the middle like closing a suitcase, then lower with control.',
+  },
+  {
+    id: 'russian-twists',
+    name: 'Russian Twists',
+    figure: 'russianTwistFlow',
+    surface: 'ground',
+    cue: 'Sit with your knees bent, leaning back slightly, feet lifted or resting on the floor. Rotate your torso side to side, tapping the floor beside each hip.',
+  },
+  {
+    id: 'shoulder-taps',
+    name: 'Shoulder Taps',
+    figure: 'shoulderTapFlow',
+    surface: 'ground',
+    cue: 'From a plank, tap one hand to the opposite shoulder without letting your hips rock, then switch sides.',
+  },
+  {
+    id: 'lunge-reach-twist',
+    name: 'Lunge Reach and Twist',
+    figure: 'lungeReachFlow',
+    surface: 'ground',
+    sided: true,
+    cue: 'From a low lunge, rotate your torso and sweep one arm down and back, then around and up overhead in one flowing arc. Move slow and controlled.',
+  },
+  {
+    id: 'toe-flexor-hold',
+    name: 'Toe Flexor Hold',
+    figure: 'toeFlexorHold',
+    surface: 'ground',
+    cue: 'Kneel with your back foot\'s toes tucked under, weight pressing into the ball of that foot, front knee bent and hands on the floor. Hold still and breathe.',
   },
 
   // --- Needs a chair, wall, towel, or book ---
