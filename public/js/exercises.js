@@ -45,9 +45,9 @@
 //   surface        'standing' | 'ground' — exactly one. Whether you need a
 //                  mat (ground) or just floor space (standing).
 //   needsFurniture optional: true if a portable prop is required — a chair,
-//                  step, towel, or book — something you might not have on
-//                  hand. Gated by the "I have a step, chair, or other prop"
-//                  toggle. Independent of `surface`.
+//                  step, towel, book, or pull-up bar — something you might not
+//                  have on hand. Gated by the "I have a step, chair, or other
+//                  prop" toggle. Independent of `surface`.
 //   needsWall      optional: true if it's done against a wall. Kept
 //                  separate from needsFurniture and NOT gated by that
 //                  toggle — a wall isn't something you carry around like a
@@ -73,7 +73,7 @@ window.EXERCISES = [
   {
     id: 'reverse-hunchback',
     name: 'Reverse Hunchback',
-    figure: 'armsBehindBack',
+    figure: 'armsBehindBackLift',
     surface: 'standing',
     cue: 'Clasp your hands behind you and lift your arms, opening your chest. Great for undoing a day at the desk.',
   },
@@ -104,6 +104,7 @@ window.EXERCISES = [
     name: 'Collarbone Look-Up',
     figure: 'collarboneLookUp',
     surface: 'standing',
+    sided: true,
     cue: 'Cross one arm over and rest your fingers on the opposite collarbone, keep your ribs down, and look up and to that side. Unloads a stiff, forward-jutted neck.',
   },
   {
@@ -131,7 +132,7 @@ window.EXERCISES = [
   {
     id: 'hands-behind-pulldown',
     name: 'Hands-Behind-Back Pull-Down',
-    figure: 'armsBehindBack',
+    figure: 'armsBehindBackDown',
     surface: 'standing',
     cue: 'Lace your fingers behind you and pull your hands down, not up. Opens your shoulders so they stop rounding forward.',
   },
@@ -156,6 +157,35 @@ window.EXERCISES = [
     surface: 'standing',
     sided: true,
     cue: 'Step one leg behind and across the other, like a curtsy, bending both knees. Push through your front heel to return.',
+  },
+
+  {
+    id: 'w-slide',
+    name: 'W-Slide',
+    figure: 'wSlideFlow',
+    surface: 'standing',
+    cue: 'Arms in a W at your sides, slide them up overhead into a Y, then back down to a W. Keep your low back settled.',
+  },
+  {
+    id: 'l-pull',
+    name: 'L-Pull',
+    figure: 'lPullFlow',
+    surface: 'standing',
+    cue: 'Elbows bent by your ribs, pull your hands back and squeeze your shoulder blades together. Slow and controlled.',
+  },
+  {
+    id: 't-raise',
+    name: 'T-Raise',
+    figure: 'standingTArms',
+    surface: 'standing',
+    cue: 'Arms out to the sides in a T, lift them slightly and squeeze between your shoulder blades. Small, controlled range.',
+  },
+  {
+    id: 'y-raise',
+    name: 'Y-Raise',
+    figure: 'standingYArms',
+    surface: 'standing',
+    cue: 'Arms overhead in a Y shape, lift them slightly using your lower shoulder blade muscles. Keep your neck relaxed.',
   },
 
   // --- Ground / mat ---
@@ -200,8 +230,9 @@ window.EXERCISES = [
     name: 'Couch Stretch',
     figure: 'couchStretch',
     surface: 'ground',
+    needsWall: true,
     sided: true,
-    cue: 'Prop your back shin up behind you — against a wall or a couch, the pose’s namesake — so that knee is fully bent, then sink your hips forward and down. A deep stretch through the front of the hip and thigh.',
+    cue: 'Prop your back shin up behind you against a wall or a couch — the one this is named for — so that knee is fully bent, then sink your hips forward and down. A deep stretch through the front of the hip and thigh.',
   },
   {
     id: 'bird-dog',
@@ -223,7 +254,6 @@ window.EXERCISES = [
     name: 'Dead Bug',
     figure: 'deadBug',
     surface: 'ground',
-    sided: true,
     cue: 'Lie on your back, arms up and knees bent to 90 degrees. Slowly extend one arm and the opposite leg, then switch.',
   },
   {
@@ -237,7 +267,7 @@ window.EXERCISES = [
   {
     id: 'kneeling-rest',
     name: 'Kneeling Rest',
-    figure: 'kneelingFold',
+    figure: 'kneelingRest',
     surface: 'ground',
     cue: 'Sit back onto your heels and fold forward, arms stretched out or resting by your sides. A good reset between rounds.',
   },
@@ -251,51 +281,23 @@ window.EXERCISES = [
   {
     id: 'butterfly-rock',
     name: 'Butterfly Rock',
-    figure: 'seatedNeutral',
+    figure: 'butterflySit',
     surface: 'ground',
     cue: 'Sit with the soles of your feet together, knees out. Gently rock side to side with a steady, easy breath.',
   },
   {
     id: 'scapular-pushup',
     name: 'Scapular Push-Up',
-    figure: 'plank',
+    figure: 'scapPushUpFlow',
     surface: 'ground',
     cue: 'From a plank, keep your arms straight and push the floor away, letting your shoulder blades spread apart, then release.',
   },
   {
     id: 'prone-w-rotation',
     name: 'Prone W-Rotation',
-    figure: 'proneWTop',
+    figure: 'proneWFlow',
     surface: 'ground',
     cue: 'Lie on your stomach, arms in a W shape, thumbs up toward the ceiling. Rotate one forearm up toward your ear, then the other, alternating side to side.',
-  },
-  {
-    id: 'w-slide',
-    name: 'W-Slide',
-    figure: 'wSlideFlow',
-    surface: 'standing',
-    cue: 'Arms in a W at your sides, slide them up overhead into a Y, then back down to a W. Keep your low back settled.',
-  },
-  {
-    id: 'l-pull',
-    name: 'L-Pull',
-    figure: 'armsElbowsAtRibs',
-    surface: 'standing',
-    cue: 'Elbows bent by your ribs, pull your hands back and squeeze your shoulder blades together. Slow and controlled.',
-  },
-  {
-    id: 't-raise',
-    name: 'T-Raise',
-    figure: 'standingTArms',
-    surface: 'standing',
-    cue: 'Arms out to the sides in a T, lift them slightly and squeeze between your shoulder blades. Small, controlled range.',
-  },
-  {
-    id: 'y-raise',
-    name: 'Y-Raise',
-    figure: 'standingArmsUp',
-    surface: 'standing',
-    cue: 'Arms overhead in a Y shape, lift them slightly using your lower shoulder blade muscles. Keep your neck relaxed.',
   },
   {
     id: 'crab-lift',
@@ -309,15 +311,16 @@ window.EXERCISES = [
     name: 'Z-Sit Lift',
     figure: 'zSit',
     surface: 'ground',
+    sided: true,
     cue: 'Sit with one leg bent in front and one bent out to the side in a Z shape. Press your hands down and lift your hips slightly.',
   },
   {
     id: 'beast-kickthrough',
     name: 'Beast Kickthrough',
-    figure: 'mountainClimber',
+    figure: 'beastKickthroughFlow',
     surface: 'ground',
     sided: true,
-    cue: 'From hands and feet, hips low, rotate and thread one leg underneath your body to the opposite side. Return and switch.',
+    cue: 'From hands and feet, hips low, rotate and thread one leg underneath your body to the opposite side. Return, and keep working this side.',
   },
   {
     id: 'scorpion-heel-taps',
@@ -325,26 +328,26 @@ window.EXERCISES = [
     figure: 'scorpionTwist',
     surface: 'ground',
     sided: true,
-    cue: 'Lie on your stomach, arms out to the sides. Swing one heel as far as you can, up and across towards the hand, then reset.',
+    cue: 'Lie on your stomach, arms out to the sides. Swing one heel as far as you can, up and across toward the hand, then reset.',
   },
   {
     id: 'ninety-ninety-switch',
     name: '90/90 Switch',
-    figure: 'zSit',
+    figure: 'ninetyNinetyFlow',
     surface: 'ground',
     cue: 'Sit with both knees bent at 90 degrees, one in front and one to the side. Rotate your knees to switch which leg is which.',
   },
   {
     id: 'lying-knee-drops',
     name: 'Lying Knee Drops',
-    figure: 'lyingKneesBent',
+    figure: 'kneeDropsFlow',
     surface: 'ground',
     cue: 'Lie on your back, knees bent and together. Slowly let your knees fall open, then draw them back to center.',
   },
   {
     id: 'windshield-wipers',
     name: 'Windshield Wipers',
-    figure: 'lyingKneesBent',
+    figure: 'windshieldWiperFlow',
     surface: 'ground',
     cue: 'Lie on your back, knees bent and together. Slowly sway both knees side to side like a windshield wiper.',
   },
@@ -389,12 +392,13 @@ window.EXERCISES = [
     name: 'Toe Flexor Hold',
     figure: 'toeFlexorHold',
     surface: 'ground',
+    sided: true,
     cue: 'Kneel with your back foot\'s toes tucked under, weight pressing into the ball of that foot, front knee bent and hands on the floor. Hold still and breathe.',
   },
   {
     id: 'cat-cow-mobility',
     name: 'Cat-Cow',
-    figure: 'tabletop',
+    figure: 'catCowFlow',
     surface: 'ground',
     cue: 'On hands and knees, arch your back and look up, then round your spine and tuck your chin. Slow and steady, following your breath.',
   },
@@ -485,7 +489,7 @@ window.EXERCISES = [
     surface: 'standing',
     needsFurniture: true,
     sided: true,
-    cue: 'Hold a towel with tension, arms straight, and pull down and across your body toward one hip. Switch sides.',
+    cue: 'Hold a towel with tension, arms straight, and pull down and across your body toward one hip. Keep the arms locked out the whole way.',
   },
   {
     id: 'towel-front-raise',
@@ -498,7 +502,7 @@ window.EXERCISES = [
   {
     id: 'towel-arm-circles',
     name: 'Towel Arm Circles',
-    figure: 'towelPull',
+    figure: 'towelCirclesFlow',
     surface: 'standing',
     needsFurniture: true,
     cue: 'Hold a towel with tension between your hands and trace big, slow circles in the air, both directions.',

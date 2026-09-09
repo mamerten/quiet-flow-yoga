@@ -18,7 +18,7 @@ A tiny, dependency-free web app for short, guided practices — like Apple Fitne
 - **Name only.** A checkbox next to the voice picker trims the spoken guidance down to just the pose/exercise name, skipping the full cue (the written cue stays on screen either way). Works the same in both modes.
 - **Left/right balance, in both modes.** One-sided poses/exercises (yoga: Warrior I/II, Triangle, Side Angle, Low Lunge, Tree, Eagle, Warrior III, Seated Twist, Cow Face Arms; calisthenics: Reverse Lunge, World's Greatest Stretch, Couch Stretch, Bird Dog, Dead Bug, Side Plank, Chair Step-Up, and others) are always scheduled as a matched pair, so you never work one side and skip the other. In Yoga, which is timed, the mirrored side is deliberately separated by another pose rather than repeated back-to-back. In Calisthenics, since you're the one deciding when to move on, the mirrored side comes immediately after instead: finish one side, hit Next, and the very next exercise is the other side of the same move (e.g. "Chair Step-Up — Left side" then "Chair Step-Up — Right side").
 - **Calisthenics equipment filter.** Two toggles on the home screen — *I have a mat* and *I have a step, chair, or other prop* — persisted between sessions (both default on). With no mat, ground-surface exercises (anything sitting or kneeling on the floor) are excluded entirely; with no prop, anything needing a chair, step, wall, towel, or book is excluded. Every entry in `public/js/exercises.js` is flagged for both.
-- **Minimal visuals.** Each pose/exercise has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio. A handful of Calisthenics exercises that are a repeated motion rather than a held position (Jump Squat, Push-Up, W-Slide, Squat Fold, Standing Toe Touch) show 2-4 frames that auto-cycle like a flip book instead of one static frame — see "Animated figures" below.
+- **Minimal visuals.** Each pose/exercise has a simple, original stick-figure illustration (inline SVG) with a gentle "breathing" animation, plus the written cue on screen for anyone who can't rely on audio. Calisthenics exercises that are a repeated motion rather than a held position (Push-Up, Jump Squat, Cat-Cow, 90/90 Switch, the towel work, and around twenty more) show 2-4 frames that auto-cycle like a flip book instead of one static frame — see "Animated figures" below.
 - **Controls.** Pause/Resume, Skip (Yoga) / Next (Calisthenics), End, plus an overall progress bar and a compact timer in the top bar.
 - **Version + source link.** A small footer shows the current version and links back to this repo.
 - **Installable, works offline.** A web app manifest + service worker let you add it to your phone's home screen (opens full-screen, no browser chrome) and run a practice with no connection once you've loaded it at least once.
@@ -134,10 +134,46 @@ keep the two conversion tables in sync if you ever add a `IV`/`V`.
 
 Both the Yoga workout generator and the Calisthenics sequencer pick up new
 entries in their respective files automatically — no other changes needed.
-To add a new illustration, add a template to `FIGURES` in
-`public/js/figures.js` (many entries in both libraries reuse the same
-handful of templates rather than each getting a bespoke drawing — that's
-intentional, matching the low level of visual detail elsewhere in the app).
+To add a new illustration, add an entry to `FIGURES` in
+`public/js/figures.js`. The yoga set still shares a handful of templates
+across similar poses, which is intentional — it matches the low level of
+visual detail elsewhere in the app. The Calisthenics set does not: every
+exercise has its own figure, because sharing them there had produced pairs
+that were byte-identical on screen despite being different exercises
+(Plank Hold and Scapular Push-Up, Lying Knee Drops and Windshield Wipers,
+and four more).
+
+### Drawing a figure
+
+Calisthenics figures are built with `stick()`, which takes named joints —
+`head`, `neck`, `hip`, optional `shoulders`, and `arms`/`legs` as
+`[elbow, hand]` / `[knee, foot]` pairs — and draws the segments between
+them in a fixed back-to-front order. Going through it rather than placing
+lines by hand is what keeps heads attached to necks and arms hanging off
+shoulders instead of out of the skull. It also takes `prop` (scenery drawn
+behind the body: `GROUND`, `MAT`, a chair, a wall, a bar), `extra` (drawn
+on top: a tucked foot, a `TOWEL`), and `spineBow` for a curved back.
+
+Three conventions worth keeping to, all learned by rendering the whole set
+and looking at it:
+
+- **Pick the camera angle the exercise needs.** Anything that folds,
+  hinges, squats or planks goes side-on — a forward fold drawn head-on is
+  an unreadable blob. Anything about what the legs do relative to each
+  other while lying down (knee drops, wipers, 90/90, bicycle, frog) goes
+  overhead, on a `MAT` outline so it doesn't read as standing up.
+- **Draw the floor.** `GROUND` is the only thing that tells you a Jump
+  Squat is airborne, a Calf Raise has its heels up, or a Bear Crawl's knees
+  are hovering. Without it those are just shapes.
+- **Hold the still parts still.** In a flip book, keep the parts that don't
+  move byte-identical across frames so the eye tracks only what actually
+  moves.
+
+There's a render-and-look script pattern worth reusing before you commit a
+figure: load `figures.js` in headless Chromium, lay every figure out as a
+labelled contact sheet with flip-book frames expanded side by side, and
+screenshot it. Most of the problems above were invisible in the source and
+obvious in the sheet.
 
 ### Animated figures
 
@@ -148,8 +184,8 @@ written the same way a single `svg()` call's argument is) in
 
 ```js
 jumpSquatFlow: animatedFigure([
-  HEAD(50, 30) + LINE(50, 38, 50, 78) /* ...crouch... */,
-  HEAD(50, 20) + LINE(50, 28, 50, 68) /* ...airborne... */,
+  stick({ /* ...crouch, feet on GROUND... */ }),
+  stick({ /* ...airborne, feet clear of the same GROUND line... */ }),
 ]),
 ```
 
