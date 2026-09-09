@@ -9,12 +9,6 @@ const HEAD = (cx, cy, r = 8) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="cu
 const LINE = (x1, y1, x2, y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${STROKE}/>`;
 const POLY = (pts) => `<polyline points="${pts}" ${STROKE}/>`;
 
-// A body segment that curves instead of running straight — currently only the
-// spine (Cat-Cow's arch and round). `bow` is how far the midpoint bulges
-// perpendicular-ish to the line: positive sags down, negative humps up.
-const CURVE = (x1, y1, x2, y2, bow) =>
-  `<path d="M${x1} ${y1} Q${(x1 + x2) / 2} ${(y1 + y2) / 2 + bow} ${x2} ${y2}" ${STROKE}/>`;
-
 // Everything that isn't the body: the floor, a wall, a chair, a pull-up bar, a
 // mat outline. Drawn thinner and faded so it reads as scenery and the figure
 // still reads as the subject.
@@ -74,6 +68,75 @@ function animatedFigure(frames) {
 //
 // Returns inner SVG content, not a finished <svg> — so the same call works
 // standalone (wrapped in svg()) or as one frame of an animatedFigure().
+// One limb segment, drawn as a filled tapered capsule rather than a stroked
+// line: the outline of the two end circles plus their outer tangents. Chaining
+// two of them (upper arm then forearm) joins seamlessly as long as they share
+// the radius at the joint, so no separate joint dots are needed.
+function BONE(x1, y1, x2, y2, r1, r2) {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const d = Math.hypot(dx, dy);
+  // Degenerate cases: zero length, or one end circle swallowing the other.
+  if (d < 0.01 || Math.abs(r1 - r2) >= d) {
+    const r = Math.max(r1, r2);
+    return r1 >= r2 ? HEAD(x1, y1, r) : HEAD(x2, y2, r);
+  }
+  const ux = dx / d;
+  const uy = dy / d;
+  const sin = (r1 - r2) / d;
+  const cos = Math.sqrt(1 - sin * sin);
+  // Left-hand normal (in SVG's y-down space).
+  const nx = -uy;
+  const ny = ux;
+  const p = (x, y, r, side) => [
+    x + r * (side * nx * cos + ux * sin),
+    y + r * (side * ny * cos + uy * sin),
+  ];
+  const [ax1, ay1] = p(x1, y1, r1, 1);
+  const [bx1, by1] = p(x2, y2, r2, 1);
+  const [ax2, ay2] = p(x1, y1, r1, -1);
+  const [bx2, by2] = p(x2, y2, r2, -1);
+  return `<path d="M${ax1} ${ay1} L${bx1} ${by1} A${r2} ${r2} 0 0 0 ${bx2} ${by2} `
+    + `L${ax2} ${ay2} A${r1} ${r1} 0 0 0 ${ax1} ${ay1} Z" fill="currentColor"/>`;
+}
+
+// A curved bone (only the spine needs one — Cat-Cow's arch and round),
+// approximated as a short chain of straight capsules sampled along a quadratic
+// Bezier, with the radius tapering across the whole run.
+function BONE_CURVED(x1, y1, x2, y2, r1, r2, bow, steps = 5) {
+  const cx = (x1 + x2) / 2;
+  const cy = (y1 + y2) / 2 + bow;
+  const at = (t) => [
+    (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * cx + t * t * x2,
+    (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * cy + t * t * y2,
+  ];
+  let out = '';
+  for (let i = 0; i < steps; i++) {
+    const t0 = i / steps;
+    const t1 = (i + 1) / steps;
+    const [sx, sy] = at(t0);
+    const [ex, ey] = at(t1);
+    out += BONE(sx, sy, ex, ey, r1 + (r2 - r1) * t0, r1 + (r2 - r1) * t1);
+  }
+  return out;
+}
+
+// Limb thicknesses, as capsule radii in viewBox units. Each segment tapers
+// toward the far end and hands its end radius to the next segment, so the
+// figure reads as a body that narrows toward the hands and feet instead of as
+// uniform wire. Tuned by rendering the whole set and checking it still reads at
+// thumbnail size — going much heavier closes the gaps in a deep squat.
+const W = {
+  torso: [5.6, 4.6],     // neck -> hip
+  shoulder: 3.2,         // the shoulder bar
+  upperArm: [3.2, 2.6],  // shoulder -> elbow
+  forearm: [2.6, 2.0],   // elbow -> hand
+  thigh: [4.2, 3.4],     // hip -> knee
+  shin: [3.4, 2.4],      // knee -> foot
+  neck: 2.6,             // neck -> head
+  foot: [2.4, 1.8],      // ankle -> toe, for the two figures that draw one
+};
+
 function stick(spec) {
   const {
     head, neck, hip, shoulders = null, arms = [], legs = [],
@@ -81,17 +144,22 @@ function stick(spec) {
   } = spec;
   let out = prop;
   legs.forEach(([knee, foot]) => {
-    out += POLY(`${hip[0]},${hip[1]} ${knee[0]},${knee[1]} ${foot[0]},${foot[1]}`);
+    out += BONE(hip[0], hip[1], knee[0], knee[1], W.thigh[0], W.thigh[1]);
+    out += BONE(knee[0], knee[1], foot[0], foot[1], W.shin[0], W.shin[1]);
   });
   out += spineBow
-    ? CURVE(neck[0], neck[1], hip[0], hip[1], spineBow)
-    : LINE(neck[0], neck[1], hip[0], hip[1]);
-  if (shoulders) out += LINE(shoulders[0][0], shoulders[0][1], shoulders[1][0], shoulders[1][1]);
+    ? BONE_CURVED(neck[0], neck[1], hip[0], hip[1], W.torso[0], W.torso[1], spineBow)
+    : BONE(neck[0], neck[1], hip[0], hip[1], W.torso[0], W.torso[1]);
+  if (shoulders) {
+    out += BONE(shoulders[0][0], shoulders[0][1], shoulders[1][0], shoulders[1][1],
+      W.shoulder, W.shoulder);
+  }
   arms.forEach(([elbow, hand], i) => {
     const from = (shoulders && shoulders[i]) || neck;
-    out += POLY(`${from[0]},${from[1]} ${elbow[0]},${elbow[1]} ${hand[0]},${hand[1]}`);
+    out += BONE(from[0], from[1], elbow[0], elbow[1], W.upperArm[0], W.upperArm[1]);
+    out += BONE(elbow[0], elbow[1], hand[0], hand[1], W.forearm[0], W.forearm[1]);
   });
-  out += LINE(neck[0], neck[1], head[0], head[1]);
+  out += BONE(neck[0], neck[1], head[0], head[1], W.neck, W.neck);
   out += HEAD(head[0], head[1], headR);
   if (extra) out += extra;
   return out;
@@ -472,7 +540,8 @@ window.FIGURES = {
     arms: [[[54, 52], [56, 74]]],
     legs: [[[46, 104], [45, 122]], [[52, 104], [51, 122]]],
     prop: GROUND(10, 90, 133),
-    extra: LINE(45, 122, 56, 133) + LINE(51, 122, 62, 133),
+    extra: BONE(45, 122, 56, 133, W.foot[0], W.foot[1])
+      + BONE(51, 122, 62, 133, W.foot[0], W.foot[1]),
   })),
 
   // C13 — standing, one leg stepped behind AND across the other so the
@@ -862,7 +931,7 @@ window.FIGURES = {
   suitcaseFlow: animatedFigure([
     stick({
       head: [14, 100], headR: 7, neck: [22, 98], hip: [56, 102],
-      arms: [[[16, 84], [6, 76]]],
+      arms: [[[18, 80], [8, 68]]],
       legs: [[[74, 104], [92, 106]]],
       prop: GROUND(6, 96, 118),
     }),
@@ -939,7 +1008,7 @@ window.FIGURES = {
     arms: [[[64, 74], [72, 124]]],
     legs: [[[56, 96], [64, 126]], [[26, 110], [10, 124]]],
     prop: GROUND(6, 96, 128),
-    extra: LINE(10, 124, 17, 127),
+    extra: BONE(10, 124, 17, 127, W.foot[0], W.foot[1]),
   })),
 
   // C45 — 2-frame flip book, side view tabletop: the spine sagging and the

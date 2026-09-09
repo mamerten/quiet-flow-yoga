@@ -148,7 +148,13 @@ and four more).
 Calisthenics figures are built with `stick()`, which takes named joints —
 `head`, `neck`, `hip`, optional `shoulders`, and `arms`/`legs` as
 `[elbow, hand]` / `[knee, foot]` pairs — and draws the segments between
-them in a fixed back-to-front order. Going through it rather than placing
+them in a fixed back-to-front order. Each segment is a filled tapered
+capsule (`BONE`), not a stroked line: it narrows toward the far end and
+hands its end radius to the next segment down the limb, so a thigh flows
+into a shin without a visible seam and the figure reads as a body rather
+than as uniform wire. All the thicknesses live in one `W` table at the top
+of the file, so the whole set can be made heavier or lighter by editing
+that alone. Going through it rather than placing
 lines by hand is what keeps heads attached to necks and arms hanging off
 shoulders instead of out of the skull. It also takes `prop` (scenery drawn
 behind the body: `GROUND`, `MAT`, a chair, a wall, a bar), `extra` (drawn
