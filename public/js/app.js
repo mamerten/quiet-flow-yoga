@@ -419,6 +419,16 @@ async function beginYogaWorkout(totalMinutes) {
 // an overall session clock (state.sessionRemaining) runs on its own.
 async function beginCalisthenicsWorkout(totalMinutes) {
   unlockAudio();
+  // Re-arm hands-free control HERE, before the first await below. On WebKit —
+  // which is every iOS browser, Chrome and Safari alike, since Apple requires
+  // it — SpeechRecognition.start() is only honoured while the tap that started
+  // the workout is still the active user gesture, and awaiting the wake lock
+  // spends it. Armed after that await, this silently fails on exactly the
+  // devices most likely to be used for a workout.
+  if (window.voiceControlSupported
+      && loadBoolPref('quietflow.voiceControl', false)) {
+    startVoiceControlUI();
+  }
   const sequencer = window.createCalisthenicsSequencer({
     hasMat: currentHasMat(),
     hasFurniture: currentHasFurniture(),
@@ -466,15 +476,6 @@ function setupWorkoutUIForMode() {
   skipBtn.textContent = isCalisthenics ? 'Next ▶' : 'Skip';
   pauseBtn.textContent = 'Pause';
   resetVoiceControlButton();
-  // Hands-free control is sticky: turn the mic on once and every later
-  // Calisthenics session arms it for you. Deliberately re-armed HERE, off the
-  // duration tap that starts the workout, rather than at page load — that tap
-  // is a user gesture, so a first-ever mic permission prompt can still appear,
-  // and a mic listening on the home screen has no exercise to advance anyway.
-  if (isCalisthenics && window.voiceControlSupported
-      && loadBoolPref('quietflow.voiceControl', false)) {
-    startVoiceControlUI();
-  }
 }
 
 function togglePause() {
@@ -548,6 +549,13 @@ homeBtn.addEventListener('click', () => showScreen(homeScreen));
 // — swipe and the Next button always work regardless.
 function resetVoiceControlButton() {
   if (!voiceControlBtn) return;
+  // Never stomp a live session: setupWorkoutUIForMode() calls this on every
+  // workout start, which now happens after the mic has already been armed.
+  if (window.isVoiceControlActive && window.isVoiceControlActive()) {
+    voiceControlBtn.textContent = '🎤 Listening… say "next"';
+    voiceControlBtn.classList.add('listening');
+    return;
+  }
   voiceControlBtn.textContent = '🎤 Listen for "next"';
   voiceControlBtn.classList.remove('listening');
 }
