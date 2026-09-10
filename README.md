@@ -175,11 +175,19 @@ and looking at it:
   move byte-identical across frames so the eye tracks only what actually
   moves.
 
-There's a render-and-look script pattern worth reusing before you commit a
-figure: load `figures.js` in headless Chromium, lay every figure out as a
-labelled contact sheet with flip-book frames expanded side by side, and
-screenshot it. Most of the problems above were invisible in the source and
-obvious in the sheet.
+Before committing a figure, render it and look at it:
+
+```bash
+node tools/render-figures.js              # all Calisthenics figures, light
+node tools/render-figures.js --mode=yoga --dark
+node tools/render-figures.js --only=plank,catCowFlow
+```
+
+That writes a labelled contact sheet PNG with flip-book frames expanded side
+by side. Every problem listed above was invisible in the source and obvious in
+the sheet. It needs Playwright's chromium (`npm i -D playwright && npx
+playwright install chromium`); it's a dev tool and ships nothing to the
+browser.
 
 ### Animated figures
 
