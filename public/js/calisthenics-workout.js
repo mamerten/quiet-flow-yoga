@@ -36,15 +36,23 @@ function shuffleExercises(arr) {
  *   hasMat        default true. false excludes surface: 'ground' exercises
  *                 (sitting or kneeling on a bare floor).
  *   hasFurniture  default true. false excludes needsFurniture exercises
- *                 (a chair, step, towel, book, or pull-up bar — something you
- *                 carry around or hang off, unlike a wall, which needsWall
- *                 exercises assume is available regardless of this toggle).
+ *                 (a chair, step, towel, or book — something you carry around
+ *                 or prop a foot on, unlike a wall, which needsWall exercises
+ *                 assume is available regardless of this toggle).
+ *   hasBar        default FALSE, unlike the other two. A pull-up bar is real
+ *                 kit rather than household furniture, so needsBar exercises
+ *                 (Dead Hang, Pull-Up) are opt-in: they stay out of the pool
+ *                 unless you say you have one.
  */
 window.createCalisthenicsSequencer = function createCalisthenicsSequencer(filter) {
   const hasMat = !filter || filter.hasMat !== false;
   const hasFurniture = !filter || filter.hasFurniture !== false;
+  // Opt-in rather than opt-out: absent a filter, assume no bar.
+  const hasBar = !!filter && filter.hasBar === true;
   const all = (window.EXERCISES || []).filter((e) =>
-    (hasMat || e.surface !== 'ground') && (hasFurniture || !e.needsFurniture)
+    (hasMat || e.surface !== 'ground')
+    && (hasFurniture || !e.needsFurniture)
+    && (hasBar || !e.needsBar)
   );
   let pool = shuffleExercises(all);
   let i = 0;

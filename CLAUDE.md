@@ -67,5 +67,6 @@ or returning visitors keep serving a stale version.
 - **Calisthenics is self-paced, Yoga is timed** — don't assume patterns from one apply to the
   other. Calisthenics has no per-exercise duration, no spoken "up next" during the countdown
   (redundant when you just pressed Next yourself), immediate back-to-back left/right pairing,
-  and an equipment filter (`hasMat`/`hasFurniture`, from the home-screen toggles) that narrows
-  the pool in `createCalisthenicsSequencer()`.
+  and an equipment filter (`hasMat`/`hasFurniture`/`hasBar`, from the home-screen toggles) that
+  narrows the pool in `createCalisthenicsSequencer()`. `hasBar` is the odd one out: it defaults
+  to FALSE, so `needsBar` exercises are opt-in, while the other two default to true.

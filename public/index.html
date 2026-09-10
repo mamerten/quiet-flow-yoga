@@ -53,6 +53,22 @@
           </button>
         </div>
 
+        <div class="form-row hidden" id="equipment-row">
+          <span class="field-label">Equipment</span>
+          <label class="checkbox-label">
+            <input type="checkbox" id="mat-toggle" />
+            I have a mat
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="furniture-toggle" />
+            I have a step, chair, or other prop (towel, book)
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="bar-toggle" />
+            I have a pull-up bar
+          </label>
+        </div>
+
         <div class="form-row">
           <label for="voice-select" class="field-label">Narration voice</label>
           <div class="voice-input-row">
@@ -65,18 +81,6 @@
           <label class="checkbox-label">
             <input type="checkbox" id="title-only-toggle" />
             Name only — skip the spoken description
-          </label>
-        </div>
-
-        <div class="form-row hidden" id="equipment-row">
-          <span class="field-label">Equipment</span>
-          <label class="checkbox-label">
-            <input type="checkbox" id="mat-toggle" />
-            I have a mat
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" id="furniture-toggle" />
-            I have a step, chair, or other prop (towel, book, pull-up bar)
           </label>
         </div>
 
@@ -104,7 +108,7 @@
           <div class="workout-right">
             <!-- Shown for the brief countdown before a pose begins -->
             <div id="countdown-view" class="countdown-view hidden">
-              <div id="countdown-number" class="countdown-number">3</div>
+              <div id="countdown-number" class="countdown-number">2</div>
               <p class="countdown-label">Get ready for</p>
               <p id="countdown-next" class="countdown-next">Pose</p>
             </div>

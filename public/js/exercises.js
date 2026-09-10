@@ -410,6 +410,20 @@ window.EXERCISES = [
     cue: 'Lie on your back, arms overhead and legs straight. Press your lower back into the floor and lift your shoulders and legs slightly off the ground. Hold.',
   },
   {
+    id: 'leg-raises',
+    name: 'Leg Raises',
+    figure: 'legRaiseFlow',
+    surface: 'ground',
+    cue: 'Sit propped back on your hands with your legs straight out in front. Raise them together as high as you can, then lower them back down without letting your feet touch the floor.',
+  },
+  {
+    id: 'down-up-dogs',
+    name: 'Down-Up Dogs',
+    figure: 'downUpDogFlow',
+    surface: 'ground',
+    cue: 'Start with your hands and feet down and your hips pushed high into an upside-down V. Roll forward until your hips sink toward the floor and your chest lifts, then push back up. Keep flowing between the two.',
+  },
+  {
     id: 'superman-hold',
     name: 'Superman Hold',
     figure: 'supermanHold',
@@ -512,7 +526,7 @@ window.EXERCISES = [
     name: 'Dead Hang',
     figure: 'deadHang',
     surface: 'standing',
-    needsFurniture: true,
+    needsBar: true,
     cue: 'Hang from a sturdy bar or door-frame pull-up bar, arms straight, shoulders relaxed. Let your spine decompress.',
   },
   {
@@ -520,7 +534,7 @@ window.EXERCISES = [
     name: 'Pull-Up',
     figure: 'pullUpFlow',
     surface: 'standing',
-    needsFurniture: true,
+    needsBar: true,
     cue: 'Hang from a bar with arms straight, then pull your chin up and over the bar, elbows driving down and back. Lower with control.',
   },
 ];

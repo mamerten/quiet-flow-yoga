@@ -15,7 +15,7 @@ const {
 } = window;
 
 const APP_VERSION = '0.1.1';
-const COUNTDOWN_SECONDS = 3;
+const COUNTDOWN_SECONDS = 2;
 
 const homeScreen = document.getElementById('screen-home');
 const workoutScreen = document.getElementById('screen-workout');
@@ -30,6 +30,7 @@ const titleOnlyCheckbox = document.getElementById('title-only-toggle');
 const equipmentRow = document.getElementById('equipment-row');
 const matToggle = document.getElementById('mat-toggle');
 const furnitureToggle = document.getElementById('furniture-toggle');
+const barToggle = document.getElementById('bar-toggle');
 const audioNote = document.getElementById('audio-note');
 const appVersionEl = document.getElementById('app-version');
 
@@ -184,7 +185,7 @@ function updateOverallProgress(index, holdElapsed = 0) {
   overallProgressBar.style.width = `${Math.min(Math.max(pct, 0), 100)}%`;
 }
 
-// Brief pause before a pose starts: shows a 3-2-1 countdown and previews
+// Brief pause before a pose starts: shows a 2-1 countdown and previews
 // the pose image so there's time to get into position.
 function startCountdown(index) {
   ensureSegment(index);
@@ -245,7 +246,7 @@ function startHold(index) {
   // before the chime and the cue narration start — otherwise a longer
   // announcement (a full pose name plus "left/right side") routinely gets
   // cut off partway through by the chime, since the countdown is a fixed
-  // 3 seconds regardless of how long that sentence takes to say.
+  // 2 seconds regardless of how long that sentence takes to say.
   window.finishNarrationThen(() => {
     // The wait can outlast this pose (End/Pause/Skip during it) — bail
     // rather than fire a chime and narration into a state that moved on.
@@ -294,7 +295,7 @@ function tick() {
   }
 }
 
-// Calisthenics: the countdown still runs the same 3-2-1 as yoga, but once
+// Calisthenics: the countdown still runs the same 2-1 as yoga, but once
 // an exercise goes "live" there's no per-exercise timer at all — you
 // decide when to move on. The only thing that ticks on its own is the
 // overall session clock, which ends the session when it runs out
@@ -371,6 +372,13 @@ function currentHasFurniture() {
   return furnitureToggle ? furnitureToggle.checked : true;
 }
 
+// A pull-up bar is its own question: a chair or a towel is something almost
+// everyone can find, but a bar is a real piece of kit you either own or
+// don't. Defaults to false for that reason, unlike the other two.
+function currentHasBar() {
+  return barToggle ? barToggle.checked : false;
+}
+
 async function beginWorkout(totalMinutes) {
   if (currentMode === 'calisthenics') {
     await beginCalisthenicsWorkout(totalMinutes);
@@ -414,6 +422,7 @@ async function beginCalisthenicsWorkout(totalMinutes) {
   const sequencer = window.createCalisthenicsSequencer({
     hasMat: currentHasMat(),
     hasFurniture: currentHasFurniture(),
+    hasBar: currentHasBar(),
   });
   const first = sequencer.next();
   if (!first) return; // no exercises defined — shouldn't happen
@@ -668,8 +677,9 @@ if (titleOnlyCheckbox) {
   });
 }
 
-// Both default to true (assume available) — the toggles are for the
-// exception, not the common case: no mat, or nowhere to prop a foot up.
+// Mat and furniture default to true (assume available) — those toggles are
+// for the exception, not the common case: no mat, or nowhere to prop a foot
+// up. The bar defaults to false, since not owning one is the common case.
 if (matToggle) {
   matToggle.checked = loadBoolPref('quietflow.hasMat', true);
   matToggle.addEventListener('change', () => {
@@ -681,6 +691,13 @@ if (furnitureToggle) {
   furnitureToggle.checked = loadBoolPref('quietflow.hasFurniture', true);
   furnitureToggle.addEventListener('change', () => {
     saveBoolPref('quietflow.hasFurniture', furnitureToggle.checked);
+  });
+}
+
+if (barToggle) {
+  barToggle.checked = loadBoolPref('quietflow.hasBar', false);
+  barToggle.addEventListener('change', () => {
+    saveBoolPref('quietflow.hasBar', barToggle.checked);
   });
 }
 

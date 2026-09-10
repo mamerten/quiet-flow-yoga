@@ -365,11 +365,13 @@ window.FIGURES = {
   // forward as a counterweight (Deep Squat Hold). Side-on because the whole
   // point is squat DEPTH, which a front view can't show, and because "reach
   // your arms forward" is invisible head-on.
+  // The hips sit low and stacked OVER the heels rather than behind them:
+  // drawn behind, the figure reads as perched on an invisible stool.
   deepSquat: svg(stick({
-    head: [42, 50], headR: 7, neck: [46, 60], hip: [46, 108],
-    arms: [[[64, 64], [84, 62]]],
-    legs: [[[76, 97], [62, 131]], [[70, 101], [56, 131]]],
-    prop: GROUND(8, 92, 132),
+    head: [58, 68], headR: 7, neck: [56, 80], hip: [52, 116],
+    arms: [[[72, 88], [88, 88]]],
+    legs: [[[84, 100], [58, 130]], [[78, 104], [52, 130]]],
+    prop: GROUND(8, 96, 132),
   })),
 
   // C2 — side view, hands clasped behind the back and the arms lifted UP
@@ -517,15 +519,15 @@ window.FIGURES = {
   // Twist).
   squatTwistFlow: animatedFigure([
     stick({
-      head: [50, 44], neck: [50, 54], shoulders: [[40, 58], [60, 58]], hip: [50, 92],
-      arms: [[[36, 74], [34, 96]], [[64, 74], [66, 96]]],
-      legs: [[[32, 98], [26, 132]], [[68, 98], [74, 132]]],
+      head: [50, 62], neck: [50, 72], shoulders: [[40, 76], [60, 76]], hip: [50, 108],
+      arms: [[[36, 94], [38, 114]], [[64, 94], [62, 114]]],
+      legs: [[[26, 104], [30, 132]], [[74, 104], [70, 132]]],
       prop: GROUND(8, 92, 132),
     }),
     stick({
-      head: [58, 30], neck: [52, 42], shoulders: [[44, 48], [62, 44]], hip: [50, 92],
-      arms: [[[38, 70], [36, 94]], [[70, 28], [80, 12]]],
-      legs: [[[32, 98], [26, 132]], [[68, 98], [74, 132]]],
+      head: [58, 62], neck: [52, 72], shoulders: [[43, 77], [61, 73]], hip: [50, 108],
+      arms: [[[38, 95], [36, 113]], [[70, 56], [78, 40]]],
+      legs: [[[26, 104], [30, 132]], [[74, 104], [70, 132]]],
       prop: GROUND(8, 92, 132),
     }),
   ]),
@@ -633,10 +635,13 @@ window.FIGURES = {
   // C20 — side view tabletop (knees down, unlike plank), opposite arm
   // reaching forward and opposite leg reaching back in one long line
   // (Bird Dog).
+  // Thigh and shin are kept to roughly equal lengths: drawn from a high hip
+  // the thigh becomes one long post to the floor with a stub of a shin, and
+  // the whole figure reads as a table rather than as someone kneeling.
   birdDog: svg(stick({
-    head: [22, 52], headR: 7, neck: [30, 56], hip: [66, 58],
-    arms: [[[30, 88], [30, 120]], [[18, 48], [4, 42]]],
-    legs: [[[66, 120], [82, 124]], [[82, 50], [96, 40]]],
+    head: [19, 83], headR: 7, neck: [32, 84], hip: [64, 86],
+    arms: [[[30, 103], [28, 122]], [[20, 69], [6, 60]]],
+    legs: [[[62, 119], [92, 123]], [[80, 72], [96, 58]]],
     prop: GROUND(6, 96, 124),
   })),
 
@@ -947,17 +952,20 @@ window.FIGURES = {
   // feet lifted, clasped hands swinging from one side to the other. Legs
   // and torso are held fixed across both frames so only the twist reads
   // (Russian Twists).
+  // The seat sits ON the floor line. Floated clear of it the figure reads as
+  // hovering in a crunch, and this exercise is defined by balancing on your
+  // backside.
   russianTwistFlow: animatedFigure([
     stick({
-      head: [32, 48], headR: 7, neck: [38, 58], hip: [52, 96],
-      arms: [[[60, 70], [76, 76]]],
-      legs: [[[76, 88], [66, 118]]],
+      head: [28, 77], headR: 7, neck: [34, 88], hip: [50, 118],
+      arms: [[[50, 96], [66, 100]]],
+      legs: [[[76, 96], [90, 118]]],
       prop: GROUND(6, 96, 124),
     }),
     stick({
-      head: [32, 48], headR: 7, neck: [38, 58], hip: [52, 96],
-      arms: [[[30, 72], [14, 78]]],
-      legs: [[[76, 88], [66, 118]]],
+      head: [28, 77], headR: 7, neck: [34, 88], hip: [50, 118],
+      arms: [[[26, 96], [14, 98]]],
+      legs: [[[76, 96], [90, 118]]],
       prop: GROUND(6, 96, 124),
     }),
   ]),
@@ -1043,6 +1051,46 @@ window.FIGURES = {
     prop: GROUND(6, 96, 116),
   })),
 
+  // C62 - 2-frame flip book, side view: propped back on the hands with the
+  // legs straight, swinging from just off the floor up past hip height (Leg
+  // Raises). Everything above the hips is identical across both frames, so
+  // the only thing that moves is what the exercise actually moves.
+  legRaiseFlow: animatedFigure([
+    stick({
+      head: [24, 79], headR: 7, neck: [30, 90], hip: [46, 116],
+      arms: [[[24, 104], [18, 120]]],
+      legs: [[[70, 112], [94, 108]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [24, 79], headR: 7, neck: [30, 90], hip: [46, 116],
+      arms: [[[24, 104], [18, 120]]],
+      legs: [[[64, 96], [80, 74]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
+  // C63 - 2-frame flip book, side view: the hips lift high into an
+  // upside-down V, then roll forward and sink low as the chest opens (Down-Up
+  // Dogs). The hands stay planted in the same spot across both frames, which
+  // is what makes this read as the body rolling over them rather than as two
+  // unrelated poses. Limb lengths are held equal frame to frame so nothing
+  // appears to grow or shrink mid-flow.
+  downUpDogFlow: animatedFigure([
+    stick({
+      head: [18, 100], headR: 7, neck: [30, 92], hip: [58, 68],
+      arms: [[[23, 108], [16, 124]]],
+      legs: [[[67, 96], [76, 124]]],
+      prop: GROUND(6, 96, 126),
+    }),
+    stick({
+      head: [16, 66], headR: 7, neck: [14, 80], hip: [38, 108],
+      arms: [[[12, 98], [10, 116]]],
+      legs: [[[67, 115], [96, 122]]],
+      prop: GROUND(6, 96, 126),
+    }),
+  ]),
+
   // C47 — side view, face down with the chest clearly lifted, both arms
   // reaching forward and the legs raised behind, only the hips touching
   // down (Superman Hold). The mirror of hollowBodyHold: the head sits much
@@ -1068,7 +1116,9 @@ window.FIGURES = {
   // C49 — 3-frame flip book built from shapes used elsewhere in this file,
   // because a burpee actually is a squat, a plank and a jump chained
   // together. All three share one floor line at the same height so the
-  // ground doesn't jump around between frames (Burpee).
+  // ground doesn't jump around between frames (Burpee). The crouch and the
+  // plank also face the same way - mirrored, the figure appears to spin 180
+  // degrees mid-rep, which is the one thing a burpee never does.
   burpeeFlow: animatedFigure([
     stick({
       head: [58, 68], headR: 7, neck: [50, 78], hip: [40, 108],
@@ -1077,9 +1127,9 @@ window.FIGURES = {
       prop: GROUND(8, 96, 132),
     }),
     stick({
-      head: [16, 72], headR: 7, neck: [24, 78], hip: [58, 104],
-      arms: [[[24, 104], [24, 130]]],
-      legs: [[[76, 117], [92, 130]]],
+      head: [84, 72], headR: 7, neck: [76, 78], hip: [42, 104],
+      arms: [[[76, 104], [76, 130]]],
+      legs: [[[24, 117], [8, 130]]],
       prop: GROUND(8, 96, 132),
     }),
     stick({
