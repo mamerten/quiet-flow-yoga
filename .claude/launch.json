@@ -6,6 +6,13 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["--yes", "serve", "public", "-p", "5183"],
       "port": 5183
+    },
+    {
+      "name": "yoga-docs",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "serve", ".", "-p", "5184"],
+      "port": 5184,
+      "url": "http://localhost:5184"
     }
   ]
 }

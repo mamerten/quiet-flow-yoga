@@ -223,7 +223,7 @@ window.EXERCISES = [
     figure: 'worldsGreatestFlow',
     surface: 'ground',
     sided: true,
-    cue: 'From a deep kneeling lunge — front foot planted, back knee down — place both hands inside your front foot. Rotate your torso and reach the arm on the same side as your back knee straight up toward the ceiling, following it with your eyes. Move slow enough to control the range.',
+    cue: 'From a deep kneeling lunge — front foot planted, back knee down — place both hands inside your front foot. Rotate your torso and reach the arm on the same side as your front foot straight up toward the ceiling, following it with your eyes. Move slow enough to control the range.',
   },
   {
     id: 'couch-stretch',

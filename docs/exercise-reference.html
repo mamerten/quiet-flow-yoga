@@ -73,7 +73,7 @@
     <span id="count">–</span> exercises, built live from
     <code>public/js/exercises.js</code> + <code>public/js/figures.js</code> —
     reopen this page after editing either file to see the update. Grouped
-    the way the equipment filter groups them in the app (mat / step-up
+    the way the equipment filter groups them in the app (mat / prop / bar
     toggles). Internal reference only, not part of the shipped site.
   </p>
   <div id="warning">Couldn't load the exercise/figure data — open this file from its normal location inside <code>docs/</code> (next to <code>public/</code>), not copied elsewhere.</div>
@@ -92,6 +92,13 @@
     // away from a group silently rendering nothing, which is exactly
     // what happened here once before.
     function groupKey(e) {
+      // needsBar is checked first and kept separate from needsFurniture: a bar
+      // is the one piece of equipment you either own or don't, so its exercises
+      // are the ones most likely to be skipped wholesale. Without this branch
+      // they fall through to 'standing' and get listed as needing no equipment
+      // at all, which is worse than the old behaviour of lumping them in with
+      // chairs and towels.
+      if (e.needsBar) return 'bar';
       if (e.needsFurniture) return 'furniture';
       if (e.surface === 'ground') return 'ground';
       return 'standing';
@@ -101,8 +108,11 @@
       standing: 'Standing, no equipment',
       ground: 'Ground / mat, no equipment',
       furniture: 'Needs a chair, step, or other prop',
+      bar: 'Needs a pull-up bar',
     };
-    const GROUP_ORDER = ['standing', 'ground', 'furniture'];
+    // Bar last: it's the only group that's off by default in the app, so it's
+    // the group you're most often reading past rather than reading.
+    const GROUP_ORDER = ['standing', 'ground', 'furniture', 'bar'];
 
     function render() {
       const exercises = window.EXERCISES || [];
