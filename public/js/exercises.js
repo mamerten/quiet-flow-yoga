@@ -232,7 +232,7 @@ window.EXERCISES = [
     surface: 'ground',
     needsWall: true,
     sided: true,
-    cue: 'Prop your back shin up behind you against a wall or a couch — the one this is named for — so that knee is fully bent, then sink your hips forward and down. A deep stretch through the front of the hip and thigh.',
+    cue: 'Prop your back shin up behind you — against a wall or a couch, the pose’s namesake — so that knee is fully bent, then sink your hips forward and down. A deep stretch through the front of the hip and thigh.',
   },
   {
     id: 'bird-dog',
@@ -328,7 +328,7 @@ window.EXERCISES = [
     figure: 'scorpionTwist',
     surface: 'ground',
     sided: true,
-    cue: 'Lie on your stomach, arms out to the sides. Swing one heel as far as you can, up and across toward the hand, then reset.',
+    cue: 'Lie on your stomach, arms out to the sides. Swing one heel as far as you can, up and across towards the hand, then reset.',
   },
   {
     id: 'ninety-ninety-switch',
