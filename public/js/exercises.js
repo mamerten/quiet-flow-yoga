@@ -104,8 +104,7 @@ window.EXERCISES = [
     name: 'Collarbone Look-Up',
     figure: 'collarboneLookUp',
     surface: 'standing',
-    sided: true,
-    cue: 'Cross one arm over and rest your fingers on the opposite collarbone, keep your ribs down, and look up and to that side. Unloads a stiff, forward-jutted neck.',
+    cue: 'Cross one arm over and rest your fingers on the opposite collarbone, keep your ribs down, and look up and away from that hand. Alternate sides as you go. Unloads a stiff, forward-jutted neck.',
   },
   {
     id: 'single-leg-balance',
@@ -239,8 +238,7 @@ window.EXERCISES = [
     name: 'Bird Dog',
     figure: 'birdDog',
     surface: 'ground',
-    sided: true,
-    cue: 'From hands and knees, reach one arm forward and extend the opposite leg back. Keep your hips level and steady.',
+    cue: 'From hands and knees, reach one arm forward and extend the opposite leg back. Keep your hips level and steady, alternating sides each rep.',
   },
   {
     id: 'glute-bridge',
@@ -319,8 +317,7 @@ window.EXERCISES = [
     name: 'Beast Kickthrough',
     figure: 'beastKickthroughFlow',
     surface: 'ground',
-    sided: true,
-    cue: 'From hands and feet, hips low, rotate and thread one leg underneath your body to the opposite side. Return, and keep working this side.',
+    cue: 'From hands and feet, hips low, rotate and thread one leg underneath your body to the opposite side. Return, and alternate sides each rep.',
   },
   {
     id: 'scorpion-heel-taps',
@@ -502,8 +499,7 @@ window.EXERCISES = [
     figure: 'towelPullAcrossFlow',
     surface: 'standing',
     needsFurniture: true,
-    sided: true,
-    cue: 'Hold a towel with tension, arms straight, and pull down and across your body toward one hip. Keep the arms locked out the whole way.',
+    cue: 'Hold a towel with tension, arms straight, and pull down and across your body toward one hip, alternating sides. Keep the arms locked out the whole way.',
   },
   {
     id: 'towel-front-raise',

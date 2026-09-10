@@ -466,6 +466,15 @@ function setupWorkoutUIForMode() {
   skipBtn.textContent = isCalisthenics ? 'Next ▶' : 'Skip';
   pauseBtn.textContent = 'Pause';
   resetVoiceControlButton();
+  // Hands-free control is sticky: turn the mic on once and every later
+  // Calisthenics session arms it for you. Deliberately re-armed HERE, off the
+  // duration tap that starts the workout, rather than at page load — that tap
+  // is a user gesture, so a first-ever mic permission prompt can still appear,
+  // and a mic listening on the home screen has no exercise to advance anyway.
+  if (isCalisthenics && window.voiceControlSupported
+      && loadBoolPref('quietflow.voiceControl', false)) {
+    startVoiceControlUI();
+  }
 }
 
 function togglePause() {
@@ -550,30 +559,44 @@ function stopVoiceControlIfActive() {
   resetVoiceControlButton();
 }
 
+// Shared by the mic button and the automatic re-arm above, so both paths put
+// the button into exactly the same state.
+function startVoiceControlUI() {
+  if (!voiceControlBtn || !window.voiceControlSupported) return false;
+  if (window.unlockVoiceAudio) window.unlockVoiceAudio();
+  const started = window.startVoiceControl(() => {
+    if (state && state.mode === 'calisthenics' && !state.paused) {
+      skipSegment();
+    }
+  });
+  if (started) {
+    voiceControlBtn.textContent = '🎤 Listening… say "next"';
+    voiceControlBtn.classList.add('listening');
+  } else {
+    voiceControlBtn.textContent = 'Voice control unavailable';
+    setTimeout(resetVoiceControlButton, 2000);
+  }
+  return started;
+}
+
 if (voiceControlBtn) {
   voiceControlBtn.addEventListener('click', () => {
     if (window.isVoiceControlActive && window.isVoiceControlActive()) {
       stopVoiceControlIfActive();
+      saveBoolPref('quietflow.voiceControl', false);
       return;
     }
-    if (window.unlockVoiceAudio) window.unlockVoiceAudio();
-    const started = window.startVoiceControl(() => {
-      if (state && state.mode === 'calisthenics' && !state.paused) {
-        skipSegment();
-      }
-    });
-    if (started) {
-      voiceControlBtn.textContent = '🎤 Listening… say "next"';
-      voiceControlBtn.classList.add('listening');
-    } else {
-      voiceControlBtn.textContent = 'Voice control unavailable';
-      setTimeout(resetVoiceControlButton, 2000);
-    }
+    // Only remember it once it actually started — storing true on a failed
+    // start would re-attempt (and re-fail) at the top of every session.
+    if (startVoiceControlUI()) saveBoolPref('quietflow.voiceControl', true);
   });
 }
 
 // Called by voice-control.js if the mic permission prompt is denied.
 window.onVoiceControlDenied = () => {
+  // Forget the preference too, so a revoked permission doesn't leave every
+  // future session trying to re-arm a mic it can never get.
+  saveBoolPref('quietflow.voiceControl', false);
   resetVoiceControlButton();
   if (voiceControlBtn) {
     voiceControlBtn.textContent = 'Mic permission denied';
