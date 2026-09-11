@@ -381,7 +381,7 @@ window.FIGURES = {
   // identically and are told apart only by which way the arms travel.
   armsBehindBackLift: svg(stick({
     head: [42, 18], headR: 7, neck: [48, 28], hip: [50, 80],
-    arms: [[[64, 58], [76, 38]]],
+    arms: [[[61, 48], [78, 62]]],
     legs: LEGS_SIDE,
     prop: FLOOR_STAND,
   })),
@@ -391,7 +391,7 @@ window.FIGURES = {
   // (Hands-Behind-Back Pull-Down). The mirror of armsBehindBackLift.
   armsBehindBackDown: svg(stick({
     head: [42, 18], headR: 7, neck: [48, 28], hip: [50, 80],
-    arms: [[[62, 52], [64, 88]]],
+    arms: [[[56, 52], [60, 76]]],
     legs: LEGS_SIDE,
     prop: FLOOR_STAND,
   })),
@@ -542,8 +542,8 @@ window.FIGURES = {
     arms: [[[54, 52], [56, 74]]],
     legs: [[[46, 104], [45, 122]], [[52, 104], [51, 122]]],
     prop: GROUND(10, 90, 133),
-    extra: BONE(45, 122, 56, 133, W.foot[0], W.foot[1])
-      + BONE(51, 122, 62, 133, W.foot[0], W.foot[1]),
+    extra: BONE(45, 122, 34, 133, W.foot[0], W.foot[1])
+      + BONE(51, 122, 40, 133, W.foot[0], W.foot[1]),
   })),
 
   // C13 — standing, one leg stepped behind AND across the other so the
@@ -563,7 +563,7 @@ window.FIGURES = {
   // starting position for standing up without using your hands
   // (Sit-to-Stand, No Hands).
   sitToStand: svg(stick({
-    head: [36, 62], headR: 7, neck: [40, 72], hip: [34, 124],
+    head: [44, 62], headR: 7, neck: [40, 72], hip: [34, 124],
     arms: [[[54, 84], [34, 90]]],
     legs: [[[68, 90], [74, 130]]],
     prop: GROUND(8, 92, 131),
@@ -626,9 +626,9 @@ window.FIGURES = {
   // drawn in because the exaggerated shin angle only makes sense once you
   // can see what it's leaning on.
   couchStretch: svg(stick({
-    head: [50, 24], headR: 7, neck: [54, 34], hip: [56, 84],
-    arms: [[[44, 58], [42, 80]]],
-    legs: [[[30, 100], [26, 132]], [[72, 124], [80, 90]]],
+    head: [50, 42], headR: 7, neck: [54, 54], hip: [58, 102],
+    arms: [[[48, 76], [36, 96]]],
+    legs: [[[30, 102], [30, 132]], [[78, 130], [84, 101]]],
     prop: PROP('M86 20 V132') + GROUND(6, 90, 132),
   })),
 

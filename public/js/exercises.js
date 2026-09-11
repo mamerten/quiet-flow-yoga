@@ -231,7 +231,7 @@ window.EXERCISES = [
     surface: 'ground',
     needsWall: true,
     sided: true,
-    cue: 'Prop your back shin up behind you — against a wall or a couch, the pose’s namesake — so that knee is fully bent, then sink your hips forward and down. A deep stretch through the front of the hip and thigh.',
+    cue: 'Kneel with your back knee in the corner where the floor meets a wall, and let that shin run up the wall behind you. Plant your other foot forward, knee bent about 90 degrees. Sink your hips down, squeeze the back glute, and bring your chest upright. A deep stretch through the front of the hip and thigh.',
   },
   {
     id: 'bird-dog',
