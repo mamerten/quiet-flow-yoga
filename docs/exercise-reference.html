@@ -70,11 +70,18 @@
 <body>
   <h1>Calisthenics exercise reference</h1>
   <p class="meta">
-    <span id="count">–</span> exercises, built live from
-    <code>public/js/exercises.js</code> + <code>public/js/figures.js</code> —
-    reopen this page after editing either file to see the update. Grouped
-    the way the equipment filter groups them in the app (mat / prop / bar
-    toggles). Internal reference only, not part of the shipped site.
+    <span id="count">–</span> exercises, read live from
+    <code>public/js/exercises.js</code> + <code>public/js/figures.js</code>
+    at <span id="rendered">–</span>.
+    <br />
+    This page keeps no copy of the data, so <strong>its own file date never
+    moves</strong> even when the exercises do — a stale "Modified" date in
+    Explorer says nothing about whether what you are reading is current.
+    Trust the count and the timestamp above instead. Reload to pick up
+    edits; use Ctrl+Shift+R if a previously-cached copy of either script is
+    being served. Grouped the way the equipment filter groups them in the
+    app (mat / prop / bar toggles). Internal reference only, not part of the
+    shipped site.
   </p>
   <div id="warning">Couldn't load the exercise/figure data — open this file from its normal location inside <code>docs/</code> (next to <code>public/</code>), not copied elsewhere.</div>
   <div id="root"></div>
@@ -122,6 +129,10 @@
         return;
       }
       document.getElementById('count').textContent = exercises.length;
+      // Proves the page just re-read the source files. Without it the only
+      // date on screen is the file's own, which is misleading by design.
+      document.getElementById('rendered').textContent =
+        new Date().toLocaleString();
 
       const groups = {};
       exercises.forEach((e) => {
