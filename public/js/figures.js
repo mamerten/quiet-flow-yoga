@@ -1070,6 +1070,45 @@ window.FIGURES = {
     }),
   ]),
 
+  // C64 - 2-frame flip book seen from overhead: legs straight, swung together
+  // to one side of an object on the floor and then the other (Two-Leg Side
+  // Sweep). Overhead because a side view cannot show lateral travel at all —
+  // it is the whole exercise. Straight legs are what separate this from
+  // windshieldWiperFlow above, which sweeps with the knees bent.
+  twoLegSweepFlow: animatedFigure([
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [22, 70]], [[70, 50], [78, 70]]],
+      legs: [[[38, 102], [26, 126]], [[44, 104], [32, 128]]],
+      prop: MAT + PROP('M44 116 H56 V126 H44 Z'),
+    }),
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [22, 70]], [[70, 50], [78, 70]]],
+      legs: [[[62, 102], [74, 126]], [[56, 104], [68, 128]]],
+      prop: MAT + PROP('M44 116 H56 V126 H44 Z'),
+    }),
+  ]),
+
+  // C65 - 2-frame flip book seen from overhead: one straight leg crosses over
+  // the object while the other stays put, then they swap (Single-Leg Side
+  // Sweep). The stationary leg is the point — it is what tells this apart from
+  // twoLegSweepFlow, where both legs travel together.
+  singleLegSweepFlow: animatedFigure([
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [22, 70]], [[70, 50], [78, 70]]],
+      legs: [[[60, 102], [72, 126]], [[46, 104], [44, 130]]],
+      prop: MAT + PROP('M44 116 H56 V126 H44 Z'),
+    }),
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [22, 70]], [[70, 50], [78, 70]]],
+      legs: [[[40, 102], [28, 126]], [[54, 104], [56, 130]]],
+      prop: MAT + PROP('M44 116 H56 V126 H44 Z'),
+    }),
+  ]),
+
   // C63 - 2-frame flip book, side view: the hips lift high into an
   // upside-down V, then roll forward and sink low as the chest opens (Down-Up
   // Dogs). The hands stay planted in the same spot across both frames, which

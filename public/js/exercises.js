@@ -414,6 +414,20 @@ window.EXERCISES = [
     cue: 'Sit propped back on your hands with your legs straight out in front. Raise them together as high as you can, then lower them back down without letting your feet touch the floor.',
   },
   {
+    id: 'two-leg-side-sweep',
+    name: 'Two-Leg Side Sweep',
+    figure: 'twoLegSweepFlow',
+    surface: 'ground',
+    cue: 'Sit propped back on your hands, legs straight out in front. Put a shoe or a cushion on the floor ahead of you to clear — or just pick a spot. Lift both legs together and sweep them across to one side of it, then back across to the other, keeping them straight and off the floor the whole way.',
+  },
+  {
+    id: 'single-leg-side-sweep',
+    name: 'Single-Leg Side Sweep',
+    figure: 'singleLegSweepFlow',
+    surface: 'ground',
+    cue: 'Sit propped back on your hands, legs straight out in front. Put a shoe or a cushion on the floor ahead of you to clear — or just pick a spot. Lift one leg and sweep it across over that marker and back, alternating legs, without letting either heel touch down.',
+  },
+  {
     id: 'down-up-dogs',
     name: 'Down-Up Dogs',
     figure: 'downUpDogFlow',
