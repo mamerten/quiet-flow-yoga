@@ -76,7 +76,7 @@ const homeBtn = document.getElementById('home-btn');
 // throughout and ends the session on its own when it reaches 0.
 let state = null;
 
-let currentMode = 'yoga';
+let currentMode = 'calisthenics';
 
 const HOME_TAGLINES = {
   yoga: "A short, guided yoga practice. Pick a length and press start — I'll walk you through it.",
@@ -99,6 +99,14 @@ function setMode(mode) {
 modeTabs.forEach((tab) => {
   tab.addEventListener('click', () => setMode(tab.dataset.mode));
 });
+
+// Apply the starting mode through the same path a tap takes. The tab states,
+// the tagline and the equipment row all hang off setMode(), so letting the
+// markup alone establish the default is how those drift apart — the equipment
+// row in particular ships hidden and would stay hidden on a Calisthenics
+// start. index.html is pre-set to the same mode purely so there's no flash of
+// the wrong tab before this line runs.
+setMode(currentMode);
 
 function showScreen(screen) {
   [homeScreen, workoutScreen, completeScreen].forEach((s) => s.classList.add('hidden'));
