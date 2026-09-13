@@ -1235,6 +1235,37 @@ window.FIGURES = {
     }),
   ]),
 
+  // C73 - 2-frame flip book, side view: kneeling with the toes tucked and the
+  // hands planted behind, sitting back on the heels, then the hips driven
+  // forward and up (Kneeling Hip Lifts). Knee, foot and hand are pinned across
+  // both frames, so the hip is the only thing that visibly travels.
+  kneelingHipLiftFlow: animatedFigure([
+    stick({
+      head: [70, 57], headR: 7, neck: [70, 68], hip: [58, 106],
+      arms: [[[74, 95], [76, 122]]],
+      legs: [[[30, 122], [62, 124]]],
+      prop: GROUND(6, 94, 124),
+    }),
+    stick({
+      head: [82, 62], headR: 7, neck: [74, 70], hip: [44, 92],
+      arms: [[[76, 96], [76, 122]]],
+      legs: [[[30, 122], [62, 124]]],
+      prop: GROUND(6, 94, 124),
+    }),
+  ]),
+
+  // C74 - side view, a deep squat on the balls of both feet with the heels
+  // lifted and the hands on the floor behind for support (Toe Squat Hold). The
+  // foot is drawn explicitly because heels-up, weight-on-the-toes IS the
+  // stretch; without it this is just a squat.
+  toeSquatHold: svg(stick({
+    head: [66, 67], headR: 7, neck: [68, 78], hip: [60, 114],
+    arms: [[[76, 104], [80, 130]]],
+    legs: [[[34, 100], [58, 124]]],
+    prop: GROUND(8, 94, 132),
+    extra: BONE(58, 124, 48, 132, W.foot[0], W.foot[1]),
+  })),
+
   // C63 - 2-frame flip book, side view: the hips lift high into an
   // upside-down V, then roll forward and sink low as the chest opens (Down-Up
   // Dogs). The hands stay planted in the same spot across both frames, which

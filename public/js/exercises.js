@@ -481,6 +481,20 @@ window.EXERCISES = [
     cue: 'Sit tall with both knees bent and your arms stretched straight overhead, hands clasped. Swing your knees from one side to the other without putting a hand down, keeping your chest lifted the whole time.',
   },
   {
+    id: 'kneeling-hip-lifts',
+    name: 'Kneeling Hip Lifts',
+    figure: 'kneelingHipLiftFlow',
+    surface: 'ground',
+    cue: 'Kneel with your toes tucked under and your hands planted on the floor behind you. Sit back toward your heels, then drive your hips forward and up, squeezing your glutes at the top. Lower with control and repeat.',
+  },
+  {
+    id: 'toe-squat-hold',
+    name: 'Toe Squat Hold',
+    figure: 'toeSquatHold',
+    surface: 'ground',
+    cue: 'Squat down onto the balls of your feet with your heels lifted and your hands on the floor behind you for support. Sit into it and let the stretch work through your toes and the soles of your feet. Hold and breathe.',
+  },
+  {
     id: 'down-up-dogs',
     name: 'Down-Up Dogs',
     figure: 'downUpDogFlow',
