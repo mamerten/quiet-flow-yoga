@@ -1109,6 +1109,132 @@ window.FIGURES = {
     }),
   ]),
 
+  // C66 - 2-frame flip book, side view: tall on one leg, then hinged forward
+  // with the free leg reaching straight back as the chest lowers (Single-Leg
+  // Romanian Deadlift). The standing foot is pinned to the same spot in both
+  // frames, since that's the one thing that must not move. The torso reads
+  // shorter when folded — the same foreshortening toeTouchFlow uses — which is
+  // what lets head-to-heel fit inside a 100-wide frame at all.
+  singleLegRdlFlow: animatedFigure([
+    stick({
+      head: [48, 19], headR: 7, neck: [52, 29], hip: [56, 81],
+      arms: [[[54, 54], [55, 78]]],
+      legs: [[[57, 107], [58, 133]], [[62, 106], [70, 122]]],
+      prop: GROUND(8, 98, 133),
+    }),
+    stick({
+      head: [15, 97], headR: 7, neck: [24, 94], hip: [60, 82],
+      arms: [[[25, 108], [26, 120]]],
+      legs: [[[58, 107], [58, 133]], [[80, 76], [98, 70]]],
+      prop: GROUND(8, 98, 133),
+    }),
+  ]),
+
+  // C67 - side view, standing on one leg with the other heel drawn up behind
+  // to the glute, the hand on that side holding the ankle and the free arm out
+  // front for balance (Standing Quad Stretch). The forward arm is doing real
+  // work: without it this is indistinguishable from someone just lifting a foot.
+  standingQuadStretch: svg(stick({
+    head: [44, 18], headR: 7, neck: [48, 28], hip: [50, 80],
+    arms: [[[56, 53], [60, 78]], [[36, 40], [24, 40]]],
+    legs: [[[50, 106], [49, 133]], [[54, 106], [60, 78]]],
+    prop: FLOOR_STAND,
+  })),
+
+  // C68 - side view, facing a wall: heel down, the ball of the front foot set
+  // up against the wall, knee driven forward toward it, hands on the wall
+  // (Wall Ankle Stretch). The foot is drawn explicitly because its angle IS the
+  // stretch — toes pulled up toward the shin, i.e. dorsiflexion.
+  wallAnkleStretch: svg(stick({
+    head: [66, 18], headR: 7, neck: [62, 28], hip: [58, 80],
+    arms: [[[72, 42], [86, 38]]],
+    legs: [[[72, 104], [76, 130]], [[50, 106], [42, 133]]],
+    prop: PROP('M88 14 V133') + GROUND(8, 88, 133),
+    extra: BONE(76, 130, 86, 118, W.foot[0], W.foot[1]),
+  })),
+
+  // C69 - 2-frame flip book, front view: feet wide with the arms straight out
+  // in a T, then rotated down so one hand touches the opposite foot while the
+  // other arm reaches for the ceiling (Windmill). Front-on because the cross-
+  // body reach to the OPPOSITE foot is the whole point, and a side view would
+  // hide which foot is being touched.
+  windmillFlow: animatedFigure([
+    stick({
+      head: [50, 17], neck: [50, 28], shoulders: [[38, 33], [62, 33]], hip: [50, 80],
+      arms: [[[26, 33], [12, 33]], [[74, 33], [88, 33]]],
+      legs: [[[36, 106], [22, 133]], [[64, 106], [78, 133]]],
+      prop: GROUND(6, 94, 133),
+    }),
+    stick({
+      head: [72, 104], headR: 7, neck: [64, 94], hip: [50, 80],
+      arms: [[[70, 112], [76, 128]], [[62, 70], [60, 46]]],
+      legs: [[[36, 106], [22, 133]], [[64, 106], [78, 133]]],
+      prop: GROUND(6, 94, 133),
+    }),
+  ]),
+
+  // C70 - 2-frame flip book seen from overhead: kneeling with the hands walked
+  // out wide and planted, the body rocking over to one side and then the other
+  // (Kneeling Shoulder Rocks). Overhead, not front-on: from the front the thighs
+  // of someone on hands and knees read as standing legs, and the pose turned
+  // into a tent. Hands stay pinned to the top corners in both frames; only the
+  // torso travels, and the arm on the far side lengthens into the stretch.
+  kneelingShoulderRockFlow: animatedFigure([
+    stick({
+      head: [40, 36], headR: 7, neck: [42, 46], shoulders: [[32, 50], [52, 50]], hip: [46, 94],
+      arms: [[[20, 38], [10, 22]], [[70, 36], [90, 22]]],
+      legs: [[[40, 112], [40, 130]], [[52, 112], [52, 130]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [60, 36], headR: 7, neck: [58, 46], shoulders: [[48, 50], [68, 50]], hip: [54, 94],
+      arms: [[[30, 36], [10, 22]], [[80, 38], [90, 22]]],
+      legs: [[[48, 112], [48, 130]], [[60, 112], [60, 130]]],
+      prop: MAT,
+    }),
+  ]),
+
+  // C71 - 2-frame flip book, side view: sitting back toward the heels, folded
+  // forward, fingers laced behind the head with the elbows dropped toward the
+  // floor — then one elbow opens up toward the ceiling (Kneeling Thoracic
+  // Rotation). Built on kneelingRest's base so the two read as related. The
+  // rising elbow is the only cue a side view can give for a rotation.
+  kneelingThoracicRotationFlow: animatedFigure([
+    stick({
+      head: [24, 106], headR: 7, neck: [36, 100], hip: [74, 84],
+      arms: [[[22, 120], [20, 104]]],
+      legs: [[[76, 118], [94, 116]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [26, 96], headR: 7, neck: [38, 94], hip: [74, 84],
+      arms: [[[36, 70], [26, 90]]],
+      legs: [[[76, 118], [94, 116]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
+  // C72 - 2-frame flip book, front view: seated tall with both arms straight
+  // overhead and the hands clasped, knees swinging from one side to the other
+  // (90/90 Switch, Arms Overhead). Front-on rather than overhead like the
+  // plain ninetyNinetyFlow, because arms raised straight up point directly at
+  // an overhead camera and vanish. Torso and arms are identical across both
+  // frames — taking the hands off the floor is exactly what makes this harder.
+  ninetyNinetyOverheadFlow: animatedFigure([
+    stick({
+      head: [50, 52], neck: [50, 62], shoulders: [[40, 66], [60, 66]], hip: [50, 106],
+      arms: [[[42, 46], [48, 26]], [[58, 46], [52, 26]]],
+      legs: [[[30, 110], [16, 122]], [[40, 116], [24, 125]]],
+      prop: GROUND(8, 92, 126),
+    }),
+    stick({
+      head: [50, 52], neck: [50, 62], shoulders: [[40, 66], [60, 66]], hip: [50, 106],
+      arms: [[[42, 46], [48, 26]], [[58, 46], [52, 26]]],
+      legs: [[[70, 110], [84, 122]], [[60, 116], [76, 125]]],
+      prop: GROUND(8, 92, 126),
+    }),
+  ]),
+
   // C63 - 2-frame flip book, side view: the hips lift high into an
   // upside-down V, then roll forward and sink low as the chest opens (Down-Up
   // Dogs). The hands stay planted in the same spot across both frames, which
