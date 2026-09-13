@@ -1266,6 +1266,27 @@ window.FIGURES = {
     extra: BONE(58, 124, 48, 132, W.foot[0], W.foot[1]),
   })),
 
+  // C75 - 3-frame flip book, side view on the plank base: plank, down to the
+  // bottom of the push-up, then back up with one foot stepped forward beside
+  // the hands and that side's hand lifted clear of the floor (Push-Up Lunge
+  // Reach). Frames one and two are pushUpFlow's own, so the push-up half reads
+  // identically; the support hand and back foot stay pinned through all three.
+  pushUpLungeReachFlow: animatedFigure([
+    stick(PLANK),
+    stick({
+      head: [16, 66], headR: 7, neck: [24, 72], hip: [58, 92],
+      arms: [[[32, 92], [24, 110]]],
+      legs: [[[76, 101], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+    stick({
+      head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 88],
+      arms: [[[24, 84], [24, 110]], [[14, 78], [8, 62]]],
+      legs: [[[36, 90], [32, 110]], [[76, 99], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+  ]),
+
   // C63 - 2-frame flip book, side view: the hips lift high into an
   // upside-down V, then roll forward and sink low as the chest opens (Down-Up
   // Dogs). The hands stay planted in the same spot across both frames, which

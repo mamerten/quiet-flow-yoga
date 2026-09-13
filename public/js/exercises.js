@@ -210,6 +210,13 @@ window.EXERCISES = [
     cue: 'Lower your chest toward the floor and press back up, keeping your body in one straight line.',
   },
   {
+    id: 'push-up-lunge-reach',
+    name: 'Push-Up Lunge Reach',
+    figure: 'pushUpLungeReachFlow',
+    surface: 'ground',
+    cue: 'Do a push-up. At the top, step one foot up beside your hand and lift that same hand off the floor, reaching it forward. Step back to plank, do another push-up, and switch sides each rep.',
+  },
+  {
     id: 'mountain-climber',
     name: 'Mountain Climber',
     figure: 'mountainClimber',
