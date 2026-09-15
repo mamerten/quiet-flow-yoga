@@ -39,25 +39,46 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
   height: 100%;
 }
 
+/* The body must be allowed to grow taller than the screen. It used to be
+   pinned to the viewport (height: 100%) and to center the card with
+   align-items: center — and when a flex item is taller than its container,
+   centering overflows it equally off BOTH ends. Scrolling can reveal the
+   bottom overhang but can never go above zero, so the top of the card (the
+   title and the mode tabs) was cut off with no way to reach it. On a phone
+   the URL bar shrinks the visible area enough to trigger that on load. */
 body {
   margin: 0;
   font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   background: linear-gradient(180deg, var(--bg-top) 0%, var(--cream) 100%);
   color: var(--text);
   display: flex;
-  align-items: center;
   justify-content: center;
+  /* 100vh on mobile is the height with the browser toolbars HIDDEN, i.e.
+     taller than what's visible while the URL bar is showing. dvh tracks
+     the toolbars as they appear and disappear; vh stays as the fallback
+     for browsers that don't know dvh. */
   min-height: 100vh;
-  padding: 20px;
+  min-height: 100dvh;
+  /* viewport-fit=cover (index.html) lets the page run under the notch and
+     home indicator, so never pad less than those insets. */
+  padding:
+    max(20px, env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
 }
 
 .app {
   width: 100%;
   max-width: 480px;
+  /* Auto margins center the card when it fits and collapse to zero when it
+     doesn't — unlike align-items: center, they never push content off the
+     top edge. */
+  margin: auto;
 }
 
 .screen.hidden,
@@ -513,12 +534,17 @@ h1 {
    countdown/timer, and controls move to the right. */
 @media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
   body {
-    padding: 10px;
-    align-items: flex-start;
+    padding:
+      max(10px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-right))
+      max(10px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
   }
 
   .app {
     max-width: 760px;
+    /* Top-aligned here, as before — just via margins now, not align-items. */
+    margin: 0 auto;
   }
 
   .card {
