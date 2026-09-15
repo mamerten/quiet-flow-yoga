@@ -358,7 +358,7 @@ window.EXERCISES = [
     name: 'Beast Kickthrough',
     figure: 'beastKickthroughFlow',
     surface: 'ground',
-    cue: 'From hands and feet, hips low, rotate and thread one leg underneath your body to the opposite side. Return, and alternate sides each rep.',
+    cue: 'From hands and feet with your knees hovering, lift one foot and the opposite hand off the floor. Rotate your hips and kick that leg through underneath you toward the side your hand came off, keeping the other hand and foot planted. Return, and alternate sides each rep.',
   },
   {
     id: 'scorpion-heel-taps',
@@ -373,7 +373,7 @@ window.EXERCISES = [
     name: '90/90 Switch',
     figure: 'ninetyNinetyFlow',
     surface: 'ground',
-    cue: 'Sit with both knees bent at 90 degrees, one in front and one to the side. Rotate your knees to switch which leg is which.',
+    cue: 'Sit tall with both knees bent at 90 degrees, one leg in front of you and the other out to the side behind you, hands on the floor for support. Lift your knees and swing them over to the other side, turning your chest with them so your whole torso rotates 90 degrees to face the new front leg.',
   },
   {
     id: 'lying-knee-drops',
@@ -423,7 +423,7 @@ window.EXERCISES = [
     figure: 'lungeReachFlow',
     surface: 'ground',
     sided: true,
-    cue: 'From a low lunge, rotate your torso and sweep one arm down and back, then around and up overhead in one flowing arc. Move slow and controlled.',
+    cue: 'From a low lunge, reach one arm forward, then rotate your torso open and sweep that arm straight back at shoulder height, following it with your eyes. Bring it forward again and repeat, slow and controlled.',
   },
   {
     id: 'toe-flexor-hold',
@@ -530,8 +530,7 @@ window.EXERCISES = [
     name: 'Standing Quad Stretch',
     figure: 'standingQuadStretch',
     surface: 'standing',
-    sided: true,
-    cue: 'Stand tall on one leg, bend the other knee, and hold that ankle behind you, drawing the heel toward your glute. Keep your knees close together and your hips tucked under, and reach the free arm out in front for balance.',
+    cue: 'Stand tall on one leg, bend the other knee, and hold that ankle behind you, drawing the heel toward your glute. Keep your knees close together and your hips tucked under, and reach the free arm out in front for balance. Hold, then switch legs halfway through.',
   },
   {
     id: 'wall-ankle-stretch',
@@ -582,7 +581,7 @@ window.EXERCISES = [
     name: 'Toe Squat Hold',
     figure: 'toeSquatHold',
     surface: 'ground',
-    cue: 'Squat down onto the balls of your feet with your heels lifted and your hands on the floor behind you for support. Sit into it and let the stretch work through your toes and the soles of your feet. Hold and breathe.',
+    cue: 'Squat down onto the balls of your feet with your heels lifted, arms reaching forward for balance and hands off the floor. Sit into it and let the stretch work through your toes and the soles of your feet. Hold and breathe.',
   },
   {
     id: 'down-up-dogs',

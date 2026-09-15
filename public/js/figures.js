@@ -426,13 +426,13 @@ window.FIGURES = {
   // front shin vertical (Reverse Lunge).
   reverseLungeFlow: animatedFigure([
     stick({
-      head: [44, 20], headR: 7, neck: [48, 30], hip: [50, 78],
+      head: [53, 20], headR: 7, neck: [48, 30], hip: [50, 78],
       arms: [[[56, 52], [52, 74]]],
       legs: [[[62, 104], [66, 133]], [[34, 106], [20, 133]]],
       prop: GROUND(8, 94, 133),
     }),
     stick({
-      head: [44, 36], headR: 7, neck: [48, 46], hip: [50, 92],
+      head: [53, 36], headR: 7, neck: [48, 46], hip: [50, 92],
       arms: [[[58, 66], [56, 88]]],
       legs: [[[72, 98], [74, 133]], [[30, 124], [16, 133]]],
       prop: GROUND(8, 94, 133),
@@ -605,24 +605,27 @@ window.FIGURES = {
   // the same planted supporting arm: hand down, mid-rise, then fully
   // rotated with the free arm reaching for the ceiling (World's Greatest
   // Stretch). Showing the rotation reads far better than any single frame
-  // of it.
+  // of it. The hip sits low, level with the front knee: drawn higher, the
+  // front shin and the planted forearm have to stretch to reach the floor,
+  // which is exactly how they once ended up at 40 and 46 units against a
+  // 27-unit torso.
   worldsGreatestFlow: animatedFigure([
     stick({
-      head: [58, 55], headR: 7, neck: [54, 64], hip: [46, 90],
-      arms: [[[58, 84], [62, 130]], [[64, 82], [68, 130]]],
-      legs: [[[72, 92], [76, 132]], [[26, 120], [10, 130]]],
+      head: [85, 102], headR: 7, neck: [76, 98], hip: [48, 106],
+      arms: [[[78, 114], [80, 130]], [[82, 113], [85, 129]]],
+      legs: [[[68, 106], [68, 132]], [[30, 126], [14, 131]]],
       prop: GROUND(6, 96, 132),
     }),
     stick({
-      head: [56, 48], headR: 7, neck: [52, 58], hip: [46, 90],
-      arms: [[[58, 84], [62, 130]], [[66, 62], [78, 52]]],
-      legs: [[[72, 92], [76, 132]], [[26, 120], [10, 130]]],
+      head: [88, 97], headR: 7, neck: [76, 97], hip: [48, 106],
+      arms: [[[78, 113], [80, 130]], [[79, 80], [83, 64]]],
+      legs: [[[68, 106], [68, 132]], [[30, 126], [14, 131]]],
       prop: GROUND(6, 96, 132),
     }),
     stick({
-      head: [56, 42], headR: 7, neck: [50, 54], hip: [46, 90],
-      arms: [[[58, 84], [62, 130]], [[64, 36], [76, 16]]],
-      legs: [[[72, 92], [76, 132]], [[26, 120], [10, 130]]],
+      head: [87, 94], headR: 7, neck: [75, 95], hip: [48, 106],
+      arms: [[[78, 112], [80, 130]], [[75, 77], [75, 59]]],
+      legs: [[[68, 106], [68, 132]], [[30, 126], [14, 131]]],
       prop: GROUND(6, 96, 132),
     }),
   ]),
@@ -831,21 +834,24 @@ window.FIGURES = {
     prop: GROUND(8, 94, 122),
   })),
 
-  // C34 — 2-frame flip book seen from overhead: both knees at 90 degrees
-  // pointing one way, then rotated over to point the other (90/90 Switch).
-  // The switch is the exercise, so it has to move; the torso stays fixed.
+  // C34 — 2-frame flip book, front view, seated: both knees at 90 degrees
+  // swung to one side with the hands on the floor for support, then over to
+  // the other (90/90 Switch). It used to be drawn overhead, which read as
+  // lying on the back, and with the torso fixed — but the chest turns 90
+  // degrees with the knees, so the torso rotates here too: a narrowed shoulder
+  // bar and the head shifted toward the new front leg.
   ninetyNinetyFlow: animatedFigure([
     stick({
-      head: [50, 24], neck: [50, 34], shoulders: [[38, 40], [62, 40]], hip: [50, 74],
-      arms: [[[32, 54], [28, 74]], [[68, 54], [72, 74]]],
-      legs: [[[80, 86], [50, 104]], [[30, 96], [34, 126]]],
-      prop: MAT,
+      head: [43, 50], neck: [46, 61], shoulders: [[40, 65], [53, 65]], hip: [50, 106],
+      arms: [[[34, 88], [34, 122]], [[62, 88], [66, 122]]],
+      legs: [[[30, 110], [16, 122]], [[40, 116], [24, 125]]],
+      prop: GROUND(8, 92, 126),
     }),
     stick({
-      head: [50, 24], neck: [50, 34], shoulders: [[38, 40], [62, 40]], hip: [50, 74],
-      arms: [[[32, 54], [28, 74]], [[68, 54], [72, 74]]],
-      legs: [[[20, 86], [50, 104]], [[70, 96], [66, 126]]],
-      prop: MAT,
+      head: [57, 50], neck: [54, 61], shoulders: [[47, 65], [60, 65]], hip: [50, 106],
+      arms: [[[38, 88], [34, 122]], [[66, 88], [66, 122]]],
+      legs: [[[70, 110], [84, 122]], [[60, 116], [76, 125]]],
+      prop: GROUND(8, 92, 126),
     }),
   ]),
 
@@ -994,20 +1000,21 @@ window.FIGURES = {
     }),
   ]),
 
-  // C43 — 2-frame flip book, side view: a low lunge held fixed while the
-  // arm sweeps through a full arc — down and back near the floor, then
-  // around and up overhead (Lunge Reach and Twist). A wider arc than
-  // worldsGreatestFlow's single rotation, which stops at vertical.
+  // C43 — 2-frame flip book, side view: a low lunge held fixed while one arm
+  // reaches forward, then sweeps straight back at shoulder height as the torso
+  // rotates open (Lunge Reach and Twist). The arm stays level — it does not
+  // arc up overhead, which is what earlier drawings of this showed and what
+  // separates it from worldsGreatestFlow's reach for the ceiling.
   lungeReachFlow: animatedFigure([
     stick({
-      head: [38, 42], headR: 7, neck: [44, 52], hip: [48, 84],
-      arms: [[[30, 66], [16, 74]]],
+      head: [52, 42], headR: 7, neck: [46, 52], hip: [48, 84],
+      arms: [[[58, 62], [72, 68]]],
       legs: [[[72, 94], [78, 132]], [[26, 110], [12, 128]]],
       prop: GROUND(6, 96, 132),
     }),
     stick({
-      head: [42, 36], headR: 7, neck: [46, 48], hip: [48, 84],
-      arms: [[[56, 26], [72, 10]]],
+      head: [50, 39], headR: 7, neck: [46, 50], hip: [48, 84],
+      arms: [[[30, 51], [13, 52]]],
       legs: [[[72, 94], [78, 132]], [[26, 110], [12, 128]]],
       prop: GROUND(6, 96, 132),
     }),
@@ -1222,10 +1229,9 @@ window.FIGURES = {
 
   // C72 - 2-frame flip book, front view: seated tall with both arms straight
   // overhead and the hands clasped, knees swinging from one side to the other
-  // (90/90 Switch, Arms Overhead). Front-on rather than overhead like the
-  // plain ninetyNinetyFlow, because arms raised straight up point directly at
-  // an overhead camera and vanish. Torso and arms are identical across both
-  // frames — taking the hands off the floor is exactly what makes this harder.
+  // (90/90 Switch, Arms Overhead). Front-on, like the plain ninetyNinetyFlow,
+  // and on the same legs. Torso and arms are identical across both frames —
+  // taking the hands off the floor is exactly what makes this harder.
   ninetyNinetyOverheadFlow: animatedFigure([
     stick({
       head: [50, 52], neck: [50, 62], shoulders: [[40, 66], [60, 66]], hip: [50, 106],
@@ -1261,12 +1267,12 @@ window.FIGURES = {
   ]),
 
   // C74 - side view, a deep squat on the balls of both feet with the heels
-  // lifted and the hands on the floor behind for support (Toe Squat Hold). The
+  // lifted and the arms reaching forward, hands off the floor (Toe Squat Hold). The
   // foot is drawn explicitly because heels-up, weight-on-the-toes IS the
   // stretch; without it this is just a squat.
   toeSquatHold: svg(stick({
-    head: [66, 67], headR: 7, neck: [68, 78], hip: [60, 114],
-    arms: [[[76, 104], [80, 130]]],
+    head: [50, 67], headR: 7, neck: [54, 78], hip: [60, 114],
+    arms: [[[38, 84], [20, 84]]],
     legs: [[[34, 100], [58, 124]]],
     prop: GROUND(8, 94, 132),
     extra: BONE(58, 124, 48, 132, W.foot[0], W.foot[1]),
