@@ -570,11 +570,11 @@ window.EXERCISES = [
     cue: 'Sit tall with both knees bent and your arms stretched straight overhead, hands clasped. Swing your knees from one side to the other without putting a hand down, keeping your chest lifted the whole time.',
   },
   {
-    id: 'kneeling-hip-lifts',
-    name: 'Kneeling Hip Lifts',
-    figure: 'kneelingHipLiftFlow',
+    id: 'squat-roll-hip-lift',
+    name: 'Squat Roll to Hip Lift',
+    figure: 'squatRollHipLiftFlow',
     surface: 'ground',
-    cue: 'Kneel with your toes tucked under and your hands planted on the floor behind you. Sit back toward your heels, then drive your hips forward and up, squeezing your glutes at the top. Lower with control and repeat.',
+    cue: 'Squat on the balls of your feet with your heels up and your hands on the floor behind you. Roll forward, lowering your knees to the floor with your toes tucked flat underneath, then lift your hips up and forward as you open the front of your body. Roll back into the squat and repeat.',
   },
   {
     id: 'toe-squat-hold',

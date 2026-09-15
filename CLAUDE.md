@@ -24,6 +24,7 @@ public/js/app.js                 Screen/timer/countdown state machine, UI wiring
 public/audio/                    Pre-generated neural narration, one folder per voice pack
 public/manifest.json + public/sw.js   PWA: installable, offline-capable
 tools/generate-voice.py          Build-time script — renders public/audio/ via Piper (not shipped to browser)
+tools/build-exercise-reference.js  Generates docs/exercise-reference.html (static; don't hand-edit)
 wrangler.toml                    Cloudflare Pages config (build output = public/)
 ```
 
@@ -34,6 +35,7 @@ npx serve public        # local static server
 npm run dev              # via Wrangler, matches production
 npm run deploy            # manual deploy (needs `wrangler login` once)
 python tools/generate-voice.py   # regenerate narration audio after editing poses.js
+npm run reference                # rebuild docs/exercise-reference.html after editing exercises/figures
 ```
 
 No test suite. Verify changes by loading the app in a browser (Browser pane tools) and exercising
@@ -56,6 +58,10 @@ or returning visitors keep serving a stale version.
 - **Roman numerals**: pose names ending in a bare Roman numeral ("Warrior I/II/III") are correct
   on screen but must be converted to spoken words ("Warrior One") for narration — see
   `spoken_name()` in `generate-voice.py` and `spokenPoseName()` in `app.js`. Keep both in sync.
+- **After editing exercises.js or figures.js**, run `npm run reference` and commit the regenerated
+  `docs/exercise-reference.html` with the change. Mat reviews exercises from that file. It used to
+  render live from the JS, which left its file date frozen for days and read as "not updated"; it's
+  now a static snapshot, so it only stays current if it's rebuilt every time.
 - **After editing any pose's `name` or `cue`**, re-run `python tools/generate-voice.py` — it
   reads `poses.js` directly, content-hashes filenames (so stale audio can't be served), and
   prunes clips no longer referenced.

@@ -189,6 +189,18 @@ the sheet. It needs Playwright's chromium (`npm i -D playwright && npx
 playwright install chromium`); it's a dev tool and ships nothing to the
 browser.
 
+After changing any exercise or figure, rebuild the exercise reference and
+commit it alongside the change:
+
+```bash
+npm run reference                         # writes docs/exercise-reference.html
+```
+
+That page is a generated, self-contained snapshot of every Calisthenics
+exercise — figure frames side by side, sides, and cue, grouped by the
+equipment toggles. It has no scripts, so it opens anywhere, and its file date
+moves whenever the exercises do.
+
 ### Animated figures
 
 Most `FIGURES` entries are a single static `svg(...)`. For exercises that

@@ -1258,22 +1258,36 @@ window.FIGURES = {
     }),
   ]),
 
-  // C73 - 2-frame flip book, side view: kneeling with the toes tucked and the
-  // hands planted behind, sitting back on the heels, then the hips driven
-  // forward and up (Kneeling Hip Lifts). Knee, foot and hand are pinned across
-  // both frames, so the hip is the only thing that visibly travels.
-  kneelingHipLiftFlow: animatedFigure([
+  // C73 - 3-frame flip book, side view, facing left: squatting on the balls of
+  // the feet with the hands planted behind, then rolling forward as the knees
+  // come down, then the knees on the floor with the hips lifted and pressed
+  // forward as the body arches back over the hands (Squat Roll to Hip Lift).
+  // The feet are drawn explicitly and pinned in all three frames, heel up with
+  // the toes tucked flat on the floor, because that foot position is what the
+  // whole movement rolls over. In the last frame the knee stays sharply bent
+  // (about 40 degrees between thigh and shin) with the hip over the heel,
+  // rather than opening up into a tall kneel.
+  squatRollHipLiftFlow: animatedFigure([
     stick({
-      head: [70, 57], headR: 7, neck: [70, 68], hip: [58, 106],
-      arms: [[[74, 95], [76, 122]]],
-      legs: [[[30, 122], [62, 124]]],
-      prop: GROUND(6, 94, 124),
+      head: [66, 69], headR: 7, neck: [70, 80], hip: [55, 110],
+      arms: [[[76, 105], [80, 130]]],
+      legs: [[[30, 104], [52, 120]]],
+      prop: GROUND(6, 94, 132),
+      extra: BONE(52, 120, 50, 131, W.foot[0], W.foot[1]) + BONE(50, 131, 41, 132, W.foot[1], 1.4),
     }),
     stick({
-      head: [82, 62], headR: 7, neck: [74, 70], hip: [44, 92],
-      arms: [[[76, 96], [76, 122]]],
-      legs: [[[30, 122], [62, 124]]],
-      prop: GROUND(6, 94, 124),
+      head: [78, 70], headR: 7, neck: [72, 80], hip: [47, 104],
+      arms: [[[77, 105], [80, 130]]],
+      legs: [[[27, 118], [52, 120]]],
+      prop: GROUND(6, 94, 132),
+      extra: BONE(52, 120, 50, 131, W.foot[0], W.foot[1]) + BONE(50, 131, 41, 132, W.foot[1], 1.4),
+    }),
+    stick({
+      head: [76, 76], headR: 7, neck: [68, 84], hip: [40, 106],
+      arms: [[[74, 107], [80, 130]]],
+      legs: [[[26, 128], [52, 120]]],
+      prop: GROUND(6, 94, 132),
+      extra: BONE(52, 120, 50, 131, W.foot[0], W.foot[1]) + BONE(50, 131, 41, 132, W.foot[1], 1.4),
     }),
   ]),
 

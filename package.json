@@ -5,7 +5,8 @@
   "description": "A short, guided yoga timer with audible instructions and simple pose visuals.",
   "scripts": {
     "dev": "wrangler pages dev",
-    "deploy": "wrangler pages deploy"
+    "deploy": "wrangler pages deploy",
+    "reference": "node tools/build-exercise-reference.js"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
