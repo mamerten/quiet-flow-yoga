@@ -45,6 +45,14 @@ VOICE_PACKS = {
 # >1.0 slows delivery down; a yoga cue read at default speed sounds rushed.
 DEFAULT_LENGTH_SCALE = 1.15
 
+# Piper reads the text to speak from stdin. We send UTF-8, but a Python child
+# process decodes stdin with the system locale unless told otherwise — cp1252 on
+# Windows — so every non-ASCII character arrived as mojibake. An em dash (UTF-8
+# E2 80 94) became "â€”", which the voice read aloud as "a circumflex euros".
+# UTF-8 mode makes the child decode stdin as UTF-8 on every platform; a real em
+# dash then comes out as a short pause, the same as a semicolon.
+PIPER_ENV = dict(os.environ, PYTHONUTF8="1", PYTHONIOENCODING="utf-8")
+
 # Fixed lines the app speaks that don't come from the pose/exercise
 # libraries. Yoga and Calisthenics get their own sign-off ("Namaste" is a
 # yoga thing, not a calisthenics one).
@@ -150,8 +158,18 @@ def generate_pack(pack_id, model_name, clips, args, ff):
     for i, (key, text) in enumerate(sorted(clips.items()), 1):
         # Content-addressed filenames: editing a cue produces a new file and
         # sidesteps any stale caching of the old audio.
+        #
+        # Clips whose text isn't plain ASCII get an extra salt. Before Piper's
+        # stdin was forced to UTF-8 (see PIPER_ENV), those clips were rendered
+        # from mangled text: an em dash reached the voice as "â€”" and was
+        # spoken as "a circumflex euros". Fixing the encoding doesn't change
+        # the text, so without the salt the corrected audio would reuse the old
+        # filename — and sw.js serves audio cache-first, so anyone who had
+        # already heard the bad take would keep hearing it. Pure-ASCII clips
+        # were never affected and keep their existing files.
+        salt = "" if text.isascii() else "|utf8-stdin"
         digest = hashlib.sha1(
-            ("%s|%s|%s" % (model_name, args.length_scale, text)).encode("utf-8")
+            ("%s|%s|%s%s" % (model_name, args.length_scale, text, salt)).encode("utf-8")
         ).hexdigest()[:10]
         fname = "%s.%s.webm" % (key, digest)
         outpath = os.path.join(out_dir, fname)
@@ -166,7 +184,7 @@ def generate_pack(pack_id, model_name, clips, args, ff):
                 [sys.executable, "-m", "piper", "-m", model_name,
                  "--data-dir", args.data_dir,
                  "--length-scale", str(args.length_scale), "-f", wav],
-                input=text.encode("utf-8"), check=True,
+                input=text.encode("utf-8"), env=PIPER_ENV, check=True,
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             subprocess.run(
                 [ff, "-y", "-i", wav, "-ac", "1", "-c:a", "libopus",
