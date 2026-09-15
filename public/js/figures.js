@@ -824,15 +824,26 @@ window.FIGURES = {
     }),
   ]),
 
-  // C33 — seated with one leg folded in front and the other folded back on
-  // the opposite side, hands planted beside the hips to press up (Z-Sit
-  // Lift). Deliberately asymmetric — that asymmetry is the "Z".
-  zSit: svg(stick({
-    head: [48, 30], neck: [48, 40], shoulders: [[38, 45], [58, 45]], hip: [50, 88],
-    arms: [[[30, 60], [26, 92]], [[70, 60], [76, 92]]],
-    legs: [[[22, 94], [52, 104]], [[78, 92], [62, 118]]],
-    prop: GROUND(8, 94, 122),
-  })),
+  // C33 — 2-frame flip book, front view: seated with BOTH legs folded to the
+  // same side, both knees pointing the same way, hands planted beside the
+  // hips — then pressed up so the hips lift off the floor (Z-Sit Lift). The
+  // first version fanned the knees out in opposite directions with the feet
+  // meeting in the middle, which is a cross-legged sit, not a Z. Feet and
+  // hands stay pinned; the hip and torso rise as the elbows straighten.
+  zSit: animatedFigure([
+    stick({
+      head: [50, 50], neck: [50, 61], shoulders: [[40, 65], [60, 65]], hip: [50, 106],
+      arms: [[[30, 92], [34, 122]], [[70, 92], [66, 122]]],
+      legs: [[[30, 110], [16, 122]], [[40, 116], [24, 125]]],
+      prop: GROUND(8, 92, 126),
+    }),
+    stick({
+      head: [50, 43], neck: [50, 54], shoulders: [[40, 58], [60, 58]], hip: [50, 99],
+      arms: [[[37, 90], [34, 122]], [[63, 90], [66, 122]]],
+      legs: [[[30, 110], [16, 122]], [[40, 116], [24, 125]]],
+      prop: GROUND(8, 92, 126),
+    }),
+  ]),
 
   // C34 — 2-frame flip book, front view, seated: both knees at 90 degrees
   // swung to one side with the hands on the floor for support, then over to

@@ -351,7 +351,7 @@ window.EXERCISES = [
     figure: 'zSit',
     surface: 'ground',
     sided: true,
-    cue: 'Sit with one leg bent in front and one bent out to the side in a Z shape. Press your hands down and lift your hips slightly.',
+    cue: 'Sit with both legs folded to the same side in a Z shape, front knee bent in front of you and back knee bent out to the side, both knees pointing the same way. Press your hands into the floor beside your hips and lift your hips slightly, then lower with control.',
   },
   {
     id: 'beast-kickthrough',
