@@ -25,6 +25,12 @@ const GROUND = (x1, x2, y) => PROP(`M${x1} ${y} H${x2}`);
 // standing up and facing you.
 const MAT = PROP('M14 8 H86 V136 H14 Z');
 
+// A potato on the floor, for Touch the Potato: a small filled oval at the
+// same faded weight as the other props, so the targets read as scenery the
+// figure reaches for rather than as part of the body.
+const POTATO = (cx, cy) =>
+  `<ellipse cx="${cx}" cy="${cy}" rx="4.5" ry="2.8" fill="currentColor" opacity="0.45"/>`;
+
 // A towel held taut between two hands. Slightly thinner than a limb and hanging
 // with a little slack, so it doesn't read as a third arm.
 const TOWEL = (x1, y1, x2, y2, sag = 7) =>
@@ -1284,6 +1290,222 @@ window.FIGURES = {
       arms: [[[24, 84], [24, 110]], [[14, 78], [8, 62]]],
       legs: [[[36, 90], [32, 110]], [[76, 99], [92, 110]]],
       prop: GROUND(8, 98, 112),
+    }),
+  ]),
+
+  // C76 - 3-frame flip book, side view: balanced tall on one leg, then hinged
+  // right out to tap the far potato, then folded low over a bent standing knee
+  // to tap the near one (Touch the Potato). The first two frames share
+  // singleLegRdlFlow's shape on purpose; the potatoes are what make this its
+  // own exercise, and the two different reaches are what say 'more than one
+  // target'. The standing foot is pinned through all three.
+  touchPotatoFlow: animatedFigure([
+    stick({
+      head: [48, 19], headR: 7, neck: [52, 29], hip: [56, 81],
+      arms: [[[54, 54], [55, 78]]],
+      legs: [[[57, 107], [58, 133]], [[62, 106], [70, 122]]],
+      prop: GROUND(8, 98, 133) + POTATO(22, 130) + POTATO(38, 130) + POTATO(84, 130),
+    }),
+    stick({
+      head: [15, 99], headR: 7, neck: [24, 96], hip: [60, 84],
+      arms: [[[23, 112], [22, 126]]],
+      legs: [[[58, 108], [58, 133]], [[80, 78], [98, 72]]],
+      prop: GROUND(8, 98, 133) + POTATO(22, 130) + POTATO(38, 130) + POTATO(84, 130),
+    }),
+    stick({
+      head: [26, 90], headR: 7, neck: [36, 84], hip: [66, 98],
+      arms: [[[38, 106], [38, 126]]],
+      legs: [[[52, 114], [58, 133]], [[82, 108], [94, 120]]],
+      prop: GROUND(8, 98, 133) + POTATO(22, 130) + POTATO(38, 130) + POTATO(84, 130),
+    }),
+  ]),
+
+  // C77 - 2-frame flip book, front view: hands on hips, one knee lifted up in
+  // front, then swung out to the side (Standing Hip Opener). The standing leg
+  // and the arms are pinned; only the lifted knee travels.
+  hipOpenerFlow: animatedFigure([
+    stick({
+      ...STAND_FRONT,
+      arms: [[[26, 54], [40, 76]], [[74, 54], [60, 76]]],
+      legs: [[[47, 106], [45, 133]], [[57, 63], [59, 89]]],
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      ...STAND_FRONT,
+      arms: [[[26, 54], [40, 76]], [[74, 54], [60, 76]]],
+      legs: [[[47, 106], [45, 133]], [[80, 78], [82, 104]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C78 - 2-frame flip book, front view: standing with the arms down, then
+  // sunk into a squat with both arms reaching straight overhead (Squat and
+  // Reach). The squat is squatTwistFlow's, so the two read as siblings.
+  squatReachFlow: animatedFigure([
+    stick({
+      ...STAND_FRONT,
+      arms: [[[36, 56], [34, 78]], [[64, 56], [66, 78]]],
+      legs: LEGS_FRONT,
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      head: [50, 62], neck: [50, 72], shoulders: [[40, 76], [60, 76]], hip: [50, 108],
+      arms: [[[37, 52], [35, 28]], [[63, 52], [65, 28]]],
+      legs: [[[26, 104], [30, 133]], [[74, 104], [70, 133]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C79 - 2-frame flip book, side view: hands behind the head at the bottom of
+  // a reverse lunge, then standing on the front leg with the back knee driven
+  // up and the elbow crunched down to meet it (Lunge Crunch). The front foot is
+  // pinned across both frames.
+  lungeCrunchFlow: animatedFigure([
+    stick({
+      head: [53, 34], headR: 7, neck: [48, 45], hip: [48, 92],
+      arms: [[[62, 40], [54, 30]]],
+      legs: [[[70, 98], [72, 133]], [[30, 124], [16, 133]]],
+      prop: GROUND(8, 94, 133),
+    }),
+    stick({
+      head: [74, 32], headR: 7, neck: [64, 40], hip: [60, 82],
+      arms: [[[76, 52], [68, 30]]],
+      legs: [[[68, 108], [72, 133]], [[80, 66], [74, 90]]],
+      prop: GROUND(8, 94, 133),
+    }),
+  ]),
+
+  // C80 - 2-frame flip book, front view: hands on hips, the chest and shoulders
+  // turned to one side and then the other while the hips and legs stay square
+  // (Standing Torso Twist). A narrowed, shifted shoulder bar is the rotation cue
+  // a front view can give; the lower body is pinned to show it isn't turning.
+  torsoTwistFlow: animatedFigure([
+    stick({
+      head: [42, 17], neck: [46, 28], shoulders: [[40, 33], [53, 33]], hip: [50, 80],
+      arms: [[[22, 52], [41, 76]], [[56, 54], [59, 76]]],
+      legs: LEGS_FRONT,
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      head: [58, 17], neck: [54, 28], shoulders: [[47, 33], [60, 33]], hip: [50, 80],
+      arms: [[[44, 54], [41, 76]], [[78, 52], [59, 76]]],
+      legs: LEGS_FRONT,
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C81 - side view, hands behind and feet flat with the hips pressed up level
+  // with the knees, so shoulders-to-knees is one flat table top facing the
+  // ceiling (Reverse Tabletop Hold). The top position of crabLiftFlow, held and
+  // flattened; kept separate so the rep and the hold can't drift into each
+  // other.
+  reverseTabletop: svg(stick({
+    head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
+    arms: [[[24, 102], [22, 122]]],
+    legs: [[[86, 84], [88, 122]]],
+    prop: GROUND(6, 96, 124),
+  })),
+
+  // C82 - 2-frame flip book, side view: face-down in a bear with the knees
+  // hovering, then turned through onto the back into a crab with the hips up
+  // (Bear to Crab). Head stays on the left in both, so the flip from facing the
+  // floor to facing the ceiling is the only change.
+  bearToCrabFlow: animatedFigure([
+    stick({
+      head: [14, 84], headR: 7, neck: [24, 78], hip: [62, 80],
+      arms: [[[24, 100], [24, 122]]],
+      legs: [[[58, 110], [82, 120]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [22, 68], headR: 7, neck: [30, 78], hip: [62, 82],
+      arms: [[[24, 100], [20, 122]]],
+      legs: [[[84, 84], [88, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
+  // C83 - 2-frame flip book, side view: landed on one foot with the knee
+  // soft, then airborne on the same foot with the arms swung up (Single-Leg
+  // Hops). The floor line is what says "off the ground".
+  singleLegHopFlow: animatedFigure([
+    stick({
+      head: [55, 31], headR: 7, neck: [50, 41], hip: [48, 88],
+      arms: [[[58, 62], [64, 80]]],
+      legs: [[[58, 110], [52, 133]], [[38, 108], [28, 116]]],
+      prop: GROUND(8, 94, 133),
+    }),
+    stick({
+      head: [55, 15], headR: 7, neck: [50, 25], hip: [48, 72],
+      arms: [[[60, 44], [66, 28]]],
+      legs: [[[53, 96], [52, 119]], [[38, 92], [28, 100]]],
+      prop: GROUND(8, 94, 133),
+    }),
+  ]),
+
+  // C84 - side view, balanced on one leg with the knee bent to about 45
+  // degrees, the other leg held straight out in front just off the floor and
+  // the arms reaching forward (45-Degree Pistol Squat Hold). The straight
+  // floating front leg is what separates it from every other one-leg squat.
+  pistolSquatHold: svg(stick({
+    head: [58, 40], headR: 7, neck: [52, 50], hip: [34, 92],
+    arms: [[[68, 58], [84, 58]]],
+    legs: [[[50, 110], [44, 133]], [[60, 104], [88, 114]]],
+    prop: GROUND(8, 96, 133),
+  })),
+
+  // C85 - 2-frame flip book, side view: hips high in an upside-down V with the
+  // arms straight, then the elbows bent so the head lowers toward the floor
+  // while the hips stay up (Pike Push-Ups). Hands and feet pinned.
+  pikePushUpFlow: animatedFigure([
+    stick({
+      head: [20, 98], headR: 7, neck: [30, 90], hip: [56, 62],
+      arms: [[[24, 107], [18, 124]]],
+      legs: [[[66, 93], [74, 124]]],
+      prop: GROUND(6, 96, 126),
+    }),
+    stick({
+      head: [22, 115], headR: 7, neck: [31, 106], hip: [54, 70],
+      arms: [[[40, 112], [18, 124]]],
+      legs: [[[65, 97], [74, 124]]],
+      prop: GROUND(6, 96, 126),
+    }),
+  ]),
+
+  // C86 - 2-frame flip book, side view on the plank base: straight-armed at the
+  // top, then at the bottom of the push-up with one knee drawn up to the elbow
+  // (Spiderman Push-Ups). Frame one is PLANK itself; frame two is pushUpFlow's
+  // bottom with the knee added.
+  spidermanPushUpFlow: animatedFigure([
+    stick(PLANK),
+    stick({
+      head: [16, 66], headR: 7, neck: [24, 72], hip: [58, 92],
+      arms: [[[32, 92], [24, 110]]],
+      legs: [[[76, 101], [92, 110]], [[40, 97], [54, 104]]],
+      prop: GROUND(8, 98, 112),
+    }),
+  ]),
+
+  // C87 - 2-frame flip book, seen head-on at floor level: head and shoulders
+  // facing the camera with the hands planted well outside the shoulders, then
+  // the elbows bent out wide as the chest lowers (Wide Push-Ups). Hand WIDTH is
+  // the only difference from a regular push-up, and a side view can't show
+  // width. Two other views were tried and rejected: overhead read as a T-pose,
+  // and a raised front view put the receding legs up in the air like a
+  // headstand. At floor level the body runs straight away from the camera and
+  // hides behind the shoulders, so no legs are drawn. Hands pinned in both.
+  widePushUpFlow: animatedFigure([
+    stick({
+      head: [50, 72], neck: [50, 82], shoulders: [[36, 84], [64, 84]], hip: [50, 90],
+      arms: [[[24, 104], [14, 124]], [[76, 104], [86, 124]]],
+      legs: [],
+      prop: GROUND(6, 94, 126),
+    }),
+    stick({
+      head: [50, 94], neck: [50, 104], shoulders: [[36, 106], [64, 106]], hip: [50, 112],
+      arms: [[[18, 100], [14, 124]], [[82, 100], [86, 124]]],
+      legs: [],
+      prop: GROUND(6, 94, 126),
     }),
   ]),
 
