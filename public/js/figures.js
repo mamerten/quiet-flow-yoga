@@ -178,6 +178,17 @@ const STAND_FRONT = { head: [50, 17], neck: [50, 28], shoulders: [[38, 33], [62,
 const LEGS_FRONT = [[[45, 106], [43, 133]], [[55, 106], [57, 133]]];
 const LEGS_SIDE = [[[46, 106], [43, 133]], [[52, 106], [55, 133]]];
 const FLOOR_STAND = GROUND(10, 90, 133);
+// Seated 90/90 (Z-sit) legs, front view, shared by every 90/90 and Z-sit figure
+// so they can't drift apart. The front knee comes toward you and its shin runs
+// across the floor; the back thigh runs out to the SAME side with its shin
+// tucked away behind it, which puts the front foot beside the back knee — the
+// Z. An earlier drawing swept both legs off to one side in parallel, which is
+// a side-saddle sit, not a 90/90. _L sits the legs to your left, _R mirrors.
+const Z_SIT_HIP_L = [54, 104];
+const Z_SIT_LEGS_L = [[[66, 116], [30, 124]], [[20, 104], [28, 98]]];
+const Z_SIT_HIP_R = [46, 104];
+const Z_SIT_LEGS_R = [[[34, 116], [70, 124]], [[80, 104], [72, 98]]];
+const Z_SIT_FLOOR = GROUND(6, 94, 128);
 // Plank: one straight diagonal from head to heels, held up by a vertical arm.
 const PLANK = {
   head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
@@ -824,45 +835,40 @@ window.FIGURES = {
     }),
   ]),
 
-  // C33 — 2-frame flip book, front view: seated with BOTH legs folded to the
-  // same side, both knees pointing the same way, hands planted beside the
-  // hips — then pressed up so the hips lift off the floor (Z-Sit Lift). The
-  // first version fanned the knees out in opposite directions with the feet
-  // meeting in the middle, which is a cross-legged sit, not a Z. Feet and
-  // hands stay pinned; the hip and torso rise as the elbows straighten.
+  // C33 — 2-frame flip book, front view: seated in the Z on the shared Z_SIT
+  // legs, chest square, hands planted beside the hips — then pressed up so the
+  // hips lift as the elbows straighten (Z-Sit Lift). Knees and feet pinned.
   zSit: animatedFigure([
     stick({
-      head: [50, 50], neck: [50, 61], shoulders: [[40, 65], [60, 65]], hip: [50, 106],
-      arms: [[[30, 92], [34, 122]], [[70, 92], [66, 122]]],
-      legs: [[[30, 110], [16, 122]], [[40, 116], [24, 125]]],
-      prop: GROUND(8, 92, 126),
+      head: [54, 51], neck: [54, 62], shoulders: [[42, 66], [66, 66]], hip: Z_SIT_HIP_L,
+      arms: [[[38, 86], [38, 106]], [[72, 90], [78, 114]]],
+      legs: Z_SIT_LEGS_L,
+      prop: Z_SIT_FLOOR,
     }),
     stick({
-      head: [50, 43], neck: [50, 54], shoulders: [[40, 58], [60, 58]], hip: [50, 99],
-      arms: [[[37, 90], [34, 122]], [[63, 90], [66, 122]]],
-      legs: [[[30, 110], [16, 122]], [[40, 116], [24, 125]]],
-      prop: GROUND(8, 92, 126),
+      head: [54, 43], neck: [54, 54], shoulders: [[42, 58], [66, 58]], hip: [54, 96],
+      arms: [[[40, 82], [38, 106]], [[72, 86], [78, 114]]],
+      legs: Z_SIT_LEGS_L,
+      prop: Z_SIT_FLOOR,
     }),
   ]),
 
-  // C34 — 2-frame flip book, front view, seated: both knees at 90 degrees
-  // swung to one side with the hands on the floor for support, then over to
-  // the other (90/90 Switch). It used to be drawn overhead, which read as
-  // lying on the back, and with the torso fixed — but the chest turns 90
-  // degrees with the knees, so the torso rotates here too: a narrowed shoulder
-  // bar and the head shifted toward the new front leg.
+  // C34 — 2-frame flip book, front view, seated in a 90/90 on the shared Z_SIT
+  // legs with the hands down for support, then switched to the other side
+  // (90/90 Switch). The chest turns with the knees, shown by the narrowed
+  // shoulder bar and the head shifting toward the front knee.
   ninetyNinetyFlow: animatedFigure([
     stick({
-      head: [43, 50], neck: [46, 61], shoulders: [[40, 65], [53, 65]], hip: [50, 106],
-      arms: [[[34, 88], [34, 122]], [[62, 88], [66, 122]]],
-      legs: [[[30, 110], [16, 122]], [[40, 116], [24, 125]]],
-      prop: GROUND(8, 92, 126),
+      head: [58, 51], neck: [56, 62], shoulders: [[46, 66], [66, 66]], hip: Z_SIT_HIP_L,
+      arms: [[[40, 86], [38, 106]], [[72, 90], [78, 114]]],
+      legs: Z_SIT_LEGS_L,
+      prop: Z_SIT_FLOOR,
     }),
     stick({
-      head: [57, 50], neck: [54, 61], shoulders: [[47, 65], [60, 65]], hip: [50, 106],
-      arms: [[[38, 88], [34, 122]], [[66, 88], [66, 122]]],
-      legs: [[[70, 110], [84, 122]], [[60, 116], [76, 125]]],
-      prop: GROUND(8, 92, 126),
+      head: [42, 51], neck: [44, 62], shoulders: [[34, 66], [54, 66]], hip: Z_SIT_HIP_R,
+      arms: [[[28, 90], [22, 114]], [[60, 86], [62, 106]]],
+      legs: Z_SIT_LEGS_R,
+      prop: Z_SIT_FLOOR,
     }),
   ]),
 
@@ -1031,16 +1037,18 @@ window.FIGURES = {
     }),
   ]),
 
-  // C44 — side view, kneeling with the hands down, the front foot planted
-  // and the back knee resting while that foot's toes stay tucked under and
-  // loaded (Toe Flexor Hold). `extra` draws the tuck itself — the tiny
-  // detail the whole exercise is named for.
+  // C44 — side view, facing left: half-kneeling with the back knee DOWN and
+  // that foot's toes tucked under, heel up, weight pressed back into the ball
+  // of the foot; front foot planted, hands on the floor (Toe Flexor Hold). The
+  // tucked foot is drawn explicitly because it is the stretch. An earlier
+  // drawing left the back knee hovering above the floor and the toes out, and
+  // read as someone standing hunched over a cane.
   toeFlexorHold: svg(stick({
-    head: [66, 44], headR: 7, neck: [58, 52], hip: [40, 82],
-    arms: [[[64, 74], [72, 124]]],
-    legs: [[[56, 96], [64, 126]], [[26, 110], [10, 124]]],
-    prop: GROUND(6, 96, 128),
-    extra: BONE(10, 124, 17, 127, W.foot[0], W.foot[1]),
+    head: [32, 76], headR: 7, neck: [40, 82], hip: [64, 108],
+    arms: [[[34, 106], [30, 128]]],
+    legs: [[[40, 106], [40, 128]], [[70, 128], [92, 120]]],
+    prop: GROUND(6, 96, 132),
+    extra: BONE(92, 120, 90, 131, W.foot[0], W.foot[1]) + BONE(90, 131, 81, 132, W.foot[1], 1.4),
   })),
 
   // C45 — 2-frame flip book, side view tabletop: the spine sagging and the
@@ -1238,23 +1246,22 @@ window.FIGURES = {
     }),
   ]),
 
-  // C72 - 2-frame flip book, front view: seated tall with both arms straight
-  // overhead and the hands clasped, knees swinging from one side to the other
-  // (90/90 Switch, Arms Overhead). Front-on, like the plain ninetyNinetyFlow,
-  // and on the same legs. Torso and arms are identical across both frames —
-  // taking the hands off the floor is exactly what makes this harder.
+  // C72 - 2-frame flip book, front view: the same 90/90 on the shared Z_SIT legs
+  // as ninetyNinetyFlow, but with both arms straight overhead and the hands
+  // clasped, switching sides (90/90 Switch, Arms Overhead). Taking the hands off
+  // the floor is exactly what makes this one harder.
   ninetyNinetyOverheadFlow: animatedFigure([
     stick({
-      head: [50, 52], neck: [50, 62], shoulders: [[40, 66], [60, 66]], hip: [50, 106],
-      arms: [[[42, 46], [48, 26]], [[58, 46], [52, 26]]],
-      legs: [[[30, 110], [16, 122]], [[40, 116], [24, 125]]],
-      prop: GROUND(8, 92, 126),
+      head: [56, 51], neck: [55, 62], shoulders: [[45, 66], [65, 66]], hip: Z_SIT_HIP_L,
+      arms: [[[47, 44], [53, 22]], [[63, 44], [57, 22]]],
+      legs: Z_SIT_LEGS_L,
+      prop: Z_SIT_FLOOR,
     }),
     stick({
-      head: [50, 52], neck: [50, 62], shoulders: [[40, 66], [60, 66]], hip: [50, 106],
-      arms: [[[42, 46], [48, 26]], [[58, 46], [52, 26]]],
-      legs: [[[70, 110], [84, 122]], [[60, 116], [76, 125]]],
-      prop: GROUND(8, 92, 126),
+      head: [44, 51], neck: [45, 62], shoulders: [[35, 66], [55, 66]], hip: Z_SIT_HIP_R,
+      arms: [[[37, 44], [43, 22]], [[53, 44], [47, 22]]],
+      legs: Z_SIT_LEGS_R,
+      prop: Z_SIT_FLOOR,
     }),
   ]),
 
@@ -1324,30 +1331,23 @@ window.FIGURES = {
     }),
   ]),
 
-  // C76 - 3-frame flip book, side view: balanced tall on one leg, then hinged
-  // right out to tap the far potato, then folded low over a bent standing knee
-  // to tap the near one (Touch the Potato). The first two frames share
-  // singleLegRdlFlow's shape on purpose; the potatoes are what make this its
-  // own exercise, and the two different reaches are what say 'more than one
-  // target'. The standing foot is pinned through all three.
+  // C76 - 2-frame flip book, side view, facing right: balanced on one leg, the
+  // free FOOT reaching out to tap a potato in front, then one behind (Touch the
+  // Potato). The standing foot is pinned and the torso leans away from each
+  // reach to counterbalance. An earlier drawing had the hand doing the tapping;
+  // it's the foot.
   touchPotatoFlow: animatedFigure([
     stick({
-      head: [48, 19], headR: 7, neck: [52, 29], hip: [56, 81],
-      arms: [[[54, 54], [55, 78]]],
-      legs: [[[57, 107], [58, 133]], [[62, 106], [70, 122]]],
-      prop: GROUND(8, 98, 133) + POTATO(22, 130) + POTATO(38, 130) + POTATO(84, 130),
+      head: [47, 21], headR: 7, neck: [44, 32], hip: [48, 82],
+      arms: [[[54, 54], [72, 56]]],
+      legs: [[[52, 107], [48, 133]], [[66, 105], [82, 129]]],
+      prop: GROUND(6, 96, 133) + POTATO(16, 130) + POTATO(84, 130),
     }),
     stick({
-      head: [15, 99], headR: 7, neck: [24, 96], hip: [60, 84],
-      arms: [[[23, 112], [22, 126]]],
-      legs: [[[58, 108], [58, 133]], [[80, 78], [98, 72]]],
-      prop: GROUND(8, 98, 133) + POTATO(22, 130) + POTATO(38, 130) + POTATO(84, 130),
-    }),
-    stick({
-      head: [26, 90], headR: 7, neck: [36, 84], hip: [66, 98],
-      arms: [[[38, 106], [38, 126]]],
-      legs: [[[52, 114], [58, 133]], [[82, 108], [94, 120]]],
-      prop: GROUND(8, 98, 133) + POTATO(22, 130) + POTATO(38, 130) + POTATO(84, 130),
+      head: [63, 26], headR: 7, neck: [56, 35], hip: [50, 84],
+      arms: [[[64, 56], [80, 56]]],
+      legs: [[[54, 108], [50, 133]], [[34, 106], [18, 129]]],
+      prop: GROUND(6, 96, 133) + POTATO(16, 130) + POTATO(84, 130),
     }),
   ]),
 

@@ -71,8 +71,8 @@ function figureCell(e) {
     problems.push(`${e.id}: missing figure "${e.figure}"`);
     return `<em class="missing">missing figure: ${esc(e.figure)}</em>`;
   }
-  return `<div class="frames">${svgs.join('')}</div>`
-    + (svgs.length > 1 ? `<div class="frame-count">${svgs.length} frames</div>` : '');
+  // No "N frames" label: the frames sit side by side, so the count is obvious.
+  return `<div class="frames">${svgs.join('')}</div>`;
 }
 
 const notes = (e) => [
@@ -162,7 +162,6 @@ const html = `<!doctype html>
     width: 68px; height: 95px; display: block; flex: 0 0 auto;
     color: #5f7a68; background: #fff; border: 1px solid #e7ece7; border-radius: 4px;
   }
-  .frame-count { font-size: 0.7rem; color: #9aa39d; margin-top: 3px; }
   .name-cell { width: 220px; }
   .name-cell .id, .name-cell .note { display: block; font-size: 0.72rem; margin-top: 2px; }
   .name-cell .id { color: #9aa39d; font-family: Consolas, monospace; }

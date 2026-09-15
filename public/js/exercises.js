@@ -346,14 +346,6 @@ window.EXERCISES = [
     cue: 'From an L-sit, hands by your hips, press down and lift your hips up into a crab position. Lower with control and repeat.',
   },
   {
-    id: 'z-sit-lift',
-    name: 'Z-Sit Lift',
-    figure: 'zSit',
-    surface: 'ground',
-    sided: true,
-    cue: 'Sit with both legs folded to the same side in a Z shape, front knee bent in front of you and back knee bent out to the side, both knees pointing the same way. Press your hands into the floor beside your hips and lift your hips slightly, then lower with control.',
-  },
-  {
     id: 'beast-kickthrough',
     name: 'Beast Kickthrough',
     figure: 'beastKickthroughFlow',
@@ -374,6 +366,21 @@ window.EXERCISES = [
     figure: 'ninetyNinetyFlow',
     surface: 'ground',
     cue: 'Sit tall with both knees bent at 90 degrees, one leg in front of you and the other out to the side behind you, hands on the floor for support. Lift your knees and swing them over to the other side, turning your chest with them so your whole torso rotates 90 degrees to face the new front leg.',
+  },
+  {
+    id: 'ninety-ninety-overhead',
+    name: '90/90 Switch, Arms Overhead',
+    figure: 'ninetyNinetyOverheadFlow',
+    surface: 'ground',
+    cue: 'Sit tall with both knees bent and your arms stretched straight overhead, hands clasped. Swing your knees from one side to the other without putting a hand down, keeping your chest lifted the whole time.',
+  },
+  {
+    id: 'z-sit-lift',
+    name: 'Z-Sit Lift',
+    figure: 'zSit',
+    surface: 'ground',
+    sided: true,
+    cue: 'Sit with both legs folded to the same side in a Z shape, front knee bent in front of you and back knee bent out to the side, both knees pointing the same way. Press your hands into the floor beside your hips and lift your hips slightly, then lower with control.',
   },
   {
     id: 'lying-knee-drops',
@@ -481,7 +488,7 @@ window.EXERCISES = [
     name: 'Touch the Potato',
     figure: 'touchPotatoFlow',
     surface: 'standing',
-    cue: 'Stand on one foot and picture potatoes scattered in a circle on the floor around you. Hinge and bend to tap each one in turn, some close and some far, standing tall between taps without putting the other foot down. Switch feet halfway through.',
+    cue: 'Balance on one foot and picture potatoes scattered on the floor in a circle around you. Reach out with your free foot and tap each one lightly, in front, to the side, and behind, without putting that foot down between taps. Keep a soft bend in the standing knee. Switch feet halfway through.',
   },
   {
     id: 'standing-hip-opener',
@@ -561,13 +568,6 @@ window.EXERCISES = [
     figure: 'kneelingThoracicRotationFlow',
     surface: 'ground',
     cue: 'Kneel, sit back toward your heels and fold forward, lacing your hands behind your head with both elbows dropping toward the floor. Open one elbow up toward the ceiling, following it with your eyes, then lower it and alternate sides.',
-  },
-  {
-    id: 'ninety-ninety-overhead',
-    name: '90/90 Switch, Arms Overhead',
-    figure: 'ninetyNinetyOverheadFlow',
-    surface: 'ground',
-    cue: 'Sit tall with both knees bent and your arms stretched straight overhead, hands clasped. Swing your knees from one side to the other without putting a hand down, keeping your chest lifted the whole time.',
   },
   {
     id: 'squat-roll-hip-lift',
