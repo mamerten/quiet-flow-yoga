@@ -217,6 +217,13 @@ window.EXERCISES = [
     cue: 'Do a push-up. At the top, step one foot up beside your hand and lift that same hand off the floor, reaching it forward. Step back to plank, do another push-up, and switch sides each rep.',
   },
   {
+    id: 'crawl-position-push-up',
+    name: 'Crawl Position Push-Up',
+    figure: 'crawlPushUpFlow',
+    surface: 'ground',
+    cue: 'Get into a crawl position on your hands and feet with your hips high and your knees pulled forward toward your elbows, hovering just off the floor. Bend your elbows and lower your head toward the floor between your hands, keeping your knees off the ground, then press back up.',
+  },
+  {
     id: 'reverse-tabletop-hold',
     name: 'Reverse Tabletop Hold',
     figure: 'reverseTabletop',
@@ -627,8 +634,7 @@ window.EXERCISES = [
     figure: 'chairStepUp',
     surface: 'standing',
     needsFurniture: true,
-    sided: true,
-    cue: 'Step one foot up onto a sturdy chair or step, and drive up through your heel. Step down with control.',
+    cue: 'Step one foot up onto a sturdy chair or step and drive up through that heel until you are standing on it, then step down with control. Alternate legs each rep.',
   },
   {
     id: 'chair-split-squat',

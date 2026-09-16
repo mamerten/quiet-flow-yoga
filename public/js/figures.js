@@ -1540,6 +1540,27 @@ window.FIGURES = {
     }),
   ]),
 
+  // C88 - 2-frame flip book, side view, facing left: a tight crawl position with
+  // the hips high and the knees pulled forward toward the elbows, hovering off
+  // the floor — then the elbows bent so the head drops toward the floor while
+  // the knee stays tucked right up against the arm (Crawl Position Push-Up).
+  // Hands and feet are pinned. The folded, knees-forward shape is the whole
+  // difference from pushUpFlow's straight plank line.
+  crawlPushUpFlow: animatedFigure([
+    stick({
+      head: [15, 90], headR: 7, neck: [26, 84], hip: [58, 72],
+      arms: [[[24, 103], [22, 122]]],
+      legs: [[[40, 96], [64, 120]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [19, 114], headR: 7, neck: [29, 106], hip: [58, 82],
+      arms: [[[44, 110], [22, 122]]],
+      legs: [[[40, 102], [64, 120]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
   // C63 - 2-frame flip book, side view: the hips lift high into an
   // upside-down V, then roll forward and sink low as the chest opens (Down-Up
   // Dogs). The hands stay planted in the same spot across both frames, which
