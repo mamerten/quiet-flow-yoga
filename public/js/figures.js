@@ -1561,6 +1561,67 @@ window.FIGURES = {
     }),
   ]),
 
+  // C89 - 2-frame flip book, side view, facing left: tall on both knees with the
+  // hips stacked over them, then hinged back so the seat travels behind and the
+  // torso comes forward with a flat back (Kneeling Hip Hinge). The feet are
+  // drawn lying flat along the floor behind the shins, tops down and soles up —
+  // not tucked under like the toe work — because that's the position the
+  // exercise is done in. Knees and feet are pinned; only the hip travels.
+  kneelingHipHingeFlow: animatedFigure([
+    stick({
+      head: [42, 42], headR: 7, neck: [46, 52], hip: [44, 92],
+      arms: [[[56, 70], [52, 88]]],
+      legs: [[[40, 120], [70, 122]]],
+      prop: GROUND(6, 96, 126),
+      extra: BONE(70, 122, 86, 124, W.foot[0], W.foot[1]),
+    }),
+    stick({
+      head: [24, 66], headR: 7, neck: [30, 74], hip: [60, 100],
+      arms: [[[44, 86], [56, 96]]],
+      legs: [[[40, 120], [70, 122]]],
+      prop: GROUND(6, 96, 126),
+      extra: BONE(70, 122, 86, 124, W.foot[0], W.foot[1]),
+    }),
+  ]),
+
+  // C90 - 2-frame flip book, front view: sitting cross-legged with the arms out
+  // to the sides and the elbows bent, then slid straight up overhead (Seated
+  // Scapular Slides). The same slide as the standing W-Slide, done sitting so
+  // the legs and low back can't help — which is the whole point, so the crossed
+  // shins are drawn rather than implied.
+  seatedScapSlideFlow: animatedFigure([
+    stick({
+      head: [50, 30], neck: [50, 40], shoulders: [[38, 45], [62, 45]], hip: [50, 88],
+      arms: [[[26, 52], [14, 40]], [[74, 52], [86, 40]]],
+      legs: [[[28, 98], [56, 106]], [[72, 98], [44, 106]]],
+      prop: GROUND(8, 92, 110),
+    }),
+    stick({
+      head: [50, 30], neck: [50, 40], shoulders: [[38, 45], [62, 45]], hip: [50, 88],
+      arms: [[[36, 28], [40, 10]], [[64, 28], [60, 10]]],
+      legs: [[[28, 98], [56, 106]], [[72, 98], [44, 106]]],
+      prop: GROUND(8, 92, 110),
+    }),
+  ]),
+
+  // C91 - 2-frame flip book, front view: the same 90/90 on the shared Z_SIT legs
+  // as ninetyNinetyFlow, switched side to side with the forearms held up in
+  // front of the chest and no hand on the floor (90/90 Elbow Switch).
+  ninetyNinetyElbowFlow: animatedFigure([
+    stick({
+      head: [56, 51], neck: [55, 62], shoulders: [[45, 66], [65, 66]], hip: Z_SIT_HIP_L,
+      arms: [[[40, 84], [50, 74]], [[70, 84], [60, 74]]],
+      legs: Z_SIT_LEGS_L,
+      prop: Z_SIT_FLOOR,
+    }),
+    stick({
+      head: [44, 51], neck: [45, 62], shoulders: [[35, 66], [55, 66]], hip: Z_SIT_HIP_R,
+      arms: [[[30, 84], [40, 74]], [[60, 84], [50, 74]]],
+      legs: Z_SIT_LEGS_R,
+      prop: Z_SIT_FLOOR,
+    }),
+  ]),
+
   // C63 - 2-frame flip book, side view: the hips lift high into an
   // upside-down V, then roll forward and sink low as the chest opens (Down-Up
   // Dogs). The hands stay planted in the same spot across both frames, which

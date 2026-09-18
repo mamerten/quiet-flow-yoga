@@ -332,6 +332,13 @@ window.EXERCISES = [
     cue: 'Sit with the soles of your feet together, knees out. Gently rock side to side with a steady, easy breath.',
   },
   {
+    id: 'seated-scapular-slides',
+    name: 'Seated Scapular Slides',
+    figure: 'seatedScapSlideFlow',
+    surface: 'ground',
+    cue: 'Sit cross-legged and tall, arms out to the sides with your elbows bent and palms forward. Slide your arms straight up overhead, reaching tall without letting your ribs flare or your shoulders climb toward your ears, then lower back down. Slow and controlled.',
+  },
+  {
     id: 'scapular-pushup',
     name: 'Scapular Push-Up',
     figure: 'scapPushUpFlow',
@@ -380,6 +387,13 @@ window.EXERCISES = [
     figure: 'ninetyNinetyOverheadFlow',
     surface: 'ground',
     cue: 'Sit tall with both knees bent and your arms stretched straight overhead, hands clasped. Swing your knees from one side to the other without putting a hand down, keeping your chest lifted the whole time.',
+  },
+  {
+    id: 'ninety-ninety-elbow-switch',
+    name: '90/90 Elbow Switch',
+    figure: 'ninetyNinetyElbowFlow',
+    surface: 'ground',
+    cue: 'Sit tall in a 90/90 with your forearms up in front of your chest and both hands off the floor. Swing your knees over to the other side and back, turning your chest with them, keeping the arms where they are so the hips do all the work. Slow and controlled.',
   },
   {
     id: 'z-sit-lift',
@@ -551,9 +565,8 @@ window.EXERCISES = [
     name: 'Wall Ankle Stretch',
     figure: 'wallAnkleStretch',
     surface: 'standing',
-    sided: true,
     needsWall: true,
-    cue: 'Face a wall and set the ball of one foot up against it, heel on the floor. Keeping that heel down, drive your knee forward toward the wall until you feel the stretch through your ankle and calf. A step or any sturdy edge works too.',
+    cue: 'Face a wall and set the ball of one foot up against it, heel on the floor. Keeping that heel down, drive your knee forward toward the wall until you feel the stretch through your ankle and calf. Hold, then switch feet halfway through. A step or any sturdy edge works too.',
   },
   {
     id: 'windmill',
@@ -582,6 +595,13 @@ window.EXERCISES = [
     figure: 'squatRollHipLiftFlow',
     surface: 'ground',
     cue: 'Squat on the balls of your feet with your heels up and your hands on the floor behind you. Roll forward, lowering your knees to the floor with your toes tucked flat underneath, then lift your hips up and forward as you open the front of your body. Roll back into the squat and repeat.',
+  },
+  {
+    id: 'kneeling-hip-hinge',
+    name: 'Kneeling Hip Hinge',
+    figure: 'kneelingHipHingeFlow',
+    surface: 'ground',
+    cue: 'Kneel tall on both knees with the tops of your feet flat on the floor and your hips stacked over your knees. Keeping your back flat and your ribs down, push your hips back and let your chest travel forward, then squeeze your glutes to drive the hips forward and stand tall on your knees again.',
   },
   {
     id: 'toe-squat-hold',
