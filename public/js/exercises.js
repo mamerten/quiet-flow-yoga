@@ -224,6 +224,13 @@ window.EXERCISES = [
     cue: 'Get into a crawl position on your hands and feet with your hips high and your knees pulled forward toward your elbows, hovering just off the floor. Bend your elbows and lower your head toward the floor between your hands, keeping your knees off the ground, then press back up.',
   },
   {
+    id: 'cross-body-foot-tap',
+    name: 'Cross-Body Foot Tap',
+    figure: 'crossBodyFootTapFlow',
+    surface: 'ground',
+    cue: 'Start on your hands and knees with your toes tucked under. Lift one hand and reach it back and across your body to tap your opposite foot, letting your hips lift high into the air as you reach. Both feet stay planted on the floor. Put that hand down and tap with the other one, alternating as you go.',
+  },
+  {
     id: 'reverse-tabletop-hold',
     name: 'Reverse Tabletop Hold',
     figure: 'reverseTabletop',

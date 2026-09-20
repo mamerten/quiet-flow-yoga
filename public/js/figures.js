@@ -1643,6 +1643,34 @@ window.FIGURES = {
     }),
   ]),
 
+  // C92 - 2-frame flip book, side view: on hands and knees, then the hips
+  // driven high as one hand leaves the floor and reaches back under the body
+  // to tap the far foot, which never leaves the ground (Cross-Body Foot Tap).
+  // Two arms and two legs are drawn in BOTH frames: the whole move is one
+  // hand coming off the floor, so a limb appearing out of nowhere would read
+  // as the wrong thing entirely. The far leg is drawn a little forward of the
+  // near one so the reaching hand lands on a visible target instead of
+  // vanishing behind the near shin. Toes stay tucked in frame one - that's
+  // what makes the lift into the pike possible at all. The supporting hand is
+  // pinned across both frames; the feet step in, because a pike deep enough
+  // for a hand to actually reach a foot is a tight fold, not a long down dog.
+  crossBodyFootTapFlow: animatedFigure([
+    stick({
+      head: [12, 84], headR: 7, neck: [22, 89], hip: [59, 93],
+      arms: [[[23, 106], [22, 124]], [[29, 106], [28, 124]]],
+      legs: [[[64, 122], [90, 120]], [[58, 122], [84, 120]]],
+      prop: GROUND(6, 96, 126),
+      extra: BONE(90, 120, 85, 126, W.foot[0], W.foot[1])
+        + BONE(84, 120, 79, 126, W.foot[0], W.foot[1]),
+    }),
+    stick({
+      head: [22, 100], headR: 7, neck: [34, 92], hip: [58, 64],
+      arms: [[[27, 108], [20, 124]], [[48, 101], [59, 119]]],
+      legs: [[[66, 92], [72, 121]], [[62, 92], [60, 122]]],
+      prop: GROUND(6, 96, 126),
+    }),
+  ]),
+
   // C47 — side view, face down with the chest clearly lifted, both arms
   // reaching forward and the legs raised behind, only the hips touching
   // down (Superman Hold). The mirror of hollowBodyHold: the head sits much
