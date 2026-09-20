@@ -633,14 +633,14 @@ window.EXERCISES = [
     id: 'toe-squat-hold',
     name: 'Toe Squat Hold',
     figure: 'toeSquatHold',
-    surface: 'ground',
+    surface: 'standing',
     cue: 'Squat all the way down onto the balls of your feet with your heels lifted, balancing there with your arms reaching forward and your hands off the floor. Let the stretch work through your toes and the soles of your feet. Hold and breathe.',
   },
   {
     id: 'squatting-heel-raise',
     name: 'Squatting Heel Raise',
     figure: 'squattingHeelRaiseFlow',
-    surface: 'ground',
+    surface: 'standing',
     cue: 'Sink into a deep squat with your feet flat and your arms reaching forward for balance. Lift both heels until you are up on the balls of your feet, then lower them back down with control. Stay down in the squat the whole time.',
   },
   {

@@ -707,14 +707,20 @@ window.FIGURES = {
     prop: GROUND(6, 96, 124),
   })),
 
-  // C24 — side view, hips sitting back on the heels with the torso folded
+  // C24 - side view, hips sitting back on the heels with the torso folded
   // all the way forward and the arms stretched out along the floor
   // (Kneeling Rest). A calisthenics-side twin of the yoga `kneelingFold`,
   // kept separate so editing one can't disturb the other.
+  // The hips sit BEHIND the knees, over the heels, and only about a hand's
+  // height off the floor. Drawn with the hips high and forward of the heels
+  // instead, the figure stretches out into a long ramp and reads as an
+  // inclined plank; drawn all the way down, the thigh and shin overlap into
+  // one horizontal bar and it reads as lying face down. This is the pose at
+  // the tightness it's actually held at.
   kneelingRest: svg(stick({
-    head: [22, 110], headR: 7, neck: [34, 104], hip: [76, 82],
-    arms: [[[20, 114], [6, 116]]],
-    legs: [[[78, 116], [93, 112]]],
+    head: [30, 113], headR: 7, neck: [44, 108], hip: [82, 94],
+    arms: [[[32, 118], [12, 120]]],
+    legs: [[[70, 118], [92, 120]]],
     prop: GROUND(6, 96, 124),
   })),
 

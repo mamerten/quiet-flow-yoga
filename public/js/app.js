@@ -14,7 +14,7 @@ const {
   resumeAllAudio,
 } = window;
 
-const APP_VERSION = '0.2.2';
+const APP_VERSION = '0.3.0';
 const COUNTDOWN_SECONDS = 2;
 
 const homeScreen = document.getElementById('screen-home');
