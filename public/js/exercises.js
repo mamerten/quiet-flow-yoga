@@ -27,7 +27,12 @@
 // from a specific post. Two more (Squat and Twist, Lunge Reach and Twist)
 // come from a separate source entirely — a Primal Instinct Instagram
 // mobility-flow reel — plus one built from a photo of a kneeling
-// toe/ankle isometric hold (Toe Flexor Hold).
+// toe/ankle isometric hold (Kneeling Ankle Stretch, first named Toe Flexor
+// Hold after the tissue it stretches; renamed because that name told nobody
+// what the exercise was, and the ankle is where it actually gets felt). Three
+// more (Squat Knee Drops, Squat Hip Pulses, Squatting Heel Raise) come from a
+// Markus deep-squat mobility reel; that reel's fourth move, "deep squat
+// folds", is already in here as Squat Fold.
 //
 // A later pass (Pull-Up, Hollow Body Hold, Superman Hold, Calf Raises,
 // Curtsy Lunge, Bear Crawl, Cat-Cow, Burpee) filled in gaps the library
@@ -76,6 +81,20 @@ window.EXERCISES = [
     figure: 'armsBehindBackLift',
     surface: 'standing',
     cue: 'Clasp your hands behind you and lift your arms, opening your chest. Great for undoing a day at the desk.',
+  },
+  {
+    id: 'squat-knee-drops',
+    name: 'Squat Knee Drops',
+    figure: 'squatKneeDropFlow',
+    surface: 'standing',
+    cue: 'Sink into a deep squat with your feet fairly close together and your hands clasped in front of your chest. Let one knee sink in toward the floor while both feet stay flat, then bring it back up and let the other one sink. Side to side, slow and controlled.',
+  },
+  {
+    id: 'squat-hip-pulses',
+    name: 'Squat Hip Pulses',
+    figure: 'squatHipPulseFlow',
+    surface: 'standing',
+    cue: 'Sink into a deep squat with your arms reaching forward for balance. Press both knees out wide, then let them come back in, and keep pulsing out and in without standing up. Small range, steady pace.',
   },
   {
     id: 'jump-squat',
@@ -461,12 +480,12 @@ window.EXERCISES = [
     cue: 'From a low lunge, reach one arm forward, then rotate your torso open and sweep that arm straight back at shoulder height, following it with your eyes. Bring it forward again and repeat, slow and controlled.',
   },
   {
-    id: 'toe-flexor-hold',
-    name: 'Toe Flexor Hold',
-    figure: 'toeFlexorHold',
+    id: 'kneeling-ankle-stretch',
+    name: 'Kneeling Ankle Stretch',
+    figure: 'kneelingAnkleStretch',
     surface: 'ground',
     sided: true,
-    cue: 'Kneel with your back foot\'s toes tucked under, weight pressing into the ball of that foot, front knee bent and hands on the floor. Hold still and breathe.',
+    cue: 'Kneel on one knee with the toes of that foot tucked under and the heel pointing straight up. Front foot flat, hands on the floor for balance. Sit your weight back over the tucked foot until the stretch builds through the ball of the foot, the arch, and up into the ankle. Hold and breathe.',
   },
   {
     id: 'cat-cow-mobility',
@@ -615,7 +634,14 @@ window.EXERCISES = [
     name: 'Toe Squat Hold',
     figure: 'toeSquatHold',
     surface: 'ground',
-    cue: 'Squat down onto the balls of your feet with your heels lifted, arms reaching forward for balance and hands off the floor. Sit into it and let the stretch work through your toes and the soles of your feet. Hold and breathe.',
+    cue: 'Squat all the way down onto the balls of your feet with your heels lifted, balancing there with your arms reaching forward and your hands off the floor. Let the stretch work through your toes and the soles of your feet. Hold and breathe.',
+  },
+  {
+    id: 'squatting-heel-raise',
+    name: 'Squatting Heel Raise',
+    figure: 'squattingHeelRaiseFlow',
+    surface: 'ground',
+    cue: 'Sink into a deep squat with your feet flat and your arms reaching forward for balance. Lift both heels until you are up on the balls of your feet, then lower them back down with control. Stay down in the squat the whole time.',
   },
   {
     id: 'down-up-dogs',

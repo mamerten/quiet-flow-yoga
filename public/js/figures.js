@@ -189,6 +189,17 @@ const Z_SIT_LEGS_L = [[[66, 116], [30, 124]], [[20, 104], [28, 98]]];
 const Z_SIT_HIP_R = [46, 104];
 const Z_SIT_LEGS_R = [[[34, 116], [70, 124]], [[80, 104], [72, 98]]];
 const Z_SIT_FLOOR = GROUND(6, 94, 128);
+// The bottom of a deep squat, up on the balls of both feet with the heels
+// clear of the floor and the arms reaching forward to balance. Toe Squat Hold
+// IS this position held; it's also the top of every Squatting Heel Raise rep,
+// so the two share one definition rather than two that can drift apart.
+const TOE_SQUAT = {
+  head: [50, 67], headR: 7, neck: [54, 78], hip: [60, 114],
+  arms: [[[38, 84], [20, 84]]],
+  legs: [[[34, 100], [58, 124]]],
+  prop: GROUND(8, 94, 132),
+  extra: BONE(58, 124, 48, 132, W.foot[0], W.foot[1]),
+};
 // Plank: one straight diagonal from head to heels, held up by a vertical arm.
 const PLANK = {
   head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
@@ -1039,11 +1050,11 @@ window.FIGURES = {
 
   // C44 — side view, facing left: half-kneeling with the back knee DOWN and
   // that foot's toes tucked under, heel up, weight pressed back into the ball
-  // of the foot; front foot planted, hands on the floor (Toe Flexor Hold). The
+  // of the foot; front foot planted, hands on the floor (Kneeling Ankle Stretch). The
   // tucked foot is drawn explicitly because it is the stretch. An earlier
   // drawing left the back knee hovering above the floor and the toes out, and
   // read as someone standing hunched over a cane.
-  toeFlexorHold: svg(stick({
+  kneelingAnkleStretch: svg(stick({
     head: [32, 76], headR: 7, neck: [40, 82], hip: [64, 108],
     arms: [[[34, 106], [30, 128]]],
     legs: [[[40, 106], [40, 128]], [[70, 128], [92, 120]]],
@@ -1302,13 +1313,74 @@ window.FIGURES = {
   // lifted and the arms reaching forward, hands off the floor (Toe Squat Hold). The
   // foot is drawn explicitly because heels-up, weight-on-the-toes IS the
   // stretch; without it this is just a squat.
-  toeSquatHold: svg(stick({
-    head: [50, 67], headR: 7, neck: [54, 78], hip: [60, 114],
-    arms: [[[38, 84], [20, 84]]],
-    legs: [[[34, 100], [58, 124]]],
-    prop: GROUND(8, 94, 132),
-    extra: BONE(58, 124, 48, 132, W.foot[0], W.foot[1]),
-  })),
+  toeSquatHold: svg(stick(TOE_SQUAT)),
+
+  // C93 - 2-frame flip book, side view: the same deep squat with the feet flat,
+  // then risen onto the balls of both feet (Squatting Heel Raise). The top
+  // frame is TOE_SQUAT itself - this move is that hold turned into reps, which
+  // is exactly how it was described. Limb lengths are identical frame to frame,
+  // so the only thing that changes is the heel gap and the few units of lift
+  // that come with it.
+  squattingHeelRaiseFlow: animatedFigure([
+    stick({
+      head: [48, 74], headR: 7, neck: [52, 85], hip: [58, 121],
+      arms: [[[36, 91], [18, 91]]],
+      legs: [[[32, 107], [56, 130]]],
+      prop: GROUND(8, 94, 132),
+    }),
+    stick(TOE_SQUAT),
+  ]),
+
+  // C94 - 2-frame flip book, FRONT view: a deep squat with the feet close
+  // together, the knees splayed and the hands clasped at the chest, one knee
+  // sinking toward the floor and then the other (Squat Knee Drops). Front-on
+  // because the whole move is side to side, which a side view flattens to
+  // nothing. Torso, arms and both feet are pinned, so the knees are the only
+  // thing that moves, and the two frames are exact mirrors of each other.
+  // The drop is drawn moderate on purpose. Taken as far as it actually goes,
+  // the low knee ends up below the hip and the figure stops reading as a squat
+  // at all - it reads as a lunge, which is a different exercise. Narrow feet
+  // under splayed knees is what keeps the squat legible; the flip book supplies
+  // the travel that the still frame deliberately understates.
+  squatKneeDropFlow: animatedFigure([
+    stick({
+      head: [50, 62], neck: [50, 72], shoulders: [[40, 76], [60, 76]], hip: [50, 112],
+      arms: [[[38, 90], [50, 86]], [[62, 90], [50, 86]]],
+      legs: [[[30, 116], [40, 132]], [[74, 100], [60, 132]]],
+      prop: GROUND(10, 90, 133),
+    }),
+    stick({
+      head: [50, 62], neck: [50, 72], shoulders: [[40, 76], [60, 76]], hip: [50, 112],
+      arms: [[[38, 90], [50, 86]], [[62, 90], [50, 86]]],
+      legs: [[[26, 100], [40, 132]], [[70, 116], [60, 132]]],
+      prop: GROUND(10, 90, 133),
+    }),
+  ]),
+
+  // C95 - 2-frame flip book, FRONT view: a deep squat with the arms reaching
+  // forward, the knees pressed wide open and then allowed back in (Squat Hip
+  // Pulses). Front-on for the same reason as widePushUpFlow - knee WIDTH is the
+  // entire exercise and a side view cannot show width at all. The cost is the
+  // arms: reaching forward, they point straight at the viewer, so they are
+  // drawn stubbed and meeting low in front rather than pretending to have
+  // length. Read against squatKneeDropFlow: there the knees move one at a time,
+  // here they move together. The inner frame is a normal squat width rather
+  // than knees pressed together: drawn any narrower the legs straighten out in
+  // projection and the figure stops reading as a squat.
+  squatHipPulseFlow: animatedFigure([
+    stick({
+      head: [50, 60], neck: [50, 70], shoulders: [[40, 74], [60, 74]], hip: [50, 108],
+      arms: [[[40, 86], [47, 94]], [[60, 86], [53, 94]]],
+      legs: [[[18, 100], [26, 132]], [[82, 100], [74, 132]]],
+      prop: GROUND(10, 90, 133),
+    }),
+    stick({
+      head: [50, 60], neck: [50, 70], shoulders: [[40, 74], [60, 74]], hip: [50, 108],
+      arms: [[[40, 86], [47, 94]], [[60, 86], [53, 94]]],
+      legs: [[[30, 106], [26, 132]], [[70, 106], [74, 132]]],
+      prop: GROUND(10, 90, 133),
+    }),
+  ]),
 
   // C75 - 3-frame flip book, side view on the plank base: plank, down to the
   // bottom of the push-up, then back up with one foot stepped forward beside
