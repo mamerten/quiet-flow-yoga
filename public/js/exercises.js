@@ -42,6 +42,12 @@
 // sourced from any one place; these are standard, widely-taught bodyweight
 // moves. Everything else in the file is Markus's.
 //
+// The kickboxing set (Jab-Cross, Hooks, Uppercuts, Bob and Weave, Front
+// Kicks, Roundhouse Kicks, Knee Strikes, Side Kicks) is standard
+// shadowboxing, chosen for cardio variety rather than taken from any one
+// source: no bag, no gloves, all standing, and every move alternates on the
+// spot, so none of them is a left/right pair.
+//
 // Schema (deliberately different from poses.js — see README):
 //   id             unique string
 //   name           short, memorable name (shown + spoken)
@@ -745,6 +751,62 @@ window.EXERCISES = [
     surface: 'standing',
     needsFurniture: true,
     cue: 'Hold a towel with tension between your hands and trace big, slow circles in the air, both directions.',
+  },
+  {
+    id: 'jab-cross',
+    name: 'Jab-Cross',
+    figure: 'jabCrossFlow',
+    surface: 'standing',
+    cue: 'Stand with one foot forward, knees soft, fists up by your chin. Snap your lead hand straight out, then drive your rear hand out as you turn your hips and pivot your back foot. Bring each hand straight back to your chin. Quick and light.',
+  },
+  {
+    id: 'hooks',
+    name: 'Hooks',
+    figure: 'hookFlow',
+    surface: 'standing',
+    cue: 'Stand with one foot forward, knees soft, fists up by your chin. Lift one elbow to shoulder height and swing that fist in a flat arc across in front of you, turning your hips with it. Back to guard, then hook with the other hand.',
+  },
+  {
+    id: 'uppercuts',
+    name: 'Uppercuts',
+    figure: 'uppercutFlow',
+    surface: 'standing',
+    cue: 'Stand with one foot forward, fists up by your chin. Dip your knees, then drive one fist upward in front of you as if under a chin, pushing up through your legs. Back to guard, then the other hand.',
+  },
+  {
+    id: 'bob-and-weave',
+    name: 'Bob and Weave',
+    figure: 'bobWeaveFlow',
+    surface: 'standing',
+    cue: 'Stand with your feet wide and your fists up by your chin. Bend your knees and duck your head down and across in a U shape, as if slipping under a punch, then come up on the other side. Keep your eyes forward and your hands up.',
+  },
+  {
+    id: 'front-kicks',
+    name: 'Front Kicks',
+    figure: 'frontKickFlow',
+    surface: 'standing',
+    cue: 'Fists up by your chin. Lift one knee high, then snap that foot straight out in front of you at hip height, pushing through the ball of your foot. Pull it back, set it down, and kick with the other leg.',
+  },
+  {
+    id: 'roundhouse-kicks',
+    name: 'Roundhouse Kicks',
+    figure: 'roundhouseKickFlow',
+    surface: 'standing',
+    cue: 'Stand with one foot forward and your fists up. Pivot on your standing foot and swing your other leg around sideways, striking with your shin at hip height as your body leans away. Set it down and switch legs.',
+  },
+  {
+    id: 'knee-strikes',
+    name: 'Knee Strikes',
+    figure: 'kneeStrikeFlow',
+    surface: 'standing',
+    cue: 'Reach both hands up in front of you as if taking hold of someone by the shoulders. Drive one knee up hard toward your chest while pulling your hands down to meet it. Set it down and drive the other knee.',
+  },
+  {
+    id: 'side-kicks',
+    name: 'Side Kicks',
+    figure: 'sideKickFlow',
+    surface: 'standing',
+    cue: 'Fists up by your chin. Draw one knee up across your body, then push that heel straight out to the side, leaning your body away from the kick. Pull the knee back in, set it down, and switch legs.',
   },
   {
     id: 'dead-hang',

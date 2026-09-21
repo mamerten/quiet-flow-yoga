@@ -200,6 +200,26 @@ const TOE_SQUAT = {
   prop: GROUND(8, 94, 132),
   extra: BONE(58, 124, 48, 132, W.foot[0], W.foot[1]),
 };
+// Kickboxing fighting stance. Every kickboxing figure starts from one of these
+// two so the set reads as the same fighter: feet staggered with the lead foot
+// forward, knees soft, fists up by the chin with the elbows tucked. The side
+// view faces right, so punches and kicks travel toward the open side of the
+// frame; the body sits left of centre to leave room for a full-reach arm or leg.
+// The fists are placed clear of the head and torso on purpose: tucked in where
+// a real guard sits, they vanish into the body at this size and the figure
+// reads as someone with their arms hanging down.
+const GUARD_SIDE = {
+  head: [44, 20], headR: 7, neck: [42, 31], hip: [38, 80],
+  legs: [[[48, 106], [52, 133]], [[30, 106], [20, 133]]],
+  prop: FLOOR_STAND,
+};
+const GUARD_ARMS_SIDE = [[[50, 52], [60, 30]], [[46, 54], [54, 32]]];
+const GUARD_FRONT = {
+  head: [50, 17], neck: [50, 28], shoulders: [[38, 33], [62, 33]], hip: [50, 80],
+  legs: [[[40, 106], [36, 133]], [[60, 106], [64, 133]]],
+  prop: FLOOR_STAND,
+};
+const GUARD_ARMS_FRONT = [[[35, 50], [40, 24]], [[65, 50], [60, 24]]];
 // Plank: one straight diagonal from head to heels, held up by a vertical arm.
 const PLANK = {
   head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
@@ -1953,4 +1973,140 @@ window.FIGURES = {
     legs: [[[16, 86], [20, 116]], [[84, 86], [80, 116]]],
     prop: MAT,
   })),
+
+  // ============================================================
+  // Kickboxing (shadowboxing - no bag, no gloves). All alternate on the spot,
+  // so none is a left/right pair. Built on GUARD_SIDE / GUARD_FRONT above.
+  // ============================================================
+
+  // C96 - 2-frame flip book, side view: the lead hand snapped straight out at
+  // shoulder height, then the rear hand, with the torso turned in behind it
+  // (Jab-Cross). In a side view both arms leave from the same neck point, so
+  // what separates the cross from the jab is the lean and the rear knee
+  // turning in - the push that comes from the back leg.
+  jabCrossFlow: animatedFigure([
+    stick({ ...GUARD_SIDE, arms: [[[64, 31], [86, 32]], GUARD_ARMS_SIDE[1]] }),
+    stick({
+      ...GUARD_SIDE, head: [54, 22], neck: [50, 32],
+      arms: [[[52, 58], [60, 42]], [[72, 32], [92, 33]]],
+      legs: [[[48, 106], [52, 133]], [[36, 106], [24, 133]]],
+    }),
+  ]),
+
+  // C97 - 2-frame flip book, FRONT view: one elbow lifted out to shoulder
+  // height with the fist swung across in front of the face, then the other
+  // (Hooks). Front-on because a hook is a flat sideways arc, which a side view
+  // collapses into a jab. The raised elbow is the tell: in guard both elbows
+  // hang down.
+  hookFlow: animatedFigure([
+    stick({ ...GUARD_FRONT, arms: [GUARD_ARMS_FRONT[0], [[84, 36], [64, 26]]] }),
+    stick({ ...GUARD_FRONT, arms: [[[16, 36], [36, 26]], GUARD_ARMS_FRONT[1]] }),
+  ]),
+
+  // C98 - 2-frame flip book, side view: knees dipped with one fist dropped
+  // low in front, then risen with that fist driven up in front of the chin
+  // (Uppercuts). The dip is drawn because the power comes from the legs, and
+  // without it the finished punch looks almost exactly like the guard.
+  uppercutFlow: animatedFigure([
+    stick({
+      ...GUARD_SIDE, head: [48, 31], neck: [44, 42], hip: [38, 90],
+      arms: [[[44, 66], [56, 82]], [[54, 60], [60, 38]]],
+      legs: [[[50, 112], [52, 133]], [[26, 112], [20, 133]]],
+    }),
+    stick({ ...GUARD_SIDE, arms: [[[60, 46], [62, 22]], GUARD_ARMS_SIDE[1]] }),
+  ]),
+
+  // C99 - 2-frame flip book, FRONT view: knees bent and the head ducked low to
+  // one side, then to the other, hands staying up by the chin (Bob and Weave).
+  // The two frames are exact mirrors with the feet pinned, so the eye reads a
+  // head travelling side to side under an imaginary punch.
+  bobWeaveFlow: animatedFigure([
+    stick({
+      head: [34, 36], neck: [38, 47], shoulders: [[28, 51], [48, 49]], hip: [46, 94],
+      arms: [[[24, 64], [26, 42]], [[50, 64], [44, 40]]],
+      legs: [[[32, 114], [34, 133]], [[62, 112], [66, 133]]],
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      head: [66, 36], neck: [62, 47], shoulders: [[52, 49], [72, 51]], hip: [54, 94],
+      arms: [[[50, 64], [56, 40]], [[76, 64], [74, 42]]],
+      legs: [[[38, 112], [34, 133]], [[68, 114], [66, 133]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C100 - 2-frame flip book, side view: the kicking knee chambered high with
+  // the foot tucked under it, then the leg snapped straight out in front at hip
+  // height with the torso leaning back to counter it (Front Kicks). The
+  // standing leg and guard are pinned.
+  frontKickFlow: animatedFigure([
+    stick({
+      head: [44, 20], headR: 7, neck: [42, 31], hip: [40, 80],
+      arms: GUARD_ARMS_SIDE,
+      legs: [[[42, 106], [42, 133]], [[64, 76], [60, 100]]],
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      head: [36, 21], headR: 7, neck: [36, 32], hip: [40, 80],
+      arms: [[[44, 53], [54, 31]], [[40, 55], [48, 33]]],
+      legs: [[[42, 106], [42, 133]], [[64, 78], [88, 76]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C101 - 2-frame flip book, FRONT view: fighting stance, then one leg swept
+  // out sideways at hip height as the body leans away from it (Roundhouse
+  // Kicks). Front-on because the kick travels sideways. The foot is pointed,
+  // in line with the shin - it lands with the shin and instep - which is what
+  // separates it from sideKickFlow's flexed, heel-first foot and steeper lean.
+  // Starts from the stance rather than a raised-knee chamber: a knee lifted
+  // out to the side, seen from the front, is exactly Standing Hip Opener.
+  roundhouseKickFlow: animatedFigure([
+    stick({
+      ...GUARD_FRONT, head: [44, 17], neck: [44, 28], hip: [44, 80],
+      shoulders: [[32, 33], [56, 33]],
+      arms: [[[29, 50], [34, 24]], [[59, 50], [54, 24]]],
+      legs: [[[40, 106], [36, 133]], [[54, 106], [60, 133]]],
+    }),
+    stick({
+      head: [22, 24], neck: [28, 34], shoulders: [[17, 38], [40, 31]], hip: [44, 80],
+      arms: [[[10, 58], [14, 80]], [[46, 53], [36, 34]]],
+      legs: [[[40, 106], [36, 133]], [[68, 74], [92, 70]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C102 - 2-frame flip book, side view: both hands reaching up and out in
+  // front as if taking hold of someone's shoulders, then one knee driven up
+  // high with both hands pulled down to meet it (Knee Strikes).
+  kneeStrikeFlow: animatedFigure([
+    stick({ ...GUARD_SIDE, arms: [[[62, 28], [82, 20]], [[60, 32], [80, 24]]] }),
+    stick({
+      head: [38, 22], headR: 7, neck: [38, 33], hip: [42, 80],
+      arms: [[[52, 50], [64, 62]], [[48, 52], [60, 64]]],
+      legs: [[[40, 106], [38, 133]], [[64, 62], [58, 86]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C103 - 2-frame flip book, FRONT view: the knee drawn up high across the
+  // front of the body with the foot cocked toward the target, then the heel
+  // driven straight out sideways with the body leaning well away (Side Kicks).
+  // Read against roundhouseKickFlow: the chamber is different, the lean is
+  // steeper, and the foot is flexed upright so the heel leads.
+  sideKickFlow: animatedFigure([
+    stick({
+      ...GUARD_FRONT, head: [44, 17], neck: [44, 28], hip: [44, 80],
+      shoulders: [[32, 33], [56, 33]],
+      arms: [[[29, 50], [34, 24]], [[59, 50], [54, 24]]],
+      legs: [[[40, 106], [36, 133]], [[50, 58], [72, 62]]],
+    }),
+    stick({
+      head: [12, 34], neck: [18, 42], shoulders: [[10, 50], [28, 36]], hip: [44, 80],
+      arms: [[[6, 70], [10, 92]], [[36, 56], [26, 44]]],
+      legs: [[[40, 106], [36, 133]], [[68, 78], [90, 76]]],
+      prop: FLOOR_STAND,
+      extra: BONE(90, 76, 92, 66, W.foot[0], W.foot[1]),
+    }),
+  ]),
 };
