@@ -83,6 +83,7 @@ const groups = {};
 for (const e of exercises) (groups[groupKey(e)] = groups[groupKey(e)] || []).push(e);
 
 const sided = exercises.filter((e) => e.sided).length;
+const mixed = exercises.filter((e) => e.mixedSides).length;
 const generated = new Date().toLocaleString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit',
 });
@@ -98,7 +99,7 @@ for (const key of GROUP_ORDER) {
         <td class="fig-cell">${figureCell(e)}</td>
         <td class="name-cell"><strong>${esc(e.name)}</strong><span class="id">${esc(e.id)}</span>${
           extra.length ? `<span class="note">${esc(extra.join(', '))}</span>` : ''}</td>
-        <td class="sides-cell">${e.sided ? 'Left + Right' : 'Single'}</td>
+        <td class="sides-cell">${e.sided ? 'Left + Right' : e.mixedSides ? 'Mixed' : 'Single'}</td>
         <td class="cue-cell">${esc(e.cue)}</td>
       </tr>`;
   }).join('');
@@ -179,9 +180,10 @@ const html = `<!doctype html>
 <body>
   <h1>Calisthenics exercise reference</h1>
   <p class="meta">
-    <strong>${exercises.length} exercises</strong> (${sided} split into left + right, the rest single) &middot;
+    <strong>${exercises.length} exercises</strong> (${sided} split into left + right, ${mixed} mixed, the rest single) &middot;
     generated <strong>${esc(generated)}</strong><br />
-    Grouped the way the equipment toggles on the home screen group them. Flip-book figures show every
+    Grouped the way the equipment toggles on the home screen group them. <em>Mixed</em> means both
+    sides in one set, left and right mixed together as you go. Flip-book figures show every
     frame side by side. Rebuilt from <code>public/js/exercises.js</code> and <code>public/js/figures.js</code>
     by <code>tools/build-exercise-reference.js</code> whenever the exercises change. Internal reference
     only, not part of the shipped site.

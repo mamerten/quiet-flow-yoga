@@ -66,6 +66,11 @@
 //                  way floor space is assumed for `surface: 'standing'`.
 //   sided          optional: true if it's done once per side (auto-paired
 //                  left/right by js/calisthenics-workout.js)
+//   mixedSides     optional: true if both sides are worked inside the one
+//                  set, left and right mixed together as you go - the
+//                  kickboxing moves. Not paired and not scheduled any
+//                  differently; it exists so the exercise reference can say
+//                  "Mixed" instead of "Single", which read as one side only.
 //
 // There's no `duration` field — unlike yoga, Calisthenics mode is
 // self-paced (see README): the app shows one exercise at a time and waits
@@ -757,6 +762,7 @@ window.EXERCISES = [
     name: 'Jab-Cross',
     figure: 'jabCrossFlow',
     surface: 'standing',
+    mixedSides: true,
     cue: 'Stand with one foot forward, knees soft, fists up by your chin. Snap your lead hand straight out, then drive your rear hand out as you turn your hips and pivot your back foot. Bring each hand straight back to your chin. Quick and light.',
   },
   {
@@ -764,6 +770,7 @@ window.EXERCISES = [
     name: 'Hooks',
     figure: 'hookFlow',
     surface: 'standing',
+    mixedSides: true,
     cue: 'Stand with one foot forward, knees soft, fists up by your chin. Lift one elbow to shoulder height and swing that fist in a flat arc across in front of you, turning your hips with it. Back to guard, then hook with the other hand.',
   },
   {
@@ -771,6 +778,7 @@ window.EXERCISES = [
     name: 'Uppercuts',
     figure: 'uppercutFlow',
     surface: 'standing',
+    mixedSides: true,
     cue: 'Stand with one foot forward, fists up by your chin. Dip your knees, then drive one fist upward in front of you as if under a chin, pushing up through your legs. Back to guard, then the other hand.',
   },
   {
@@ -778,6 +786,7 @@ window.EXERCISES = [
     name: 'Bob and Weave',
     figure: 'bobWeaveFlow',
     surface: 'standing',
+    mixedSides: true,
     cue: 'Stand with your feet wide and your fists up by your chin. Bend your knees and duck your head down and across in a U shape, as if slipping under a punch, then come up on the other side. Keep your eyes forward and your hands up.',
   },
   {
@@ -785,6 +794,7 @@ window.EXERCISES = [
     name: 'Front Kicks',
     figure: 'frontKickFlow',
     surface: 'standing',
+    mixedSides: true,
     cue: 'Fists up by your chin. Lift one knee high, then snap that foot straight out in front of you at hip height, pushing through the ball of your foot. Pull it back, set it down, and kick with the other leg.',
   },
   {
@@ -792,6 +802,7 @@ window.EXERCISES = [
     name: 'Roundhouse Kicks',
     figure: 'roundhouseKickFlow',
     surface: 'standing',
+    mixedSides: true,
     cue: 'Stand with one foot forward and your fists up. Pivot on your standing foot and swing your other leg around sideways, striking with your shin at hip height as your body leans away. Set it down and switch legs.',
   },
   {
@@ -799,6 +810,7 @@ window.EXERCISES = [
     name: 'Knee Strikes',
     figure: 'kneeStrikeFlow',
     surface: 'standing',
+    mixedSides: true,
     cue: 'Reach both hands up in front of you as if taking hold of someone by the shoulders. Drive one knee up hard toward your chest while pulling your hands down to meet it. Set it down and drive the other knee.',
   },
   {
@@ -806,6 +818,7 @@ window.EXERCISES = [
     name: 'Side Kicks',
     figure: 'sideKickFlow',
     surface: 'standing',
+    mixedSides: true,
     cue: 'Fists up by your chin. Draw one knee up across your body, then push that heel straight out to the side, leaning your body away from the kick. Pull the knee back in, set it down, and switch legs.',
   },
   {
