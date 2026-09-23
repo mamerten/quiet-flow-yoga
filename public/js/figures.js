@@ -2109,4 +2109,160 @@ window.FIGURES = {
       extra: BONE(90, 76, 92, 66, W.foot[0], W.foot[1]),
     }),
   ]),
+
+  // C104 - 2-frame flip book, side view: the reverse tabletop, then one hand
+  // lifted off the floor and swept back over the head as the chest turns up
+  // (Crab Reach). Frame one is reverseTabletop's shape with the second hand
+  // drawn in, because the whole move is one hand leaving the floor and a hand
+  // cannot appear from nowhere between frames.
+  crabReachFlow: animatedFigure([
+    stick({
+      head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
+      arms: [[[24, 102], [22, 122]], [[31, 100], [29, 122]]],
+      legs: [[[86, 84], [88, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [22, 64], headR: 7, neck: [30, 76], hip: [62, 78],
+      arms: [[[24, 100], [22, 122]], [[18, 58], [10, 40]]],
+      legs: [[[86, 80], [88, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
+  // C105 - 2-frame flip book, front view: one knee driven up above hip height
+  // with the opposite arm swung forward, then the other side (A-Skips). Frame
+  // two floats the whole figure clear of the floor line, because a skip that
+  // never leaves the ground is a march. The running arms, and a knee lifted
+  // straight up rather than opened out, are what separate this from Standing
+  // Hip Opener and Open the Gate.
+  aSkipFlow: animatedFigure([
+    stick({
+      ...STAND_FRONT,
+      arms: [[[30, 52], [38, 28]], [[74, 54], [82, 74]]],
+      legs: [[[47, 104], [45, 127]], [[62, 58], [66, 84]]],
+      prop: FLOOR_STAND,
+      extra: BONE(45, 127, 40, 133, W.foot[0], W.foot[1]),
+    }),
+    stick({
+      head: [50, 11], neck: [50, 22], shoulders: [[38, 27], [62, 27]], hip: [50, 74],
+      arms: [[[26, 48], [18, 68]], [[70, 46], [62, 22]]],
+      legs: [[[53, 98], [55, 121]], [[38, 52], [34, 78]]],
+      prop: FLOOR_STAND,
+      extra: BONE(55, 121, 60, 127, W.foot[0], W.foot[1]),
+    }),
+  ]),
+
+  // C106 - 2-frame flip book, front view: a wide deep squat with both hands
+  // down, then one hand planted between the feet while the other arm opens
+  // straight up and the chest turns to follow it (Deep Squat Reach). The hand
+  // ON THE FLOOR is the whole difference from squatTwistFlow, where the same
+  // reach happens with both hands free, so it is drawn planted and pinned.
+  squatOpenReachFlow: animatedFigure([
+    stick({
+      head: [50, 62], neck: [50, 72], shoulders: [[40, 76], [60, 76]], hip: [50, 108],
+      arms: [[[40, 94], [44, 114]], [[60, 94], [56, 114]]],
+      legs: [[[26, 104], [30, 133]], [[74, 104], [70, 133]]],
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      head: [54, 62], neck: [52, 72], shoulders: [[42, 78], [62, 72]], hip: [50, 108],
+      arms: [[[40, 96], [44, 114]], [[64, 50], [66, 26]]],
+      legs: [[[26, 104], [30, 133]], [[74, 104], [70, 133]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C107 - 3-frame flip book, front view: both arms swung from down and back,
+  // out through shoulder height, to straight overhead (Front Arm Circles).
+  // The arms are drawn shorter than the figure's real reach: a full-length arm
+  // from a standing shoulder runs off the top of the frame, and every front-on
+  // wide-arm figure here (windmillFlow) foreshortens the same way.
+  frontArmCircleFlow: animatedFigure([
+    stick({
+      ...STAND_FRONT,
+      arms: [[[32, 54], [26, 74]], [[68, 54], [74, 74]]],
+      legs: LEGS_FRONT,
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      ...STAND_FRONT,
+      arms: [[[20, 30], [6, 26]], [[80, 30], [94, 26]]],
+      legs: LEGS_FRONT,
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      ...STAND_FRONT,
+      arms: [[[26, 16], [40, 2]], [[74, 16], [60, 2]]],
+      legs: LEGS_FRONT,
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C108 - 2-frame flip book, side view: standing tall with the fingers laced
+  // behind the head and the elbows wide, then hinged at the hips until the
+  // back is parallel to the floor (Good Mornings). The hands stay behind the
+  // head through the hinge, which is what separates it from squatFoldFlow and
+  // toeTouchFlow, where the hands travel to the floor.
+  goodMorningFlow: animatedFigure([
+    stick({
+      head: [52, 20], headR: 7, neck: [50, 31], hip: [48, 80],
+      arms: [[[66, 36], [46, 24]], [[62, 40], [44, 26]]],
+      legs: [[[48, 106], [46, 133]], [[54, 106], [54, 133]]],
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      head: [88, 66], headR: 7, neck: [82, 74], hip: [36, 84],
+      arms: [[[74, 52], [86, 58]], [[78, 54], [88, 62]]],
+      legs: [[[42, 108], [44, 133]], [[36, 108], [38, 133]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C109 - 3-frame flip book, front view: the knee lifted in front, swung out
+  // to the side, then carried down and back to the floor (Open the Gate) - one
+  // continuous circle of the knee. Frames one and two are Standing Hip
+  // Opener's two positions on purpose, since it is the same opening; the third
+  // frame and the wide balancing arms are what make this the full circle
+  // rather than the lift-and-hold.
+  openGateFlow: animatedFigure([
+    stick({
+      ...STAND_FRONT,
+      arms: [[[20, 30], [6, 26]], [[80, 30], [94, 26]]],
+      legs: [[[47, 106], [45, 133]], [[62, 58], [66, 84]]],
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      ...STAND_FRONT,
+      arms: [[[20, 30], [6, 26]], [[80, 30], [94, 26]]],
+      legs: [[[47, 106], [45, 133]], [[80, 78], [82, 104]]],
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      ...STAND_FRONT,
+      arms: [[[20, 30], [6, 26]], [[80, 30], [94, 26]]],
+      legs: [[[47, 106], [45, 133]], [[72, 98], [74, 126]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
+  // C110 - 2-frame flip book, front view on the shared Z_SIT legs: sitting
+  // tall in the 90/90, then the torso turned toward the BACK leg and folded
+  // over it, both hands to the floor, looking back over that shoulder
+  // (90/90 Fold). The legs are ninetyNinetyFlow's, unchanged, so the family
+  // still reads as one position; only the torso moves, which is the point.
+  ninetyNinetyFoldFlow: animatedFigure([
+    stick({
+      head: [58, 51], neck: [56, 62], shoulders: [[46, 66], [66, 66]], hip: Z_SIT_HIP_L,
+      arms: [[[40, 86], [38, 106]], [[72, 90], [78, 114]]],
+      legs: Z_SIT_LEGS_L,
+      prop: Z_SIT_FLOOR,
+    }),
+    stick({
+      head: [20, 76], neck: [32, 84], shoulders: [[24, 74], [40, 92]], hip: Z_SIT_HIP_L,
+      arms: [[[16, 96], [12, 118]], [[34, 104], [30, 122]]],
+      legs: Z_SIT_LEGS_L,
+      prop: Z_SIT_FLOOR,
+    }),
+  ]),
 };

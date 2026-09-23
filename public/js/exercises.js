@@ -48,6 +48,14 @@
 // source: no bag, no gloves, all standing, and every move alternates on the
 // spot, so none of them is a left/right pair.
 //
+// Crab Reach, A-Skips, Deep Squat Reach, Front Arm Circles, Good Mornings,
+// Open the Gate and 90/90 Fold come from one five-minute mobility reel. Three
+// of them land close to something already here and are kept deliberately
+// distinct: Deep Squat Reach plants a hand on the floor where Squat and Twist
+// keeps both hands free, Open the Gate carries the knee through a full circle
+// where Standing Hip Opener lifts and opens it, and 90/90 Fold rotates and
+// folds where the other three 90/90s only switch sides.
+//
 // Schema (deliberately different from poses.js — see README):
 //   id             unique string
 //   name           short, memorable name (shown + spoken)
@@ -756,6 +764,60 @@ window.EXERCISES = [
     surface: 'standing',
     needsFurniture: true,
     cue: 'Hold a towel with tension between your hands and trace big, slow circles in the air, both directions.',
+  },
+  {
+    id: 'crab-reach',
+    name: 'Crab Reach',
+    figure: 'crabReachFlow',
+    surface: 'ground',
+    mixedSides: true,
+    cue: 'Sit with your knees bent and feet flat, hands on the floor behind you, and press your hips up into a tabletop. Lift one hand and reach it back over your head, turning your chest up toward the ceiling and following the hand with your eyes. Plant it again and reach with the other hand, alternating as you go.',
+  },
+  {
+    id: 'a-skips',
+    name: 'A-Skips',
+    figure: 'aSkipFlow',
+    surface: 'standing',
+    mixedSides: true,
+    cue: 'Skip on the spot. Drive one knee up above hip height as you push off the ball of the other foot, swinging the opposite arm forward. Land soft and drive the other knee up. Quick, light and springy.',
+  },
+  {
+    id: 'deep-squat-reach',
+    name: 'Deep Squat Reach',
+    figure: 'squatOpenReachFlow',
+    surface: 'standing',
+    mixedSides: true,
+    cue: 'Sink into a wide, deep squat with your feet flat. Plant one hand on the floor between your feet, then open your chest and reach the other arm straight up toward the ceiling, following it with your eyes. Come back down, swap hands, and reach with the other arm.',
+  },
+  {
+    id: 'front-arm-circles',
+    name: 'Front Arm Circles',
+    figure: 'frontArmCircleFlow',
+    surface: 'standing',
+    cue: 'Stand tall with your arms down by your sides. Swing both arms forward and all the way up overhead, brushing past your ears, then carry them back and around in one big circle. Keep your elbows straight and make the circle as big as your shoulders will allow.',
+  },
+  {
+    id: 'good-mornings',
+    name: 'Good Mornings',
+    figure: 'goodMorningFlow',
+    surface: 'standing',
+    cue: 'Stand with your feet hip width and your hands behind your head, elbows wide. Keeping your back flat and a soft bend in your knees, push your hips back and hinge your chest forward until your torso is about parallel to the floor. Squeeze your glutes to stand back up.',
+  },
+  {
+    id: 'open-the-gate',
+    name: 'Open the Gate',
+    figure: 'openGateFlow',
+    surface: 'standing',
+    mixedSides: true,
+    cue: 'Stand tall with your arms out to the sides for balance. Lift one knee up in front of you, then swing it out and around to the side in one big circle, as if opening a gate, and set the foot back down. Alternate legs and keep it quick.',
+  },
+  {
+    id: 'ninety-ninety-fold',
+    name: '90/90 Fold',
+    figure: 'ninetyNinetyFoldFlow',
+    surface: 'ground',
+    mixedSides: true,
+    cue: 'Sit in a 90/90, with one shin in front of you and the other out to the side behind you, both knees bent square. Turn your torso toward the back leg, reaching both hands to the floor beside it and looking behind you over that shoulder, then come back up tall. Switch which leg is in front halfway through.',
   },
   {
     id: 'jab-cross',
