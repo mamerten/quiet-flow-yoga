@@ -51,10 +51,12 @@
 // Crab Reach, A-Skips, Deep Squat Reach, Front Arm Circles, Good Mornings,
 // Open the Gate and 90/90 Fold come from one five-minute mobility reel. Three
 // of them land close to something already here and are kept deliberately
-// distinct: Deep Squat Reach plants a hand on the floor where Squat and Twist
-// keeps both hands free, Open the Gate carries the knee through a full circle
-// where Standing Hip Opener lifts and opens it, and 90/90 Fold rotates and
-// folds where the other three 90/90s only switch sides.
+// distinct: Deep Squat Reach Upward plants a hand on the floor and reaches
+// straight up, where Squat and Twist keeps both hands free and turns right
+// around; Open the Gate whips the knee through a full circle where Standing
+// Hip Opener eases it open and pauses there, and its figure cycles at double
+// speed to say so; and 90/90 Rotate and Fold turns and folds where the other
+// three 90/90s only switch sides.
 //
 // Schema (deliberately different from poses.js — see README):
 //   id             unique string
@@ -178,7 +180,7 @@ window.EXERCISES = [
     name: 'Squat and Twist',
     figure: 'squatTwistFlow',
     surface: 'standing',
-    cue: 'Sink into a squat, then rotate your torso and reach one arm up toward the ceiling, following it with your eyes. Return to the squat and switch sides.',
+    cue: 'Sink into a squat and keep both hands free. Holding your hips low and square, turn your chest around to one side and sweep that arm away behind you at shoulder height, looking back past your hand as far as you can see. Come back to the middle and twist around the other way.',
   },
   {
     id: 'calf-raises',
@@ -561,7 +563,7 @@ window.EXERCISES = [
     name: 'Standing Hip Opener',
     figure: 'hipOpenerFlow',
     surface: 'standing',
-    cue: 'Stand tall with your hands on your hips. Lift one knee up in front of you, then swing it out to the side in a slow, wide circle before setting the foot back down. Alternate legs, keeping the standing leg steady.',
+    cue: 'Stand tall with your hands on your hips. Lift one knee up in front of you, then open it out to the side as slowly as you can, pausing at the end of the range before you set the foot down. Stay in control the whole way and keep the standing leg quiet. Alternate legs.',
   },
   {
     id: 'squat-and-reach',
@@ -782,8 +784,8 @@ window.EXERCISES = [
     cue: 'Skip on the spot. Drive one knee up above hip height as you push off the ball of the other foot, swinging the opposite arm forward. Land soft and drive the other knee up. Quick, light and springy.',
   },
   {
-    id: 'deep-squat-reach',
-    name: 'Deep Squat Reach',
+    id: 'deep-squat-reach-upward',
+    name: 'Deep Squat Reach Upward',
     figure: 'squatOpenReachFlow',
     surface: 'standing',
     mixedSides: true,
@@ -809,11 +811,11 @@ window.EXERCISES = [
     figure: 'openGateFlow',
     surface: 'standing',
     mixedSides: true,
-    cue: 'Stand tall with your arms out to the sides for balance. Lift one knee up in front of you, then swing it out and around to the side in one big circle, as if opening a gate, and set the foot back down. Alternate legs and keep it quick.',
+    cue: 'Stand tall with your arms out to the sides for balance. Drive one knee up and whip it out and around to the side in one fast circle, as if kicking a gate open, and plant the foot back down. Go straight into the other leg. This one is quick and punchy, not slow and careful.',
   },
   {
-    id: 'ninety-ninety-fold',
-    name: '90/90 Fold',
+    id: 'ninety-ninety-rotate-fold',
+    name: '90/90 Rotate and Fold',
     figure: 'ninetyNinetyFoldFlow',
     surface: 'ground',
     mixedSides: true,

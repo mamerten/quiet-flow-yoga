@@ -46,8 +46,13 @@ function svg(inner) {
 // jumping, Push-Up going up and down, W-Slide sliding between its two
 // named shapes. The cycling itself is pure CSS (see .figure-frames in
 // style.css), so this needs no JS timer and nothing in app.js changes.
-function animatedFigure(frames) {
-  return `<div class="figure-frames frames-${frames.length}">${frames.map(svg).join('')}</div>`;
+// `opts.fast` doubles the cycle speed (see .frames-fast in style.css). Used
+// where the TEMPO is the exercise: Open the Gate and Standing Hip Opener are
+// the same circle of the knee, one whipped and one deliberate, so drawing them
+// at the same speed would make them the same picture.
+function animatedFigure(frames, opts) {
+  const fast = opts && opts.fast ? ' frames-fast' : '';
+  return `<div class="figure-frames frames-${frames.length}${fast}">${frames.map(svg).join('')}</div>`;
 }
 
 // A stick figure built from named joints rather than free-floating line
@@ -561,10 +566,12 @@ window.FIGURES = {
     }),
   ]),
 
-  // C11 — 2-frame flip book: a wide squat held byte-identical across both
-  // frames while the torso swings from a forward, hands-down lean up into
-  // a full rotation with one arm reaching for the ceiling (Squat and
-  // Twist).
+  // C11 - 2-frame flip book: a wide squat held byte-identical across both
+  // frames while the torso turns right around and one arm sweeps away behind
+  // the body at shoulder height, the head following it (Squat and Twist). The
+  // shoulder bar narrows as it turns, which is the only cue a front view can
+  // give for rotation, and the arm goes BACK rather than up: reaching straight
+  // up is Deep Squat Reach Upward, and the two have to look different.
   squatTwistFlow: animatedFigure([
     stick({
       head: [50, 62], neck: [50, 72], shoulders: [[40, 76], [60, 76]], hip: [50, 108],
@@ -573,8 +580,8 @@ window.FIGURES = {
       prop: GROUND(8, 92, 132),
     }),
     stick({
-      head: [58, 62], neck: [52, 72], shoulders: [[43, 77], [61, 73]], hip: [50, 108],
-      arms: [[[38, 95], [36, 113]], [[70, 56], [78, 40]]],
+      head: [58, 62], neck: [50, 72], shoulders: [[46, 76], [62, 72]], hip: [50, 108],
+      arms: [[[44, 92], [40, 106]], [[78, 68], [92, 66]]],
       legs: [[[26, 104], [30, 132]], [[74, 104], [70, 132]]],
       prop: GROUND(8, 92, 132),
     }),
@@ -2224,7 +2231,9 @@ window.FIGURES = {
   // continuous circle of the knee. Frames one and two are Standing Hip
   // Opener's two positions on purpose, since it is the same opening; the third
   // frame and the wide balancing arms are what make this the full circle
-  // rather than the lift-and-hold.
+  // rather than the lift-and-hold - and it cycles at double speed, because the
+  // difference between the two really is tempo: this one is whipped around,
+  // the hip opener is eased around.
   openGateFlow: animatedFigure([
     stick({
       ...STAND_FRONT,
@@ -2244,7 +2253,7 @@ window.FIGURES = {
       legs: [[[47, 106], [45, 133]], [[72, 98], [74, 126]]],
       prop: FLOOR_STAND,
     }),
-  ]),
+  ], { fast: true }),
 
   // C110 - 2-frame flip book, front view on the shared Z_SIT legs: sitting
   // tall in the 90/90, then the torso turned toward the BACK leg and folded
