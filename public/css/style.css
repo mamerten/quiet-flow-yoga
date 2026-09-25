@@ -385,6 +385,7 @@ h1 {
 .controls {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .control-btn {
@@ -400,6 +401,19 @@ h1 {
 
 .control-btn:hover {
   background: var(--control-hover-bg);
+}
+
+.control-btn.icon-btn {
+  flex: 0 0 auto;
+  width: 48px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+}
+
+.control-btn.muted {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: white;
 }
 
 .control-btn-danger {

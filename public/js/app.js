@@ -53,6 +53,7 @@ const overallProgressBar = document.getElementById('overall-progress-bar');
 const stepLabel = document.getElementById('step-label');
 const topTimer = document.getElementById('top-timer');
 const nextLabel = document.getElementById('next-label');
+const muteBtn = document.getElementById('mute-btn');
 const pauseBtn = document.getElementById('pause-btn');
 const skipBtn = document.getElementById('skip-btn');
 const endBtn = document.getElementById('end-btn');
@@ -76,6 +77,31 @@ const homeBtn = document.getElementById('home-btn');
 let state = null;
 
 let currentMode = 'yoga';
+
+// Spoken narration on/off, independent of device volume — added because a
+// phone's hardware volume buttons don't reliably reach in-page audio, so
+// they're not a real way to go quiet mid-practice. Muting stops whatever
+// line is playing right now rather than letting it finish. Persisted so it
+// carries over to your next practice. The chime/countdown tick stay on —
+// this only silences spoken lines.
+let narrationOn = loadBoolPref('quietflow.narrationOn', true);
+
+function renderMuteButton() {
+  if (!muteBtn) return;
+  muteBtn.textContent = narrationOn ? '🔊' : '🔇';
+  muteBtn.title = narrationOn ? 'Turn narration off' : 'Turn narration on';
+  muteBtn.setAttribute('aria-pressed', String(!narrationOn));
+  muteBtn.classList.toggle('muted', !narrationOn);
+}
+
+function toggleNarration() {
+  narrationOn = !narrationOn;
+  saveBoolPref('quietflow.narrationOn', narrationOn);
+  renderMuteButton();
+  if (!narrationOn) stopNarration(); // silence whatever line is playing right now
+}
+
+renderMuteButton();
 
 const HOME_TAGLINES = {
   yoga: "A short, guided yoga practice. Pick a length and press start — I'll walk you through it.",
@@ -214,7 +240,7 @@ function startCountdown(index) {
   // useful. Calisthenics is self-paced — you just pressed Next yourself,
   // and the name is right there on screen — so a spoken "Up next" is
   // redundant with the cue that plays a moment later in startHold().
-  if (state.mode !== 'calisthenics') {
+  if (state.mode !== 'calisthenics' && narrationOn) {
     narrate(clipKey('next', seg), `Up next: ${spokenLabel(seg)}`);
   }
 }
@@ -251,6 +277,7 @@ function startHold(index) {
     // rather than fire a chime and narration into a state that moved on.
     if (!state || state.paused || state.index !== index) return;
     chime();
+    if (!narrationOn) return;
     // "Exercise title only" mode skips the long spoken cue — the written
     // cue stays on screen either way.
     if (state.titleOnly) {
@@ -346,10 +373,10 @@ function finishWorkout() {
   if (state.mode === 'calisthenics') {
     const count = state.index + 1;
     summaryText.textContent = `Great job — you completed your ${state.totalMinutes}-minute session (${count} exercise${count === 1 ? '' : 's'}).`;
-    narrate('complete-calisthenics', 'Great job. You completed your session.');
+    if (narrationOn) narrate('complete-calisthenics', 'Great job. You completed your session.');
   } else {
     summaryText.textContent = `Great job — you completed your ${state.totalMinutes}-minute practice (${state.segments.length} poses).`;
-    narrate('complete', 'Great job. You completed your practice. Namaste.');
+    if (narrationOn) narrate('complete', 'Great job. You completed your practice. Namaste.');
   }
   showScreen(completeScreen);
 }
@@ -515,6 +542,7 @@ durationButtons.forEach((btn) => {
   });
 });
 
+if (muteBtn) muteBtn.addEventListener('click', toggleNarration);
 pauseBtn.addEventListener('click', togglePause);
 skipBtn.addEventListener('click', skipSegment);
 endBtn.addEventListener('click', endWorkout);
