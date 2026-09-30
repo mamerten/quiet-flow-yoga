@@ -1532,7 +1532,7 @@ window.FIGURES = {
 
   // C81 - side view, hands behind and feet flat with the hips pressed up level
   // with the knees, so shoulders-to-knees is one flat table top facing the
-  // ceiling (Reverse Tabletop Hold). The top position of crabLiftFlow, held and
+  // ceiling (Crab Hold). The top position of crabLiftFlow, held and
   // flattened; kept separate so the rep and the hold can't drift into each
   // other.
   reverseTabletop: svg(stick({
@@ -1588,6 +1588,10 @@ window.FIGURES = {
     arms: [[[68, 58], [84, 58]]],
     legs: [[[50, 110], [44, 133]], [[60, 104], [88, 114]]],
     prop: GROUND(8, 96, 133),
+    // The outstretched foot, drawn flexed with the toes up so the heel is its
+    // lowest point - and that heel sits well clear of the floor line. Without a
+    // foot the leg just ends, and "is it touching?" has no answer.
+    extra: BONE(88, 114, 92, 103, W.foot[0], W.foot[1]),
   })),
 
   // C85 - 2-frame flip book, side view: hips high in an upside-down V with the

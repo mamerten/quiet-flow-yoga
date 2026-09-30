@@ -271,8 +271,8 @@ window.EXERCISES = [
     cue: 'Start on your hands and knees with your toes tucked under. Lift one hand and reach it back and across your body to tap your opposite foot, letting your hips lift high into the air as you reach. Both feet stay planted on the floor. Put that hand down and tap with the other one, alternating as you go.',
   },
   {
-    id: 'reverse-tabletop-hold',
-    name: 'Reverse Tabletop Hold',
+    id: 'crab-hold',
+    name: 'Crab Hold',
     figure: 'reverseTabletop',
     surface: 'ground',
     cue: 'Sit with your knees bent and feet flat, hands on the floor behind you with your fingers toward your feet. Press your hips up until they are level with your knees and your body forms a flat table. Squeeze your glutes and hold.',
@@ -598,7 +598,7 @@ window.EXERCISES = [
     name: '45-Degree Pistol Squat Hold',
     figure: 'pistolSquatHold',
     surface: 'standing',
-    cue: 'Stand on one leg and hold the other straight out in front of you, just off the floor. Sit your hips back until the standing knee is bent about 45 degrees, arms reaching forward for balance, and hold. Switch legs halfway through.',
+    cue: 'Stand on one leg and hold the other straight out in front of you, just off the floor. Sit your hips back until the standing knee is bent about 45 degrees, arms reaching forward for balance, and hold. The heel of your outstretched leg never touches the floor. Switch legs halfway through.',
   },
   {
     id: 'standing-quad-stretch',

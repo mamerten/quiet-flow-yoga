@@ -54,6 +54,48 @@ const GROUP_LABELS = {
 // Bar last: it's the only group that's off by default in the app.
 const GROUP_ORDER = ['standing', 'ground', 'furniture', 'bar'];
 
+// Row order within a section. The order of exercises.js means nothing to the
+// app - the sequencer shuffles - so left alone it drifts into "the order things
+// were added in", which is no order at all to someone scanning for a move.
+// This decides a scannable order for the reference only; the app is untouched.
+//
+// Standing runs: upright moves, then squatting, then kickboxing, then the rest
+// (lunges, hinges and folds). These are explicit lists because nothing in the
+// data says whether a move is upright. A new standing exercise that isn't
+// listed here is shown last in its section and named by the build, so it gets
+// placed rather than silently landing somewhere odd.
+const STANDING_ORDER = [
+  // upright
+  'reverse-hunchback', 'elbow-lift-hold', 'collarbone-look-up', 'hands-behind-pulldown',
+  'w-slide', 'l-pull', 't-raise', 'y-raise', 'front-arm-circles', 'standing-torso-twist',
+  'calf-raises', 'single-leg-balance', 'touch-the-potato', 'standing-quad-stretch',
+  'wall-ankle-stretch', 'standing-hip-opener', 'open-the-gate', 'a-skips', 'single-leg-hops',
+  // squatting
+  'deep-squat-hold', 'toe-squat-hold', 'squatting-heel-raise', 'squat-knee-drops',
+  'squat-hip-pulses', 'squat-twist', 'deep-squat-reach-upward', 'squat-and-reach',
+  'squat-fold', 'wall-sit-hold', 'pistol-squat-hold-45', 'jump-squat',
+  // kickboxing
+  'jab-cross', 'hooks', 'uppercuts', 'bob-and-weave',
+  'front-kicks', 'roundhouse-kicks', 'knee-strikes', 'side-kicks',
+  // everything else: lunges, hinges, folds
+  'reverse-lunge', 'curtsy-lunge', 'lunge-crunch', 'good-mornings',
+  'single-leg-rdl', 'standing-toe-touch', 'windmill',
+];
+
+// Ground keeps exercises.js order, except that each family below is pulled
+// together at the position of its first member. Families are rules rather
+// than lists so a new 90/90 or a new overhead figure joins its family
+// automatically.
+// The overhead test looks for the mat outline figures.js draws around every
+// figure seen from directly above (its MAT constant). If that outline is ever
+// redrawn this string has to follow, which is why the build fails loudly when
+// it matches nothing rather than quietly scattering the family again.
+const OVERHEAD_MAT = 'M14 8 H86 V136 H14 Z';
+const GROUND_FAMILIES = [
+  (e) => /90\/90|z-sit/i.test(e.name),
+  (e) => (figures[e.figure] || '').includes(OVERHEAD_MAT),
+];
+
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -81,6 +123,38 @@ const notes = (e) => [
 
 const groups = {};
 for (const e of exercises) (groups[groupKey(e)] = groups[groupKey(e)] || []).push(e);
+
+function orderStanding(list) {
+  const rank = new Map(STANDING_ORDER.map((id, i) => [id, i]));
+  const ids = new Set(list.map((e) => e.id));
+  const stale = STANDING_ORDER.filter((id) => !ids.has(id));
+  if (stale.length) problems.push(`STANDING_ORDER names exercises that aren't standing (renamed or moved?): ${stale.join(', ')}`);
+  const unplaced = list.filter((e) => !rank.has(e.id));
+  if (unplaced.length) {
+    console.warn(`Standing exercises not in STANDING_ORDER, shown last: ${unplaced.map((e) => e.id).join(', ')}`);
+  }
+  return [...list.filter((e) => rank.has(e.id)).sort((a, b) => rank.get(a.id) - rank.get(b.id)), ...unplaced];
+}
+
+function gatherFamilies(list, families) {
+  const out = [];
+  const placed = new Set();
+  for (const e of list) {
+    if (placed.has(e)) continue;
+    const family = families.find((f) => f(e));
+    for (const m of family ? list.filter(family) : [e]) {
+      out.push(m);
+      placed.add(m);
+    }
+  }
+  return out;
+}
+
+if (!exercises.some(GROUND_FAMILIES[1])) {
+  problems.push('No overhead (mat-outline) figures found: OVERHEAD_MAT no longer matches figures.js MAT');
+}
+groups.standing = orderStanding(groups.standing || []);
+groups.ground = gatherFamilies(groups.ground || [], GROUND_FAMILIES);
 
 const sided = exercises.filter((e) => e.sided).length;
 const mixed = exercises.filter((e) => e.mixedSides).length;
@@ -182,7 +256,9 @@ const html = `<!doctype html>
   <p class="meta">
     <strong>${exercises.length} exercises</strong> (${sided} split into left + right, ${mixed} mixed, the rest single) &middot;
     generated <strong>${esc(generated)}</strong><br />
-    Grouped the way the equipment toggles on the home screen group them. <em>Mixed</em> means both
+    Grouped the way the equipment toggles on the home screen group them. Standing runs upright
+    moves, then squatting, then kickboxing, then lunges and hinges; on the ground, the 90/90 family
+    and the figures drawn from overhead are kept together. <em>Mixed</em> means both
     sides in one set, left and right mixed together as you go. Flip-book figures show every
     frame side by side. Rebuilt from <code>public/js/exercises.js</code> and <code>public/js/figures.js</code>
     by <code>tools/build-exercise-reference.js</code> whenever the exercises change. Internal reference
