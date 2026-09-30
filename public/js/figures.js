@@ -2278,4 +2278,57 @@ window.FIGURES = {
       prop: Z_SIT_FLOOR,
     }),
   ]),
+
+  // C111 - 3-frame flip book, side view: a long, low crawl with the hands
+  // planted far out in front and the knees bent low underneath; turned
+  // through to sit on the floor with one hand planted behind and the other up
+  // in front of the chest; then back in the crawl with the chest lowered
+  // toward the floor between the hands (Low Crawl Sit-Through). Frames follow
+  // the three reference photos in the order they were given. Both arms are
+  // drawn in every frame because the sit-through frame needs two, and a limb
+  // can't appear from nowhere between frames. The planted hands are pinned in
+  // the two crawl frames.
+  lowCrawlSitThroughFlow: animatedFigure([
+    stick({
+      head: [20, 94], headR: 7, neck: [32, 98], hip: [66, 98],
+      arms: [[[20, 110], [8, 122]], [[25, 110], [14, 122]]],
+      legs: [[[46, 114], [74, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [48, 77], headR: 7, neck: [40, 88], hip: [52, 118],
+      arms: [[[30, 104], [22, 122]], [[52, 98], [60, 86]]],
+      legs: [[[72, 100], [86, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [16, 110], headR: 7, neck: [28, 112], hip: [62, 104],
+      arms: [[[18, 104], [8, 122]], [[23, 104], [14, 122]]],
+      legs: [[[44, 116], [72, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
+  // C112 - 2-frame flip book, side view: a straight-armed plank, then the
+  // hips piked high with one hand off the floor reaching back to the far foot
+  // (Plank Opposite Toe Touch). Frame two is crossBodyFootTapFlow's end
+  // position lifted onto PLANK's floor line: the finish is the same, and the
+  // start - a full plank on the toes rather than knees down - is the whole
+  // difference, so that is what frame one shows. The feet step in between
+  // frames because a hand can only reach a foot in a tight pike. PLANK is
+  // redrawn here with a second arm and leg so nothing appears from nowhere.
+  plankToeTouchFlow: animatedFigure([
+    stick({
+      head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
+      arms: [[[24, 84], [24, 110]], [[29, 84], [29, 110]]],
+      legs: [[[76, 97], [92, 110]], [[72, 98], [87, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+    stick({
+      head: [22, 86], headR: 7, neck: [34, 78], hip: [58, 50],
+      arms: [[[28, 94], [24, 110]], [[48, 87], [59, 105]]],
+      legs: [[[66, 78], [72, 107]], [[62, 78], [60, 108]]],
+      prop: GROUND(8, 98, 112),
+    }),
+  ]),
 };

@@ -264,11 +264,27 @@ window.EXERCISES = [
     cue: 'Get into a crawl position on your hands and feet with your hips high and your knees pulled forward toward your elbows, hovering just off the floor. Bend your elbows and lower your head toward the floor between your hands, keeping your knees off the ground, then press back up.',
   },
   {
+    id: 'low-crawl-sit-through',
+    name: 'Low Crawl Sit-Through',
+    figure: 'lowCrawlSitThroughFlow',
+    surface: 'ground',
+    mixedSides: true,
+    cue: 'Get into a long, low crawl: hands planted well out in front of your shoulders, knees bent low underneath you, up on the balls of your feet. Lower your chest toward the floor between your hands. Then turn through to sit on the floor, one hand planted behind you and the other up in front of your chest. Turn back into the crawl, and sit through to the other side next time.',
+  },
+  {
     id: 'cross-body-foot-tap',
     name: 'Cross-Body Foot Tap',
     figure: 'crossBodyFootTapFlow',
     surface: 'ground',
     cue: 'Start on your hands and knees with your toes tucked under. Lift one hand and reach it back and across your body to tap your opposite foot, letting your hips lift high into the air as you reach. Both feet stay planted on the floor. Put that hand down and tap with the other one, alternating as you go.',
+  },
+  {
+    id: 'plank-opposite-toe-touch',
+    name: 'Plank Opposite Toe Touch',
+    figure: 'plankToeTouchFlow',
+    surface: 'ground',
+    mixedSides: true,
+    cue: 'Start in a high plank, arms straight and body in one line. Pike your hips up and reach one hand back to touch the opposite foot, letting your hands and feet draw a little closer together so you can reach it. Return to the plank and touch with the other hand, alternating as you go.',
   },
   {
     id: 'crab-hold',

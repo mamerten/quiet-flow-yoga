@@ -82,18 +82,31 @@ const STANDING_ORDER = [
   'single-leg-rdl', 'standing-toe-touch', 'windmill',
 ];
 
-// Ground keeps exercises.js order, except that each family below is pulled
-// together at the position of its first member. Families are rules rather
-// than lists so a new 90/90 or a new overhead figure joins its family
-// automatically.
+// Ground keeps exercises.js order, except that each cluster below is pulled
+// together at the position of its first member. A cluster is one or more
+// families laid down back to back, in the order listed. They are rules rather
+// than lists, so a new push-up, crab move or 90/90 joins its group without
+// anyone touching this file.
 // The overhead test looks for the mat outline figures.js draws around every
 // figure seen from directly above (its MAT constant). If that outline is ever
 // redrawn this string has to follow, which is why the build fails loudly when
-// it matches nothing rather than quietly scattering the family again.
+// it matches nothing rather than quietly scattering the group again.
 const OVERHEAD_MAT = 'M14 8 H86 V136 H14 Z';
-const GROUND_FAMILIES = [
-  (e) => /90\/90|z-sit/i.test(e.name),
-  (e) => (figures[e.figure] || '').includes(OVERHEAD_MAT),
+const isOverhead = (e) => (figures[e.figure] || '').includes(OVERHEAD_MAT);
+const isLegRaise = (e) => /leg raise|side sweep/i.test(e.name);
+const GROUND_CLUSTERS = [
+  [(e) => /push-up/i.test(e.name)],
+  [(e) => /crab/i.test(e.name)],
+  [(e) => /90\/90|z-sit/i.test(e.name)],
+  // Two asks that overlap: keep the overhead figures together, and keep the
+  // leg raises together - but two of the three leg raises (the side sweeps)
+  // are drawn overhead. So the overhead run ends on those two, and the third
+  // leg raise follows straight on, which keeps both groups unbroken.
+  [
+    (e) => isOverhead(e) && !isLegRaise(e),
+    (e) => isOverhead(e) && isLegRaise(e),
+    (e) => isLegRaise(e) && !isOverhead(e),
+  ],
 ];
 
 const esc = (s) => String(s)
@@ -136,25 +149,26 @@ function orderStanding(list) {
   return [...list.filter((e) => rank.has(e.id)).sort((a, b) => rank.get(a.id) - rank.get(b.id)), ...unplaced];
 }
 
-function gatherFamilies(list, families) {
+function gatherClusters(list, clusters) {
   const out = [];
   const placed = new Set();
+  const place = (m) => {
+    if (!placed.has(m)) { out.push(m); placed.add(m); }
+  };
   for (const e of list) {
     if (placed.has(e)) continue;
-    const family = families.find((f) => f(e));
-    for (const m of family ? list.filter(family) : [e]) {
-      out.push(m);
-      placed.add(m);
-    }
+    const cluster = clusters.find((c) => c.some((f) => f(e)));
+    if (!cluster) { place(e); continue; }
+    for (const family of cluster) list.filter(family).forEach(place);
   }
   return out;
 }
 
-if (!exercises.some(GROUND_FAMILIES[1])) {
+if (!exercises.some(isOverhead)) {
   problems.push('No overhead (mat-outline) figures found: OVERHEAD_MAT no longer matches figures.js MAT');
 }
 groups.standing = orderStanding(groups.standing || []);
-groups.ground = gatherFamilies(groups.ground || [], GROUND_FAMILIES);
+groups.ground = gatherClusters(groups.ground || [], GROUND_CLUSTERS);
 
 const sided = exercises.filter((e) => e.sided).length;
 const mixed = exercises.filter((e) => e.mixedSides).length;
@@ -257,8 +271,9 @@ const html = `<!doctype html>
     <strong>${exercises.length} exercises</strong> (${sided} split into left + right, ${mixed} mixed, the rest single) &middot;
     generated <strong>${esc(generated)}</strong><br />
     Grouped the way the equipment toggles on the home screen group them. Standing runs upright
-    moves, then squatting, then kickboxing, then lunges and hinges; on the ground, the 90/90 family
-    and the figures drawn from overhead are kept together. <em>Mixed</em> means both
+    moves, then squatting, then kickboxing, then lunges and hinges. On the ground, push-ups, crab
+    moves, the 90/90 family, the figures drawn from overhead and the leg raises are each kept
+    together. <em>Mixed</em> means both
     sides in one set, left and right mixed together as you go. Flip-book figures show every
     frame side by side. Rebuilt from <code>public/js/exercises.js</code> and <code>public/js/figures.js</code>
     by <code>tools/build-exercise-reference.js</code> whenever the exercises change. Internal reference
