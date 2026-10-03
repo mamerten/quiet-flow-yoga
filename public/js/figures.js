@@ -2143,6 +2143,27 @@ window.FIGURES = {
     }),
   ]),
 
+  // C114 - 2-frame flip book, side view: a low crab, both hands planted behind
+  // and both feet in front with the hips just off the floor; then one leg
+  // kicked up with the knee bent and the opposite hand reaching across to
+  // touch that foot (Crab Toe Touch). The hips sit lower than in crabHold on
+  // purpose - the reference photo is a compact, low crab, and dropping the
+  // hips is what lets the hand reach the foot at all.
+  crabToeTouchFlow: animatedFigure([
+    stick({
+      head: [24, 70], headR: 7, neck: [30, 80], hip: [52, 100],
+      arms: [[[27, 101], [24, 122]], [[32, 101], [29, 122]]],
+      legs: [[[72, 94], [80, 122]], [[68, 96], [75, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [28, 70], headR: 7, neck: [32, 82], hip: [52, 108],
+      arms: [[[28, 102], [24, 122]], [[50, 76], [68, 72]]],
+      legs: [[[72, 96], [80, 122]], [[66, 88], [70, 70]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
   // C104 - 2-frame flip book, side view: the reverse tabletop, then one hand
   // lifted off the floor and swept back over the head as the chest turns up
   // (Crab Reach). Frame one is reverseTabletop's shape with the second hand

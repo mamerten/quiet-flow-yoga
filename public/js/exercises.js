@@ -792,6 +792,14 @@ window.EXERCISES = [
     cue: 'Hold a towel with tension between your hands and trace big, slow circles in the air, both directions.',
   },
   {
+    id: 'crab-toe-touch',
+    name: 'Crab Toe Touch',
+    figure: 'crabToeTouchFlow',
+    surface: 'ground',
+    mixedSides: true,
+    cue: 'Sit low in a crab, hands planted on the floor behind you and feet flat in front, hips just off the floor. Kick one leg up with the knee bent and reach the opposite hand across to touch that foot. Set them both back down and touch with the other hand and foot, alternating as you go.',
+  },
+  {
     id: 'crab-reach',
     name: 'Crab Reach',
     figure: 'crabReachFlow',
