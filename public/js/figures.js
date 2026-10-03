@@ -734,6 +734,27 @@ window.FIGURES = {
     prop: GROUND(6, 96, 124),
   })),
 
+  // C113 - 2-frame flip book, seen from the front: lying on one side propped
+  // on the forearm, top hand behind the head, legs straight and resting; then
+  // both legs lifted together off the floor while the top elbow curls down
+  // toward the hip (Side Curl). The hip stays on the floor - that, and the
+  // forearm pointing along the floor rather than holding the body up in a
+  // line, is what separates it from sidePlank. Torso and forearm are pinned.
+  sideCurlFlow: animatedFigure([
+    stick({
+      head: [84, 88], headR: 7, neck: [74, 96], hip: [48, 112],
+      arms: [[[76, 118], [60, 120]], [[66, 78], [80, 82]]],
+      legs: [[[24, 116], [4, 118]], [[24, 113], [4, 115]]],
+      prop: GROUND(2, 98, 122),
+    }),
+    stick({
+      head: [84, 88], headR: 7, neck: [74, 96], hip: [48, 112],
+      arms: [[[76, 118], [60, 120]], [[60, 88], [80, 82]]],
+      legs: [[[26, 102], [6, 90]], [[26, 99], [6, 87]]],
+      prop: GROUND(2, 98, 122),
+    }),
+  ]),
+
   // C24 - side view, hips sitting back on the heels with the torso folded
   // all the way forward and the arms stretched out along the floor
   // (Kneeling Rest). A calisthenics-side twin of the yoga `kneelingFold`,
@@ -1780,16 +1801,17 @@ window.FIGURES = {
     }),
   ]),
 
-  // C47 — side view, face down with the chest clearly lifted, both arms
-  // reaching forward and the legs raised behind, only the hips touching
-  // down (Superman Hold). The mirror of hollowBodyHold: the head sits much
-  // higher off the floor and both arms are visible out front, which is what
-  // stops the two from reading as the same picture.
+  // C47 - side view, face down and nearly flat: belly and hips on the floor,
+  // chest, arms and legs each lifted only a little, so the body makes a
+  // shallow banana just above the floor line (Superman Hold). It was drawn
+  // with the chest and legs both raised about 40 degrees from a low hip, a
+  // deep V that read exactly like a seated V-sit; the lift in a real superman
+  // is small, and keeping it small is what says "lying on your stomach".
   supermanHold: svg(stick({
-    head: [20, 64], headR: 7, neck: [30, 74], hip: [62, 102],
-    arms: [[[20, 66], [6, 60]], [[24, 58], [10, 50]]],
-    legs: [[[80, 92], [94, 76]]],
-    prop: GROUND(6, 96, 116),
+    head: [18, 96], headR: 7, neck: [28, 102], hip: [60, 109],
+    arms: [[[14, 92], [2, 86]], [[16, 95], [4, 90]]],
+    legs: [[[78, 105], [96, 100]]],
+    prop: GROUND(2, 98, 116),
   })),
 
   // C48 — side view, hands and feet down with the knees bent and hovering

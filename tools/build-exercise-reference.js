@@ -93,7 +93,7 @@ const STANDING_ORDER = [
 // it matches nothing rather than quietly scattering the group again.
 const OVERHEAD_MAT = 'M14 8 H86 V136 H14 Z';
 const isOverhead = (e) => (figures[e.figure] || '').includes(OVERHEAD_MAT);
-const isLegRaise = (e) => /leg raise|side sweep/i.test(e.name);
+const isLegRaise = (e) => /leg raise|side sweep|side curl/i.test(e.name);
 const GROUND_CLUSTERS = [
   [(e) => /push-up/i.test(e.name)],
   [(e) => /crab/i.test(e.name)],

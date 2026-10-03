@@ -374,6 +374,14 @@ window.EXERCISES = [
     cue: 'Prop up on one forearm with your body in a straight line, hips lifted. Reach your top arm toward the ceiling.',
   },
   {
+    id: 'side-curl',
+    name: 'Side Curl',
+    figure: 'sideCurlFlow',
+    surface: 'ground',
+    sided: true,
+    cue: 'Lie on your side, propped up on your forearm with the elbow under your shoulder and your top hand behind your head. Keeping your legs straight and together, lift them off the floor as you curl your top elbow down toward your hip, then lower them with control.',
+  },
+  {
     id: 'kneeling-rest',
     name: "Child's Pose",
     figure: 'kneelingRest',
