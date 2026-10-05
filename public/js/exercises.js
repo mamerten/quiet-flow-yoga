@@ -40,7 +40,10 @@
 // work, lateral lunging, locomotion, a core "anti-pair" beyond Plank Hold,
 // and (oddly, given how foundational it is) Cat-Cow — rather than being
 // sourced from any one place; these are standard, widely-taught bodyweight
-// moves. Everything else in the file is Markus's.
+// moves. Everything else in the file is Markus's - with two renamed since:
+// his "Z-lifts" are the 90/90 Hip Lift (a Z-sit is the same seated position,
+// and the name meant nothing to the person using the app), and Beast
+// Kickthrough is now Kick-Through, started from a plank rather than a bear.
 //
 // The kickboxing set (Jab-Cross, Hooks, Uppercuts, Bob and Weave, Front
 // Kicks, Roundhouse Kicks, Knee Strikes, Side Kicks) is standard
@@ -76,6 +79,9 @@
 //                  way floor space is assumed for `surface: 'standing'`.
 //   sided          optional: true if it's done once per side (auto-paired
 //                  left/right by js/calisthenics-workout.js)
+//   difficulty     optional: 'E' | 'M' | 'H' (easy, medium, hard), as rated
+//                  for the person using this app. Shown in the exercise
+//                  reference; the app itself doesn't use it yet.
 //   mixedSides     optional: true if both sides are worked inside the one
 //                  set, left and right mixed together as you go - the
 //                  kickboxing moves. Not paired and not scheduled any
@@ -264,26 +270,10 @@ window.EXERCISES = [
     cue: 'Get into a crawl position on your hands and feet with your hips high and your knees pulled forward toward your elbows, hovering just off the floor. Bend your elbows and lower your head toward the floor between your hands, keeping your knees off the ground, then press back up.',
   },
   {
-    id: 'low-crawl-sit-through',
-    name: 'Low Crawl Sit-Through',
-    figure: 'lowCrawlSitThroughFlow',
-    surface: 'ground',
-    mixedSides: true,
-    cue: 'Get into a long, low crawl: hands planted well out in front of your shoulders, knees bent low underneath you, up on the balls of your feet. Lower your chest toward the floor between your hands. Then turn through to sit on the floor, one hand planted behind you and the other up in front of your chest. Turn back into the crawl, and sit through to the other side next time.',
-  },
-  {
-    id: 'cross-body-foot-tap',
-    name: 'Cross-Body Foot Tap',
-    figure: 'crossBodyFootTapFlow',
-    surface: 'ground',
-    cue: 'Start on your hands and knees with your toes tucked under. Lift one hand and reach it back and across your body to tap your opposite foot, letting your hips lift high into the air as you reach. Both feet stay planted on the floor. Put that hand down and tap with the other one, alternating as you go.',
-  },
-  {
     id: 'plank-opposite-toe-touch',
     name: 'Plank Opposite Toe Touch',
     figure: 'plankToeTouchFlow',
     surface: 'ground',
-    mixedSides: true,
     cue: 'Start in a high plank, arms straight and body in one line. Pike your hips up and reach one hand back to touch the opposite foot, letting your hands and feet draw a little closer together so you can reach it. Return to the plank and touch with the other hand, alternating as you go.',
   },
   {
@@ -431,11 +421,11 @@ window.EXERCISES = [
     cue: 'From an L-sit, hands by your hips, press down and lift your hips up into a crab position. Lower with control and repeat.',
   },
   {
-    id: 'beast-kickthrough',
-    name: 'Beast Kickthrough',
-    figure: 'beastKickthroughFlow',
+    id: 'kick-through',
+    name: 'Kick-Through',
+    figure: 'kickThroughFlow',
     surface: 'ground',
-    cue: 'From hands and feet with your knees hovering, lift one foot and the opposite hand off the floor. Rotate your hips and kick that leg through underneath you toward the side your hand came off, keeping the other hand and foot planted. Return, and alternate sides each rep.',
+    cue: 'Start in a high plank. Lift one hand and the opposite foot, then rotate your hips and kick that leg through underneath your body toward the side your hand came off, keeping the other hand and foot planted. Bring it back to the plank and kick through to the other side, alternating as you go.',
   },
   {
     id: 'scorpion-heel-taps',
@@ -450,6 +440,7 @@ window.EXERCISES = [
     name: '90/90 Switch',
     figure: 'ninetyNinetyFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'Sit tall with both knees bent at 90 degrees, one leg in front of you and the other out to the side behind you, hands on the floor for support. Lift your knees and swing them over to the other side, turning your chest with them so your whole torso rotates 90 degrees to face the new front leg.',
   },
   {
@@ -457,6 +448,7 @@ window.EXERCISES = [
     name: '90/90 Switch, Arms Overhead',
     figure: 'ninetyNinetyOverheadFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'Sit tall with both knees bent and your arms stretched straight overhead, hands clasped. Swing your knees from one side to the other without putting a hand down, keeping your chest lifted the whole time.',
   },
   {
@@ -464,15 +456,17 @@ window.EXERCISES = [
     name: '90/90 Elbow Switch',
     figure: 'ninetyNinetyElbowFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'Sit tall in a 90/90 with your forearms up in front of your chest and both hands off the floor. Swing your knees over to the other side and back, turning your chest with them, keeping the arms where they are so the hips do all the work. Slow and controlled.',
   },
   {
-    id: 'z-sit-lift',
-    name: 'Z-Sit Lift',
-    figure: 'zSit',
+    id: 'ninety-ninety-hip-lift',
+    name: '90/90 Hip Lift',
+    figure: 'ninetyNinetyHipLiftFlow',
     surface: 'ground',
     sided: true,
-    cue: 'Sit with both legs folded to the same side in a Z shape, front knee bent in front of you and back knee bent out to the side, both knees pointing the same way. Press your hands into the floor beside your hips and lift your hips slightly, then lower with control.',
+    difficulty: 'H',
+    cue: 'Sit in a 90/90: one shin across the floor in front of you, the other leg out to the side behind you, both knees bent square. Put your hands on your hips. Squeeze your glutes and drive your hips up and forward until you are kneeling tall on the front shin and the back knee, then sit back down with control.',
   },
   {
     id: 'lying-knee-drops',
@@ -851,6 +845,7 @@ window.EXERCISES = [
     figure: 'ninetyNinetyFoldFlow',
     surface: 'ground',
     mixedSides: true,
+    difficulty: 'H',
     cue: 'Sit in a 90/90, with one shin in front of you and the other out to the side behind you, both knees bent square. Turn your torso toward the back leg, reaching both hands to the floor beside it and looking behind you over that shoulder, then come back up tall. Switch which leg is in front halfway through.',
   },
   {

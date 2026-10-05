@@ -187,6 +187,7 @@ for (const key of GROUP_ORDER) {
         <td class="fig-cell">${figureCell(e)}</td>
         <td class="name-cell"><strong>${esc(e.name)}</strong><span class="id">${esc(e.id)}</span>${
           extra.length ? `<span class="note">${esc(extra.join(', '))}</span>` : ''}</td>
+        <td class="level-cell">${e.difficulty ? esc(e.difficulty) : ''}</td>
         <td class="sides-cell">${e.sided ? 'Left + Right' : e.mixedSides ? 'Mixed' : 'Single'}</td>
         <td class="cue-cell">${esc(e.cue)}</td>
       </tr>`;
@@ -195,7 +196,7 @@ for (const key of GROUP_ORDER) {
   <section>
     <h2>${esc(GROUP_LABELS[key])} <span class="count">(${list.length})</span></h2>
     <table>
-      <thead><tr><th>Figure</th><th>Name</th><th>Sides</th><th>Cue</th></tr></thead>
+      <thead><tr><th>Figure</th><th>Name</th><th class="level-col" title="Difficulty: E easy, M medium, H hard">Level</th><th class="sides-col">Sides</th><th>Cue</th></tr></thead>
       <tbody>${rows}
       </tbody>
     </table>
@@ -256,11 +257,13 @@ const html = `<!doctype html>
   .name-cell .id { color: #9aa39d; font-family: Consolas, monospace; }
   .name-cell .note { color: #a0764a; }
   .sides-cell { width: 90px; color: #6b7570; }
+  .level-col, .level-cell { width: 44px; text-align: center; }
+  .level-cell { font-weight: 700; color: #5f7a68; }
   .cue-cell { line-height: 1.45; }
   .missing { color: #a33; }
   @media (max-width: 700px) {
     body { margin: 16px 12px 40px; }
-    th:nth-child(3), td.sides-cell { display: none; }
+    th.sides-col, td.sides-cell { display: none; }
     .name-cell { width: auto; }
   }
 </style>
@@ -274,7 +277,8 @@ const html = `<!doctype html>
     moves, then squatting, then kickboxing, then lunges and hinges. On the ground, push-ups, crab
     moves, the 90/90 family, the figures drawn from overhead and the leg raises are each kept
     together. <em>Mixed</em> means both
-    sides in one set, left and right mixed together as you go. Flip-book figures show every
+    sides in one set, left and right mixed together as you go. <em>Level</em> is difficulty: E easy,
+    M medium, H hard. Flip-book figures show every
     frame side by side. Rebuilt from <code>public/js/exercises.js</code> and <code>public/js/figures.js</code>
     by <code>tools/build-exercise-reference.js</code> whenever the exercises change. Internal reference
     only, not part of the shipped site.

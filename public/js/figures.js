@@ -900,19 +900,23 @@ window.FIGURES = {
     }),
   ]),
 
-  // C33 — 2-frame flip book, front view: seated in the Z on the shared Z_SIT
-  // legs, chest square, hands planted beside the hips — then pressed up so the
-  // hips lift as the elbows straighten (Z-Sit Lift). Knees and feet pinned.
-  zSit: animatedFigure([
+  // C33 - 2-frame flip book, front view on the shared Z_SIT legs: sitting in
+  // the 90/90 with the hands on the hips, then the hips driven up and forward
+  // until kneeling tall on the front shin and the back knee (90/90 Hip Lift).
+  // Knees and feet are pinned and the hands never touch the floor - the glutes
+  // do the lifting. This was "Z-Sit Lift" (a Z-sit is the same seated
+  // position), drawn as a small hands-assisted hover whose two frames barely
+  // differed; the move worth doing goes all the way up to kneeling.
+  ninetyNinetyHipLiftFlow: animatedFigure([
     stick({
-      head: [54, 51], neck: [54, 62], shoulders: [[42, 66], [66, 66]], hip: Z_SIT_HIP_L,
-      arms: [[[38, 86], [38, 106]], [[72, 90], [78, 114]]],
+      head: [54, 51], neck: [54, 62], shoulders: [[44, 66], [64, 66]], hip: Z_SIT_HIP_L,
+      arms: [[[38, 82], [48, 96]], [[70, 82], [60, 96]]],
       legs: Z_SIT_LEGS_L,
       prop: Z_SIT_FLOOR,
     }),
     stick({
-      head: [54, 43], neck: [54, 54], shoulders: [[42, 58], [66, 58]], hip: [54, 96],
-      arms: [[[40, 82], [38, 106]], [[72, 86], [78, 114]]],
+      head: [52, 37], neck: [52, 48], shoulders: [[42, 52], [62, 52]], hip: [52, 90],
+      arms: [[[36, 68], [46, 84]], [[68, 68], [58, 84]]],
       legs: Z_SIT_LEGS_L,
       prop: Z_SIT_FLOOR,
     }),
@@ -937,20 +941,24 @@ window.FIGURES = {
     }),
   ]),
 
-  // C35 — 2-frame flip book, side view: the bear position (hands and feet
-  // down, knees hovering), then one leg threaded through underneath to the
-  // opposite side as the hips turn open and the free arm lifts (Beast
-  // Kickthrough).
-  beastKickthroughFlow: animatedFigure([
+  // C35 - 2-frame flip book, side view: a straight-armed plank, then one hand
+  // lifted and the opposite leg threaded through underneath to the far side as
+  // the hips turn open and the free arm reaches up (Kick-Through). This was
+  // Beast Kickthrough, starting from a bear with the knees hovering; it starts
+  // from a plank now because that is how it is done here, and the move after
+  // the start is unchanged. PLANK is redrawn on this figure's floor line with
+  // a second arm and leg so nothing appears from nowhere between frames; the
+  // supporting hand is pinned.
+  kickThroughFlow: animatedFigure([
     stick({
-      head: [16, 54], headR: 7, neck: [24, 58], hip: [66, 58],
-      arms: [[[24, 86], [24, 116]]],
-      legs: [[[68, 88], [74, 116]], [[60, 88], [54, 116]]],
+      head: [16, 60], headR: 7, neck: [24, 66], hip: [58, 92],
+      arms: [[[24, 92], [24, 118]], [[29, 92], [29, 118]]],
+      legs: [[[76, 105], [92, 118]], [[72, 106], [87, 118]]],
       prop: GROUND(6, 96, 120),
     }),
     stick({
       head: [18, 58], headR: 7, neck: [26, 62], hip: [64, 74],
-      arms: [[[26, 90], [26, 116]], [[24, 44], [18, 28]]],
+      arms: [[[25, 90], [24, 118]], [[24, 44], [18, 28]]],
       legs: [[[74, 96], [80, 118]], [[52, 96], [30, 116]]],
       prop: GROUND(6, 96, 120),
     }),
@@ -1773,34 +1781,6 @@ window.FIGURES = {
     }),
   ]),
 
-  // C92 - 2-frame flip book, side view: on hands and knees, then the hips
-  // driven high as one hand leaves the floor and reaches back under the body
-  // to tap the far foot, which never leaves the ground (Cross-Body Foot Tap).
-  // Two arms and two legs are drawn in BOTH frames: the whole move is one
-  // hand coming off the floor, so a limb appearing out of nowhere would read
-  // as the wrong thing entirely. The far leg is drawn a little forward of the
-  // near one so the reaching hand lands on a visible target instead of
-  // vanishing behind the near shin. Toes stay tucked in frame one - that's
-  // what makes the lift into the pike possible at all. The supporting hand is
-  // pinned across both frames; the feet step in, because a pike deep enough
-  // for a hand to actually reach a foot is a tight fold, not a long down dog.
-  crossBodyFootTapFlow: animatedFigure([
-    stick({
-      head: [12, 84], headR: 7, neck: [22, 89], hip: [59, 93],
-      arms: [[[23, 106], [22, 124]], [[29, 106], [28, 124]]],
-      legs: [[[64, 122], [90, 120]], [[58, 122], [84, 120]]],
-      prop: GROUND(6, 96, 126),
-      extra: BONE(90, 120, 85, 126, W.foot[0], W.foot[1])
-        + BONE(84, 120, 79, 126, W.foot[0], W.foot[1]),
-    }),
-    stick({
-      head: [22, 100], headR: 7, neck: [34, 92], hip: [58, 64],
-      arms: [[[27, 108], [20, 124]], [[48, 101], [59, 119]]],
-      legs: [[[66, 92], [72, 121]], [[62, 92], [60, 122]]],
-      prop: GROUND(6, 96, 126),
-    }),
-  ]),
-
   // C47 - side view, face down and nearly flat: belly and hips on the floor,
   // chest, arms and legs each lifted only a little, so the body makes a
   // shallow banana just above the floor line (Superman Hold). It was drawn
@@ -2208,20 +2188,23 @@ window.FIGURES = {
   ]),
 
   // C106 - 2-frame flip book, front view: a wide deep squat with both hands
-  // down, then one hand planted between the feet while the other arm opens
-  // straight up and the chest turns to follow it (Deep Squat Reach). The hand
-  // ON THE FLOOR is the whole difference from squatTwistFlow, where the same
-  // reach happens with both hands free, so it is drawn planted and pinned.
+  // on the floor between the feet, then one hand staying planted while the
+  // other arm opens straight up and the chest turns to follow it (Deep Squat
+  // Reach Upward). The hand ON THE FLOOR is the whole difference from
+  // squatTwistFlow, so it has to actually reach the floor line: the torso
+  // tips forward over the knees, drawn shorter because it leans toward you,
+  // which is what lets an arm of normal length get there. The first drawing
+  // kept the chest upright and the "planted" hand stopped at hip height.
   squatOpenReachFlow: animatedFigure([
     stick({
-      head: [50, 62], neck: [50, 72], shoulders: [[40, 76], [60, 76]], hip: [50, 108],
-      arms: [[[40, 94], [44, 114]], [[60, 94], [56, 114]]],
+      head: [50, 74], neck: [50, 84], shoulders: [[40, 88], [60, 88]], hip: [50, 108],
+      arms: [[[40, 110], [44, 131]], [[60, 110], [56, 131]]],
       legs: [[[26, 104], [30, 133]], [[74, 104], [70, 133]]],
       prop: FLOOR_STAND,
     }),
     stick({
-      head: [54, 62], neck: [52, 72], shoulders: [[42, 78], [62, 72]], hip: [50, 108],
-      arms: [[[40, 96], [44, 114]], [[64, 50], [66, 26]]],
+      head: [56, 72], neck: [52, 84], shoulders: [[42, 90], [62, 80]], hip: [50, 108],
+      arms: [[[40, 110], [44, 131]], [[64, 56], [66, 32]]],
       legs: [[[26, 104], [30, 133]], [[74, 104], [70, 133]]],
       prop: FLOOR_STAND,
     }),
@@ -2322,42 +2305,10 @@ window.FIGURES = {
     }),
   ]),
 
-  // C111 - 3-frame flip book, side view: a long, low crawl with the hands
-  // planted far out in front and the knees bent low underneath; turned
-  // through to sit on the floor with one hand planted behind and the other up
-  // in front of the chest; then back in the crawl with the chest lowered
-  // toward the floor between the hands (Low Crawl Sit-Through). Frames follow
-  // the three reference photos in the order they were given. Both arms are
-  // drawn in every frame because the sit-through frame needs two, and a limb
-  // can't appear from nowhere between frames. The planted hands are pinned in
-  // the two crawl frames.
-  lowCrawlSitThroughFlow: animatedFigure([
-    stick({
-      head: [20, 94], headR: 7, neck: [32, 98], hip: [66, 98],
-      arms: [[[20, 110], [8, 122]], [[25, 110], [14, 122]]],
-      legs: [[[46, 114], [74, 122]]],
-      prop: GROUND(6, 96, 124),
-    }),
-    stick({
-      head: [48, 77], headR: 7, neck: [40, 88], hip: [52, 118],
-      arms: [[[30, 104], [22, 122]], [[52, 98], [60, 86]]],
-      legs: [[[72, 100], [86, 122]]],
-      prop: GROUND(6, 96, 124),
-    }),
-    stick({
-      head: [16, 110], headR: 7, neck: [28, 112], hip: [62, 104],
-      arms: [[[18, 104], [8, 122]], [[23, 104], [14, 122]]],
-      legs: [[[44, 116], [72, 122]]],
-      prop: GROUND(6, 96, 124),
-    }),
-  ]),
-
   // C112 - 2-frame flip book, side view: a straight-armed plank, then the
   // hips piked high with one hand off the floor reaching back to the far foot
-  // (Plank Opposite Toe Touch). Frame two is crossBodyFootTapFlow's end
-  // position lifted onto PLANK's floor line: the finish is the same, and the
-  // start - a full plank on the toes rather than knees down - is the whole
-  // difference, so that is what frame one shows. The feet step in between
+  // (Plank Opposite Toe Touch). It replaced Cross-Body Foot Tap, which did the
+  // same reach from hands and knees; one version was enough. The feet step in between
   // frames because a hand can only reach a foot in a tight pike. PLANK is
   // redrawn here with a second arm and leg so nothing appears from nowhere.
   plankToeTouchFlow: animatedFigure([
