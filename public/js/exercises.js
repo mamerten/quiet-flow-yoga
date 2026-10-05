@@ -249,6 +249,14 @@ window.EXERCISES = [
     cue: 'Hold a straight line from head to heels, forearms or hands under your shoulders. Keep your hips level.',
   },
   {
+    id: 'reverse-plank',
+    name: 'Reverse Plank',
+    figure: 'reversePlank',
+    surface: 'ground',
+    difficulty: 'H',
+    cue: 'Sit with your legs straight out in front of you and your hands on the floor just behind your hips, fingers pointing toward your feet. Press into your hands and heels and lift your hips until your body is one straight line from shoulders to heels, chest facing the ceiling. Hold, without letting your hips sag.',
+  },
+  {
     id: 'push-up-flow',
     name: 'Push-Up',
     figure: 'pushUpFlow',
@@ -349,6 +357,14 @@ window.EXERCISES = [
     cue: 'Lie on your back, feet flat, and lift your hips toward the ceiling, squeezing your glutes at the top.',
   },
   {
+    id: 'single-leg-glute-bridge',
+    name: 'Single-Leg Glute Bridge',
+    figure: 'singleLegBridgeFlow',
+    surface: 'ground',
+    difficulty: 'H',
+    cue: 'Lie on your back with one foot flat on the floor, knee bent, and the other leg pointing straight up at the ceiling, arms by your sides. Drive through the planted heel and lift your hips until they line up with your shoulders and knee, then lower with control. Switch legs halfway through.',
+  },
+  {
     id: 'dead-bug',
     name: 'Dead Bug',
     figure: 'deadBug',
@@ -369,7 +385,7 @@ window.EXERCISES = [
     figure: 'sideCurlFlow',
     surface: 'ground',
     sided: true,
-    cue: 'Lie on your side, propped up on your forearm with the elbow under your shoulder and your top hand behind your head. Keeping your legs straight and together, lift them off the floor as you curl your top elbow down toward your hip, then lower them with control.',
+    cue: 'Lie on your side, propped up on your forearm with the elbow under your shoulder, feet stacked and your top hand behind your head. Keeping your feet on the floor, press through your forearm and lift your hips up off the floor as high as they will go, then lower them back down with control.',
   },
   {
     id: 'kneeling-rest',
@@ -450,14 +466,6 @@ window.EXERCISES = [
     surface: 'ground',
     difficulty: 'H',
     cue: 'Sit tall with both knees bent and your arms stretched straight overhead, hands clasped. Swing your knees from one side to the other without putting a hand down, keeping your chest lifted the whole time.',
-  },
-  {
-    id: 'ninety-ninety-elbow-switch',
-    name: '90/90 Elbow Switch',
-    figure: 'ninetyNinetyElbowFlow',
-    surface: 'ground',
-    difficulty: 'H',
-    cue: 'Sit tall in a 90/90 with your forearms up in front of your chest and both hands off the floor. Swing your knees over to the other side and back, turning your chest with them, keeping the arms where they are so the hips do all the work. Slow and controlled.',
   },
   {
     id: 'ninety-ninety-hip-lift',

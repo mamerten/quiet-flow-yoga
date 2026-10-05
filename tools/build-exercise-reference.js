@@ -54,60 +54,75 @@ const GROUP_LABELS = {
 // Bar last: it's the only group that's off by default in the app.
 const GROUP_ORDER = ['standing', 'ground', 'furniture', 'bar'];
 
-// Row order within a section. The order of exercises.js means nothing to the
-// app - the sequencer shuffles - so left alone it drifts into "the order things
-// were added in", which is no order at all to someone scanning for a move.
-// This decides a scannable order for the reference only; the app is untouched.
+// Subsections and row order within a section. The order of exercises.js means
+// nothing to the app - the sequencer shuffles - so left alone it drifts into
+// "the order things were added in", which is no order at all to someone
+// scanning for a move. This decides a findable layout for the reference only;
+// the app is untouched.
 //
-// Standing runs: upright moves, then squatting, then kickboxing, then the rest
-// (lunges, hinges and folds). These are explicit lists because nothing in the
-// data says whether a move is upright. A new standing exercise that isn't
-// listed here is shown last in its section and named by the build, so it gets
-// placed rather than silently landing somewhere odd.
-const STANDING_ORDER = [
-  // upright
-  'reverse-hunchback', 'elbow-lift-hold', 'collarbone-look-up', 'hands-behind-pulldown',
-  'w-slide', 'l-pull', 't-raise', 'y-raise', 'front-arm-circles', 'standing-torso-twist',
-  'calf-raises', 'single-leg-balance', 'touch-the-potato', 'standing-quad-stretch',
-  'wall-ankle-stretch', 'standing-hip-opener', 'open-the-gate', 'a-skips', 'single-leg-hops',
-  // squatting
-  'deep-squat-hold', 'toe-squat-hold', 'squatting-heel-raise', 'squat-knee-drops',
-  'squat-hip-pulses', 'squat-twist', 'deep-squat-reach-upward', 'squat-and-reach',
-  'squat-fold', 'wall-sit-hold', 'pistol-squat-hold-45', 'jump-squat',
-  // kickboxing
-  'jab-cross', 'hooks', 'uppercuts', 'bob-and-weave',
-  'front-kicks', 'roundhouse-kicks', 'knee-strikes', 'side-kicks',
-  // everything else: lunges, hinges, folds
-  'reverse-lunge', 'curtsy-lunge', 'lunge-crunch', 'good-mornings',
-  'single-leg-rdl', 'standing-toe-touch', 'windmill',
-];
-
-// Ground keeps exercises.js order, except that each cluster below is pulled
-// together at the position of its first member. A cluster is one or more
-// families laid down back to back, in the order listed. They are rules rather
-// than lists, so a new push-up, crab move or 90/90 joins its group without
-// anyone touching this file.
-// The overhead test looks for the mat outline figures.js draws around every
-// figure seen from directly above (its MAT constant). If that outline is ever
-// redrawn this string has to follow, which is why the build fails loudly when
-// it matches nothing rather than quietly scattering the group again.
-const OVERHEAD_MAT = 'M14 8 H86 V136 H14 Z';
-const isOverhead = (e) => (figures[e.figure] || '').includes(OVERHEAD_MAT);
-const isLegRaise = (e) => /leg raise|side sweep|side curl/i.test(e.name);
-const GROUND_CLUSTERS = [
-  [(e) => /push-up/i.test(e.name)],
-  [(e) => /crab/i.test(e.name)],
-  [(e) => /90\/90|z-sit/i.test(e.name)],
-  // Two asks that overlap: keep the overhead figures together, and keep the
-  // leg raises together - but two of the three leg raises (the side sweeps)
-  // are drawn overhead. So the overhead run ends on those two, and the third
-  // leg raise follows straight on, which keeps both groups unbroken.
-  [
-    (e) => isOverhead(e) && !isLegRaise(e),
-    (e) => isOverhead(e) && isLegRaise(e),
-    (e) => isLegRaise(e) && !isOverhead(e),
+// A section listed here names every one of its exercises, in display order,
+// under a subheading. These are explicit lists because nothing in the data says
+// whether a move is upright or chest-down. A new exercise that isn't listed
+// shows under "Unsorted" at the end of its section and is named by the build,
+// so it gets placed; a listed id that is no longer in that section (renamed,
+// moved, deleted) fails the build, so the lists can't quietly rot.
+const SUBSECTIONS = {
+  standing: [
+    ['Upright', [
+      'reverse-hunchback', 'elbow-lift-hold', 'collarbone-look-up', 'hands-behind-pulldown',
+      'w-slide', 'l-pull', 't-raise', 'y-raise', 'front-arm-circles', 'standing-torso-twist',
+      'calf-raises', 'single-leg-balance', 'touch-the-potato', 'standing-quad-stretch',
+      'wall-ankle-stretch', 'standing-hip-opener', 'open-the-gate', 'a-skips', 'single-leg-hops',
+    ]],
+    ['Squatting', [
+      'deep-squat-hold', 'toe-squat-hold', 'squatting-heel-raise', 'squat-knee-drops',
+      'squat-hip-pulses', 'squat-twist', 'deep-squat-reach-upward', 'squat-and-reach',
+      'squat-fold', 'wall-sit-hold', 'pistol-squat-hold-45', 'jump-squat',
+    ]],
+    ['Kickboxing', [
+      'jab-cross', 'hooks', 'uppercuts', 'bob-and-weave',
+      'front-kicks', 'roundhouse-kicks', 'knee-strikes', 'side-kicks',
+    ]],
+    ['Lunges, hinges and folds', [
+      'reverse-lunge', 'curtsy-lunge', 'lunge-crunch', 'good-mornings',
+      'single-leg-rdl', 'standing-toe-touch', 'windmill',
+    ]],
   ],
-];
+  // The three ways you meet the mat, in the user's own words for them.
+  ground: [
+    ['Indian style', [
+      'sit-to-stand', 'butterfly-rock', 'seated-scapular-slides',
+      'ninety-ninety-switch', 'ninety-ninety-overhead', 'ninety-ninety-hip-lift',
+      'ninety-ninety-rotate-fold',
+    ]],
+    ['Chest down', [
+      // planks and push-ups
+      'plank-hold', 'shoulder-taps', 'side-plank', 'side-curl',
+      'push-up-flow', 'wide-push-up', 'push-up-lunge-reach', 'spiderman-push-up',
+      'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
+      'plank-opposite-toe-touch', 'kick-through', 'mountain-climber', 'burpee',
+      'down-up-dogs', 'bear-crawl',
+      // hands and knees
+      'bird-dog', 'cat-cow-mobility', 'frog-sit-opener', 'kneeling-shoulder-rocks',
+      'kneeling-thoracic-rotation', 'kneeling-rest',
+      // kneeling and low lunges
+      'worlds-greatest-stretch', 'lunge-reach-twist', 'couch-stretch',
+      'kneeling-ankle-stretch', 'kneeling-hip-hinge', 'squat-roll-hip-lift',
+      // face down
+      'superman-hold', 'prone-w-rotation', 'scorpion-heel-taps',
+    ]],
+    ['Chest up', [
+      // crab
+      'crab-hold', 'bear-to-crab', 'crab-lift', 'crab-toe-touch', 'crab-reach',
+      'reverse-plank',
+      // on the back
+      'glute-bridge', 'single-leg-glute-bridge', 'dead-bug', 'hollow-body-hold',
+      'suitcase-crunches', 'bicycle-crunches', 'lying-knee-drops', 'windshield-wipers',
+      // propped back on the hands: the leg raises
+      'two-leg-side-sweep', 'single-leg-side-sweep', 'leg-raises', 'russian-twists',
+    ]],
+  ],
+};
 
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -137,38 +152,31 @@ const notes = (e) => [
 const groups = {};
 for (const e of exercises) (groups[groupKey(e)] = groups[groupKey(e)] || []).push(e);
 
-function orderStanding(list) {
-  const rank = new Map(STANDING_ORDER.map((id, i) => [id, i]));
-  const ids = new Set(list.map((e) => e.id));
-  const stale = STANDING_ORDER.filter((id) => !ids.has(id));
-  if (stale.length) problems.push(`STANDING_ORDER names exercises that aren't standing (renamed or moved?): ${stale.join(', ')}`);
-  const unplaced = list.filter((e) => !rank.has(e.id));
-  if (unplaced.length) {
-    console.warn(`Standing exercises not in STANDING_ORDER, shown last: ${unplaced.map((e) => e.id).join(', ')}`);
-  }
-  return [...list.filter((e) => rank.has(e.id)).sort((a, b) => rank.get(a.id) - rank.get(b.id)), ...unplaced];
-}
-
-function gatherClusters(list, clusters) {
-  const out = [];
+// Split a section into its subsections. A section with no SUBSECTIONS entry
+// is one untitled block, in exercises.js order.
+function subsections(key, list) {
+  const spec = SUBSECTIONS[key];
+  if (!spec) return [{ title: null, list }];
+  const where = GROUP_LABELS[key];
+  const byId = new Map(list.map((e) => [e.id, e]));
   const placed = new Set();
-  const place = (m) => {
-    if (!placed.has(m)) { out.push(m); placed.add(m); }
-  };
-  for (const e of list) {
-    if (placed.has(e)) continue;
-    const cluster = clusters.find((c) => c.some((f) => f(e)));
-    if (!cluster) { place(e); continue; }
-    for (const family of cluster) list.filter(family).forEach(place);
+  const out = spec.map(([title, ids]) => {
+    const stale = ids.filter((id) => !byId.has(id));
+    if (stale.length) {
+      problems.push(`${where} / ${title} lists exercises that aren't in that section (renamed, moved or deleted?): ${stale.join(', ')}`);
+    }
+    const twice = ids.filter((id, n) => placed.has(id) || ids.indexOf(id) !== n);
+    if (twice.length) problems.push(`${where}: listed more than once: ${twice.join(', ')}`);
+    ids.forEach((id) => placed.add(id));
+    return { title, list: ids.filter((id) => byId.has(id)).map((id) => byId.get(id)) };
+  });
+  const unplaced = list.filter((e) => !placed.has(e.id));
+  if (unplaced.length) {
+    console.warn(`${where}: not in any subsection, shown under "Unsorted": ${unplaced.map((e) => e.id).join(', ')}`);
+    out.push({ title: 'Unsorted', list: unplaced });
   }
-  return out;
+  return out.filter((s) => s.list.length);
 }
-
-if (!exercises.some(isOverhead)) {
-  problems.push('No overhead (mat-outline) figures found: OVERHEAD_MAT no longer matches figures.js MAT');
-}
-groups.standing = orderStanding(groups.standing || []);
-groups.ground = gatherClusters(groups.ground || [], GROUND_CLUSTERS);
 
 const sided = exercises.filter((e) => e.sided).length;
 const mixed = exercises.filter((e) => e.mixedSides).length;
@@ -176,13 +184,9 @@ const generated = new Date().toLocaleString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit',
 });
 
-let sections = '';
-for (const key of GROUP_ORDER) {
-  const list = groups[key];
-  if (!list || !list.length) continue;
-  const rows = list.map((e) => {
-    const extra = notes(e);
-    return `
+function row(e) {
+  const extra = notes(e);
+  return `
       <tr>
         <td class="fig-cell">${figureCell(e)}</td>
         <td class="name-cell"><strong>${esc(e.name)}</strong><span class="id">${esc(e.id)}</span>${
@@ -191,7 +195,15 @@ for (const key of GROUP_ORDER) {
         <td class="sides-cell">${e.sided ? 'Left + Right' : e.mixedSides ? 'Mixed' : 'Single'}</td>
         <td class="cue-cell">${esc(e.cue)}</td>
       </tr>`;
-  }).join('');
+}
+
+let sections = '';
+for (const key of GROUP_ORDER) {
+  const list = groups[key];
+  if (!list || !list.length) continue;
+  const rows = subsections(key, list).map((sub) => (sub.title ? `
+      <tr class="subhead"><td colspan="5">${esc(sub.title)} <span class="count">(${sub.list.length})</span></td></tr>` : '')
+    + sub.list.map(row).join('')).join('');
   sections += `
   <section>
     <h2>${esc(GROUP_LABELS[key])} <span class="count">(${list.length})</span></h2>
@@ -246,6 +258,15 @@ const html = `<!doctype html>
     color: #6b7570;
   }
   tr:hover td { background: #f2f5f1; }
+  tr.subhead td, tr.subhead:hover td {
+    background: transparent;
+    border-bottom: 2px solid #d7ded9;
+    padding: 26px 14px 6px;
+    color: #2f3b34;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  tr.subhead .count { color: #9aa39d; font-weight: 400; }
   .fig-cell { width: 1%; white-space: nowrap; }
   .frames { display: flex; gap: 3px; }
   .frames svg {
@@ -273,10 +294,9 @@ const html = `<!doctype html>
   <p class="meta">
     <strong>${exercises.length} exercises</strong> (${sided} split into left + right, ${mixed} mixed, the rest single) &middot;
     generated <strong>${esc(generated)}</strong><br />
-    Grouped the way the equipment toggles on the home screen group them. Standing runs upright
-    moves, then squatting, then kickboxing, then lunges and hinges. On the ground, push-ups, crab
-    moves, the 90/90 family, the figures drawn from overhead and the leg raises are each kept
-    together. <em>Mixed</em> means both
+    Grouped the way the equipment toggles on the home screen group them. Standing and Ground / mat
+    are split into subsections so a move is easier to find: standing into upright, squatting,
+    kickboxing, and lunges and hinges; the mat into Indian style, chest down and chest up. <em>Mixed</em> means both
     sides in one set, left and right mixed together as you go. <em>Level</em> is difficulty: E easy,
     M medium, H hard. Flip-book figures show every
     frame side by side. Rebuilt from <code>public/js/exercises.js</code> and <code>public/js/figures.js</code>

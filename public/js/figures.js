@@ -629,6 +629,24 @@ window.FIGURES = {
   // Hold). The base for most of the face-down work below.
   plank: svg(stick(PLANK)),
 
+  // C116 - side view, the plank turned over: hands planted under the shoulders
+  // with the fingers toward the feet, heels on the floor, and the body one
+  // straight line from shoulders to heels with the chest to the ceiling
+  // (Reverse Plank). From the side its outline is almost exactly PLANK's - a
+  // straight diagonal on straight arms - so two things say which way up it is:
+  // the foot points toes-up off the heel instead of resting on tucked toes,
+  // and a small CHEST label sits over the side that faces up. It is the only
+  // figure with a word in it; nothing else here needs one.
+  reversePlank: svg(stick({
+    head: [15, 76], headR: 7, neck: [24, 82], hip: [56, 100],
+    arms: [[[23, 102], [22, 122]]],
+    legs: [[[74, 110], [92, 120]]],
+    prop: GROUND(6, 98, 124),
+    extra: BONE(92, 120, 95, 110, W.foot[0], W.foot[1])
+      + '<text x="46" y="79" text-anchor="middle" font-size="7" font-weight="700" '
+      + 'letter-spacing="0.5" font-family="sans-serif" fill="currentColor" opacity="0.75">CHEST</text>',
+  })),
+
   // C16 — 2-frame flip book on the plank base: straight-armed at the top,
   // then lower with the elbow bent back alongside the ribs (Push-Up).
   pushUpFlow: animatedFigure([
@@ -713,6 +731,27 @@ window.FIGURES = {
     prop: GROUND(6, 96, 124),
   })),
 
+  // C115 - 2-frame flip book, side view: on the back with one foot planted and
+  // the other leg pointing straight at the ceiling, then the hips driven up
+  // off the planted heel until shoulders, hip and knee line up (Single-Leg
+  // Glute Bridge). Shoulders, arms and the planted foot are pinned; the raised
+  // leg rides up with the hips but stays vertical, because a leg that drifts
+  // down is the most common way this turns into a two-leg bridge.
+  singleLegBridgeFlow: animatedFigure([
+    stick({
+      head: [14, 108], headR: 7, neck: [24, 104], hip: [58, 116],
+      arms: [[[38, 116], [52, 120]]],
+      legs: [[[78, 96], [88, 122]], [[62, 90], [66, 64]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [14, 108], headR: 7, neck: [24, 104], hip: [58, 96],
+      arms: [[[38, 116], [52, 120]]],
+      legs: [[[82, 90], [88, 122]], [[62, 70], [66, 44]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
   // C22 — side view, lying on the back with one arm and the opposite leg
   // reaching away while the other pair stays stacked over the torso (Dead
   // Bug).
@@ -735,11 +774,11 @@ window.FIGURES = {
   })),
 
   // C113 - 2-frame flip book, seen from the front: lying on one side propped
-  // on the forearm, top hand behind the head, legs straight and resting; then
-  // both legs lifted together off the floor while the top elbow curls down
-  // toward the hip (Side Curl). The hip stays on the floor - that, and the
-  // forearm pointing along the floor rather than holding the body up in a
-  // line, is what separates it from sidePlank. Torso and forearm are pinned.
+  // on the forearm, top hand behind the head, hip resting on the floor; then
+  // the hip lifted up off the floor while the feet stay down (Side Curl). It
+  // was first drawn with the legs lifting and the hip pinned, which is the
+  // movement backwards. Forearm, top arm and feet are pinned; only the hip
+  // travels, and it rises a little past a straight line so the lift reads.
   sideCurlFlow: animatedFigure([
     stick({
       head: [84, 88], headR: 7, neck: [74, 96], hip: [48, 112],
@@ -748,9 +787,9 @@ window.FIGURES = {
       prop: GROUND(2, 98, 122),
     }),
     stick({
-      head: [84, 88], headR: 7, neck: [74, 96], hip: [48, 112],
-      arms: [[[76, 118], [60, 120]], [[60, 88], [80, 82]]],
-      legs: [[[26, 102], [6, 90]], [[26, 99], [6, 87]]],
+      head: [84, 88], headR: 7, neck: [74, 96], hip: [48, 100],
+      arms: [[[76, 118], [60, 120]], [[66, 78], [80, 82]]],
+      legs: [[[26, 110], [4, 118]], [[26, 107], [4, 115]]],
       prop: GROUND(2, 98, 122),
     }),
   ]),
@@ -1739,24 +1778,6 @@ window.FIGURES = {
       arms: [[[36, 28], [40, 10]], [[64, 28], [60, 10]]],
       legs: [[[28, 98], [56, 106]], [[72, 98], [44, 106]]],
       prop: GROUND(8, 92, 110),
-    }),
-  ]),
-
-  // C91 - 2-frame flip book, front view: the same 90/90 on the shared Z_SIT legs
-  // as ninetyNinetyFlow, switched side to side with the forearms held up in
-  // front of the chest and no hand on the floor (90/90 Elbow Switch).
-  ninetyNinetyElbowFlow: animatedFigure([
-    stick({
-      head: [56, 51], neck: [55, 62], shoulders: [[45, 66], [65, 66]], hip: Z_SIT_HIP_L,
-      arms: [[[40, 84], [50, 74]], [[70, 84], [60, 74]]],
-      legs: Z_SIT_LEGS_L,
-      prop: Z_SIT_FLOOR,
-    }),
-    stick({
-      head: [44, 51], neck: [45, 62], shoulders: [[35, 66], [55, 66]], hip: Z_SIT_HIP_R,
-      arms: [[[30, 84], [40, 74]], [[60, 84], [50, 74]]],
-      legs: Z_SIT_LEGS_R,
-      prop: Z_SIT_FLOOR,
     }),
   ]),
 
