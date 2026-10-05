@@ -310,6 +310,7 @@ window.EXERCISES = [
     name: 'Spiderman Push-Ups',
     figure: 'spidermanPushUpFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'Do a push-up, and as you lower, draw one knee out to the side and up toward that same elbow. Press back up as the leg returns, and switch sides each rep.',
   },
   {
@@ -340,6 +341,7 @@ window.EXERCISES = [
     figure: 'couchStretch',
     surface: 'ground',
     needsWall: true,
+    difficulty: 'H',
     cue: 'Kneel with your back knee in the corner where the floor meets a wall, and let that shin run up the wall behind you. Plant your other foot forward, knee bent about 90 degrees. Sink your hips down, squeeze the back glute, and bring your chest upright. Hold, then switch sides halfway through. A deep stretch through the front of the hip and thigh.',
   },
   {
@@ -667,6 +669,7 @@ window.EXERCISES = [
     name: 'Squat Roll to Hip Lift',
     figure: 'squatRollHipLiftFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'Squat on the balls of your feet with your heels up and your hands on the floor behind you. Roll forward, lowering your knees to the floor with your toes tucked flat underneath, then lift your hips up and forward as you open the front of your body. Roll back into the squat and repeat.',
   },
   {
@@ -716,6 +719,7 @@ window.EXERCISES = [
     name: 'Burpee',
     figure: 'burpeeFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'Squat down and place your hands on the floor, jump or step your feet back into a plank, then jump them back in and explode up into a jump.',
   },
 

@@ -721,15 +721,27 @@ window.FIGURES = {
     prop: GROUND(6, 96, 124),
   })),
 
-  // C21 — side view, shoulders resting on the floor with shoulder, hip and
-  // knee in one unbroken line and the shin dropping to a flat foot (Glute
-  // Bridge) — the straight line IS the exercise, so it's drawn as one.
-  gluteBridge: svg(stick({
-    head: [14, 108], headR: 7, neck: [24, 104], hip: [58, 86],
-    arms: [[[16, 116], [5, 120]]],
-    legs: [[[86, 76], [90, 120]]],
-    prop: GROUND(6, 96, 124),
-  })),
+  // C21 - 2-frame flip book, side view: on the back with both feet planted
+  // and the hips resting on the floor, then the hips driven up until
+  // shoulder, hip and knee form one unbroken line (Glute Bridge). It used to
+  // be the top position alone, which showed where the move ends but not that
+  // the hips start on the floor. Built on the same base as
+  // singleLegBridgeFlow - shoulders, arms and the planted foot pinned in the
+  // same places - so the two bridges read as one family.
+  gluteBridge: animatedFigure([
+    stick({
+      head: [14, 108], headR: 7, neck: [24, 104], hip: [58, 116],
+      arms: [[[38, 116], [52, 120]]],
+      legs: [[[78, 96], [88, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [14, 108], headR: 7, neck: [24, 104], hip: [58, 96],
+      arms: [[[38, 116], [52, 120]]],
+      legs: [[[82, 90], [88, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
 
   // C115 - 2-frame flip book, side view: on the back with one foot planted and
   // the other leg pointing straight at the ceiling, then the hips driven up

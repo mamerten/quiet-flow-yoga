@@ -97,9 +97,9 @@ const SUBSECTIONS = {
     ]],
     ['Chest down', [
       // planks and push-ups
-      'plank-hold', 'shoulder-taps', 'side-plank', 'side-curl',
-      'push-up-flow', 'wide-push-up', 'push-up-lunge-reach', 'spiderman-push-up',
-      'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
+      'plank-hold', 'shoulder-taps', 'push-up-flow', 'wide-push-up',
+      'spiderman-push-up', 'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
+      'push-up-lunge-reach', 'side-plank', 'side-curl',
       'plank-opposite-toe-touch', 'kick-through', 'mountain-climber', 'burpee',
       'down-up-dogs', 'bear-crawl',
       // hands and knees
