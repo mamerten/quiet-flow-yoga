@@ -303,6 +303,7 @@ window.EXERCISES = [
     name: 'Pike Push-Ups',
     figure: 'pikePushUpFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'From a plank, walk your feet in and lift your hips high into an upside-down V. Bend your elbows to lower the top of your head toward the floor between your hands, then press back up, keeping your hips high throughout.',
   },
   {
@@ -318,6 +319,7 @@ window.EXERCISES = [
     name: 'Wide Push-Ups',
     figure: 'widePushUpFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'Set your hands well wider than your shoulders and do a push-up, lowering your chest between your hands with your body in one straight line. Press back up with control.',
   },
   {
