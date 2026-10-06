@@ -239,6 +239,7 @@ window.EXERCISES = [
     name: 'Sit-to-Stand, No Hands',
     figure: 'sitToStand',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'From sitting on the floor, cross your arms over your chest and stand straight up — no hands, no rocking. Sit back down with the same control.',
   },
   {
@@ -262,6 +263,13 @@ window.EXERCISES = [
     figure: 'pushUpFlow',
     surface: 'ground',
     cue: 'Lower your chest toward the floor and press back up, keeping your body in one straight line.',
+  },
+  {
+    id: 'shoulder-tap-push-up',
+    name: 'Shoulder Tap Push-Ups',
+    figure: 'shoulderTapPushUpFlow',
+    surface: 'ground',
+    cue: 'From a high plank, lower into a push-up and press back up. At the top, tap one hand to the opposite shoulder and put it back down, then do the next push-up and tap with the other hand. Keep your hips level the whole time.',
   },
   {
     id: 'push-up-lunge-reach',

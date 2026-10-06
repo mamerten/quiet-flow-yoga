@@ -1141,6 +1141,33 @@ window.FIGURES = {
     }),
   ]),
 
+  // C117 - 3-frame flip book on the plank base: both hands down at the top,
+  // down into the push-up, then back at the top with one hand lifted across
+  // to the opposite shoulder (Shoulder Tap Push-Ups). Frames one and three are
+  // shoulderTapFlow's own two frames and frame two is pushUpFlow's bottom with
+  // the second hand added, so it reads literally as a push-up followed by a
+  // shoulder tap - which is all the move is.
+  shoulderTapPushUpFlow: animatedFigure([
+    stick({
+      head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
+      arms: [[[24, 84], [24, 110]], [[32, 84], [34, 110]]],
+      legs: [[[76, 97], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+    stick({
+      head: [16, 66], headR: 7, neck: [24, 72], hip: [58, 92],
+      arms: [[[32, 92], [24, 110]], [[38, 92], [34, 110]]],
+      legs: [[[76, 101], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+    stick({
+      head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
+      arms: [[[24, 84], [24, 110]], [[34, 74], [26, 62]]],
+      legs: [[[76, 97], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+  ]),
+
   // C43 — 2-frame flip book, side view: a low lunge held fixed while one arm
   // reaches forward, then sweeps straight back at shoulder height as the torso
   // rotates open (Lunge Reach and Twist). The arm stays level — it does not
