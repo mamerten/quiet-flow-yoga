@@ -94,7 +94,7 @@ const SUBSECTIONS = {
   // The three ways you meet the mat, in the user's own words for them.
   ground: [
     ['Indian style', [
-      'sit-to-stand', 'butterfly-rock', 'seated-scapular-slides',
+      'sit-to-stand', 'butterfly-rock', 'seated-scapular-slides', 'seated-toe-touch',
       'ninety-ninety-switch', 'ninety-ninety-overhead', 'ninety-ninety-hip-lift',
       'ninety-ninety-rotate-fold',
     ]],

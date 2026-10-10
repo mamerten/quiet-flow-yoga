@@ -647,6 +647,28 @@ window.FIGURES = {
       + 'letter-spacing="0.5" font-family="sans-serif" fill="currentColor" opacity="0.75">CHEST</text>',
   })),
 
+  // C123 - 2-frame flip book, side view: sitting tall with the legs straight
+  // out in front and the toes up, then folded forward from the hips with the
+  // hands at the toes (Seated Toe Touch). The floor-sitting twin of
+  // toeTouchFlow. Hips, legs and feet are pinned so only the torso travels,
+  // and the feet are drawn toes-up because that is what the hands reach for.
+  seatedToeTouchFlow: animatedFigure([
+    stick({
+      head: [32, 60], headR: 7, neck: [30, 71], hip: [28, 114],
+      arms: [[[38, 92], [50, 108]]],
+      legs: [[[54, 116], [80, 118]]],
+      prop: GROUND(6, 96, 124),
+      extra: BONE(80, 118, 82, 107, W.foot[0], W.foot[1]),
+    }),
+    stick({
+      head: [72, 84], headR: 7, neck: [62, 89], hip: [28, 114],
+      arms: [[[68, 108], [82, 106]]],
+      legs: [[[54, 116], [80, 118]]],
+      prop: GROUND(6, 96, 124),
+      extra: BONE(80, 118, 82, 107, W.foot[0], W.foot[1]),
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a

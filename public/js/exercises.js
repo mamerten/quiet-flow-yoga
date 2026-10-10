@@ -115,6 +115,7 @@ window.EXERCISES = [
     name: 'Reverse Hunchback',
     figure: 'armsBehindBackLift',
     surface: 'standing',
+    difficulty: 'E',
     cue: 'Clasp your hands behind you and lift your arms, opening your chest. Great for undoing a day at the desk.',
   },
   {
@@ -180,7 +181,7 @@ window.EXERCISES = [
     name: 'Standing Toe Touch',
     figure: 'toeTouchFlow',
     surface: 'standing',
-    cue: 'Fold forward from your hips and reach for your toes, knees soft. A simple check-in for your hamstrings and low back.',
+    cue: 'Stand tall, then fold forward from your hips and reach for your toes, keeping your knees soft. Let your head hang and breathe into it. For an even deeper stretch, grab your ankles and gently pull your chest toward your legs, or stand on a towel and pull on its ends.',
   },
   {
     id: 'squat-fold',
@@ -194,6 +195,7 @@ window.EXERCISES = [
     name: 'Hands-Behind-Back Pull-Down',
     figure: 'armsBehindBackDown',
     surface: 'standing',
+    difficulty: 'E',
     cue: 'Lace your fingers behind you and pull your hands down, not up. Opens your shoulders so they stop rounding forward.',
   },
   {
@@ -231,6 +233,7 @@ window.EXERCISES = [
     name: 'L-Pull',
     figure: 'lPullFlow',
     surface: 'standing',
+    difficulty: 'E',
     cue: 'Elbows bent by your ribs, pull your hands back and squeeze your shoulder blades together. Slow and controlled.',
   },
   {
@@ -457,6 +460,13 @@ window.EXERCISES = [
     figure: 'seatedScapSlideFlow',
     surface: 'ground',
     cue: 'Sit cross-legged and tall, arms out to the sides with your elbows bent and palms forward. Slide your arms straight up overhead, reaching tall without letting your ribs flare or your shoulders climb toward your ears, then lower back down. Slow and controlled.',
+  },
+  {
+    id: 'seated-toe-touch',
+    name: 'Seated Toe Touch',
+    figure: 'seatedToeTouchFlow',
+    surface: 'ground',
+    cue: 'Sit on the floor with your legs straight out in front of you, feet together and toes pointing up. Fold forward from your hips and reach for your toes, keeping your back long. For an even deeper stretch, grab your ankles and gently pull, or loop a towel around your feet and pull on its ends.',
   },
   {
     id: 'scapular-pushup',
