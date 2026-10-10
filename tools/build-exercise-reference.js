@@ -71,13 +71,16 @@ const SUBSECTIONS = {
     ['Upright', [
       'reverse-hunchback', 'elbow-lift-hold', 'collarbone-look-up', 'hands-behind-pulldown',
       'w-slide', 'l-pull', 't-raise', 'y-raise', 'front-arm-circles', 'standing-torso-twist',
-      'calf-raises', 'single-leg-balance', 'touch-the-potato', 'standing-quad-stretch',
+      'calf-raises', 'single-leg-balance', 'standing-lateral-leg-raise', 'touch-the-potato',
+      'standing-quad-stretch',
       'wall-ankle-stretch', 'standing-hip-opener', 'open-the-gate', 'a-skips', 'single-leg-hops',
     ]],
     ['Squatting', [
-      'deep-squat-hold', 'toe-squat-hold', 'squatting-heel-raise', 'squat-knee-drops',
+      'bodyweight-squat', 'deep-squat-hold', 'toe-squat-hold', 'squatting-heel-raise',
+      'squat-knee-drops',
       'squat-hip-pulses', 'squat-twist', 'deep-squat-reach-upward', 'squat-and-reach',
-      'squat-fold', 'wall-sit-hold', 'pistol-squat-hold-45', 'jump-squat',
+      'squat-fold', 'wall-sit-hold', 'pistol-squat-hold-45', 'single-leg-squat-heel-touch',
+      'jump-squat',
     ]],
     ['Kickboxing', [
       'jab-cross', 'hooks', 'uppercuts', 'bob-and-weave',
@@ -99,7 +102,8 @@ const SUBSECTIONS = {
       // planks and push-ups
       'plank-hold', 'shoulder-taps', 'push-up-flow', 'shoulder-tap-push-up', 'wide-push-up',
       'spiderman-push-up', 'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
-      'push-up-lunge-reach', 'side-plank', 'side-curl',
+      'push-up-lunge-reach', 'push-up-kick-through', 'push-up-side-plank',
+      'side-plank', 'side-curl',
       'plank-opposite-toe-touch', 'kick-through', 'mountain-climber', 'burpee',
       'down-up-dogs', 'bear-crawl',
       // hands and knees

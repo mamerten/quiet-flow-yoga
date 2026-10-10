@@ -647,6 +647,122 @@ window.FIGURES = {
       + 'letter-spacing="0.5" font-family="sans-serif" fill="currentColor" opacity="0.75">CHEST</text>',
   })),
 
+  // C118 - 2-frame flip book, side view: standing tall, then sat back and down
+  // until the thighs are level with the floor, arms reaching forward to
+  // balance (Bodyweight Squat). The plain squat every other squat here is a
+  // variation of. Feet are pinned; it stops at thighs-level on purpose, which
+  // is what separates it from deepSquat's below-the-knees hold.
+  bodyweightSquatFlow: animatedFigure([
+    stick({
+      head: [56, 18], headR: 7, neck: [54, 29], hip: [52, 78],
+      arms: [[[56, 52], [58, 72]]],
+      legs: [[[55, 104], [58, 131]], [[49, 104], [52, 131]]],
+      prop: GROUND(8, 98, 133),
+    }),
+    stick({
+      head: [62, 50], headR: 7, neck: [56, 61], hip: [36, 104],
+      arms: [[[76, 65], [95, 66]]],
+      legs: [[[62, 104], [58, 131]], [[56, 106], [52, 131]]],
+      prop: GROUND(8, 98, 133),
+    }),
+  ]),
+
+  // C119 - 2-frame flip book, side view: balanced on one leg with the other
+  // held just off the floor in front, then sunk on the standing leg until the
+  // front heel touches the floor (Single-Leg Squat to Heel Touch). The front
+  // foot is drawn in both frames, flexed toes-up, because where that heel is
+  // IS the exercise: clear of the floor at the top, just touching it at the
+  // bottom. The standing foot is pinned. Deeper than pistolSquatHold's 45
+  // degrees, since on a flat floor the heel only reaches when you sink low.
+  singleLegSquatHeelTouchFlow: animatedFigure([
+    stick({
+      head: [50, 24], headR: 7, neck: [46, 35], hip: [44, 80],
+      arms: [[[56, 56], [62, 74]]],
+      legs: [[[45, 106], [44, 133]], [[54, 104], [64, 124]]],
+      prop: GROUND(8, 96, 133),
+      extra: BONE(64, 124, 69, 117, W.foot[0], W.foot[1]),
+    }),
+    stick({
+      head: [56, 53], headR: 7, neck: [50, 64], hip: [30, 104],
+      arms: [[[68, 72], [88, 74]]],
+      legs: [[[54, 110], [44, 133]], [[53, 118], [76, 131]]],
+      prop: GROUND(8, 96, 133),
+      extra: BONE(76, 131, 81, 122, W.foot[0], W.foot[1]),
+    }),
+  ]),
+
+  // C120 - 3-frame flip book, side view: plank, down into the push-up, then
+  // back up with one hand lifted and the opposite leg kicked through
+  // underneath (Push-Up to Kick-Through). Frames one and three are
+  // kickThroughFlow's own two frames and frame two is the push-up's bottom on
+  // the same floor line, so it reads as exactly what it is: a push-up, then a
+  // kick-through.
+  pushUpKickThroughFlow: animatedFigure([
+    stick({
+      head: [16, 60], headR: 7, neck: [24, 66], hip: [58, 92],
+      arms: [[[24, 92], [24, 118]], [[29, 92], [29, 118]]],
+      legs: [[[76, 105], [92, 118]], [[72, 106], [87, 118]]],
+      prop: GROUND(6, 96, 120),
+    }),
+    stick({
+      head: [16, 74], headR: 7, neck: [24, 80], hip: [58, 100],
+      arms: [[[32, 100], [24, 118]], [[37, 100], [29, 118]]],
+      legs: [[[76, 109], [92, 118]], [[72, 110], [87, 118]]],
+      prop: GROUND(6, 96, 120),
+    }),
+    stick({
+      head: [18, 58], headR: 7, neck: [26, 62], hip: [64, 74],
+      arms: [[[25, 90], [24, 118]], [[24, 44], [18, 28]]],
+      legs: [[[74, 96], [80, 118]], [[52, 96], [30, 116]]],
+      prop: GROUND(6, 96, 120),
+    }),
+  ]),
+
+  // C121 - 3-frame flip book on the plank base: plank, down into the push-up,
+  // then rolled open onto one straight arm with the other reaching straight
+  // up (Push-Up to Side Plank). Seen from the side the rolled-open body keeps
+  // the plank's line, so the arm going from the floor to the ceiling is the
+  // whole picture of the rotation. The supporting hand and feet are pinned.
+  pushUpSidePlankFlow: animatedFigure([
+    stick({
+      head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
+      arms: [[[24, 84], [24, 110]], [[32, 84], [34, 110]]],
+      legs: [[[76, 97], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+    stick({
+      head: [16, 66], headR: 7, neck: [24, 72], hip: [58, 92],
+      arms: [[[32, 92], [24, 110]], [[38, 92], [34, 110]]],
+      legs: [[[76, 101], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+    stick({
+      head: [15, 49], headR: 7, neck: [24, 58], hip: [58, 84],
+      arms: [[[24, 84], [24, 110]], [[25, 34], [26, 10]]],
+      legs: [[[76, 97], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+  ]),
+
+  // C122 - 2-frame flip book, front view: standing with the hands on the hips,
+  // then balanced on one leg with the other lifted straight out to the side
+  // (Standing Lateral Leg Raise). The torso stays dead upright in both frames:
+  // leaning away is how the lift gets faked, so the drawing doesn't.
+  standingLateralLegRaiseFlow: animatedFigure([
+    stick({
+      ...STAND_FRONT,
+      arms: [[[26, 54], [40, 76]], [[74, 54], [60, 76]]],
+      legs: LEGS_FRONT,
+      prop: FLOOR_STAND,
+    }),
+    stick({
+      ...STAND_FRONT,
+      arms: [[[26, 54], [40, 76]], [[74, 54], [60, 76]]],
+      legs: [[[47, 106], [45, 133]], [[70, 95], [88, 110]]],
+      prop: FLOOR_STAND,
+    }),
+  ]),
+
   // C16 — 2-frame flip book on the plank base: straight-armed at the top,
   // then lower with the elbow bent back alongside the ribs (Push-Up).
   pushUpFlow: animatedFigure([

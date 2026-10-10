@@ -96,6 +96,14 @@
 window.EXERCISES = [
   // --- Standing, no equipment ---
   {
+    id: 'bodyweight-squat',
+    name: 'Bodyweight Squat',
+    figure: 'bodyweightSquatFlow',
+    surface: 'standing',
+    difficulty: 'E',
+    cue: 'Stand with your feet about shoulder width apart. Sit your hips back and down as if into a chair until your thighs are about level with the floor, chest up and heels down, arms reaching forward for balance. Stand back up tall and repeat.',
+  },
+  {
     id: 'deep-squat-hold',
     name: 'Deep Squat Hold',
     figure: 'deepSquat',
@@ -159,6 +167,13 @@ window.EXERCISES = [
     surface: 'standing',
     sided: true,
     cue: 'Lift one foot off the floor and hold your balance, arms out for control. Once you feel steady, try closing your eyes.',
+  },
+  {
+    id: 'standing-lateral-leg-raise',
+    name: 'Standing Lateral Leg Raise',
+    figure: 'standingLateralLegRaiseFlow',
+    surface: 'standing',
+    cue: 'Stand tall on one leg with your hands on your hips. Keeping both legs straight and your body upright, lift the other leg straight out to the side as high as you can without leaning, then lower it with control, not letting the foot rest between reps. Switch legs halfway through.',
   },
   {
     id: 'standing-toe-touch',
@@ -247,6 +262,7 @@ window.EXERCISES = [
     name: 'Plank Hold',
     figure: 'plank',
     surface: 'ground',
+    difficulty: 'E',
     cue: 'Hold a straight line from head to heels, forearms or hands under your shoulders. Keep your hips level.',
   },
   {
@@ -277,6 +293,20 @@ window.EXERCISES = [
     figure: 'pushUpLungeReachFlow',
     surface: 'ground',
     cue: 'Do a push-up. At the top, step one foot up beside your hand and lift that same hand off the floor, reaching it forward. Step back to plank, do another push-up, and switch sides each rep.',
+  },
+  {
+    id: 'push-up-kick-through',
+    name: 'Push-Up to Kick-Through',
+    figure: 'pushUpKickThroughFlow',
+    surface: 'ground',
+    cue: 'Start in a high plank and do one push-up. At the top, lift one hand and the opposite foot, rotate your hips and kick that leg through underneath your body toward the side your hand came off. Bring it back to the plank, do another push-up, and kick through to the other side.',
+  },
+  {
+    id: 'push-up-side-plank',
+    name: 'Push-Up to Side Plank',
+    figure: 'pushUpSidePlankFlow',
+    surface: 'ground',
+    cue: 'Start in a high plank and do one push-up. At the top, shift your weight onto one hand and roll your whole body open to the side, reaching the other arm straight up toward the ceiling as your feet roll onto their edges. Roll back down to the plank, do another push-up, and open to the other side.',
   },
   {
     id: 'crawl-position-push-up',
@@ -381,6 +411,7 @@ window.EXERCISES = [
     name: 'Dead Bug',
     figure: 'deadBug',
     surface: 'ground',
+    difficulty: 'E',
     cue: 'Lie on your back, arms up and knees bent to 90 degrees. Slowly extend one arm and the opposite leg, then switch.',
   },
   {
@@ -636,7 +667,16 @@ window.EXERCISES = [
     name: '45-Degree Pistol Squat Hold',
     figure: 'pistolSquatHold',
     surface: 'standing',
+    difficulty: 'H',
     cue: 'Stand on one leg and hold the other straight out in front of you, just off the floor. Sit your hips back until the standing knee is bent about 45 degrees, arms reaching forward for balance, and hold. The heel of your outstretched leg never touches the floor. Switch legs halfway through.',
+  },
+  {
+    id: 'single-leg-squat-heel-touch',
+    name: 'Single-Leg Squat to Heel Touch',
+    figure: 'singleLegSquatHeelTouchFlow',
+    surface: 'standing',
+    difficulty: 'H',
+    cue: 'Stand on one leg with the other held just off the floor in front of you. Sit your hips back and bend the standing knee, lowering under control until the heel of your front leg lightly touches the floor without taking any weight. Drive back up to standing. Keep your standing heel down the whole time. Switch legs halfway through.',
   },
   {
     id: 'standing-quad-stretch',
@@ -821,6 +861,7 @@ window.EXERCISES = [
     figure: 'crabReachFlow',
     surface: 'ground',
     mixedSides: true,
+    difficulty: 'H',
     cue: 'Sit with your knees bent and feet flat, hands on the floor behind you, and press your hips up into a tabletop. Lift one hand and reach it back over your head, turning your chest up toward the ceiling and following the hand with your eyes. Plant it again and reach with the other hand, alternating as you go.',
   },
   {
