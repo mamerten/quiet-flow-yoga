@@ -669,6 +669,34 @@ window.FIGURES = {
     }),
   ]),
 
+  // C124 - 2-frame flip book, side view: kneeling with the hips up, the torso
+  // leaned well forward and the fingertips on the shoulders, elbows level;
+  // then the upper body turned so one elbow points up and back and the other
+  // down toward the floor (Kneeling Lean and Rotate). Knees, feet and hips
+  // are pinned - the legs are kneelingHipHingeFlow's - so the lean is held and
+  // only the shoulders turn. Hands on the shoulders make each arm a short
+  // folded lever; with the elbows level they point at and away from the
+  // viewer and nearly vanish, which is why frame one's arms are small, and
+  // turned they swing into view as one diagonal line through the shoulder.
+  // Read against kneelingThoracicRotationFlow: that one sits back on the
+  // heels with the hands behind the head; here the hips stay high.
+  kneelingLeanRotateFlow: animatedFigure([
+    stick({
+      head: [14, 66], headR: 7, neck: [22, 72], hip: [50, 94],
+      arms: [[[30, 86], [24, 74]], [[20, 88], [22, 74]]],
+      legs: [[[40, 120], [70, 122]]],
+      prop: GROUND(6, 96, 126),
+      extra: BONE(70, 122, 86, 124, W.foot[0], W.foot[1]),
+    }),
+    stick({
+      head: [15, 63], headR: 7, neck: [22, 72], hip: [50, 94],
+      arms: [[[34, 52], [25, 68]], [[12, 92], [20, 76]]],
+      legs: [[[40, 120], [70, 122]]],
+      prop: GROUND(6, 96, 126),
+      extra: BONE(70, 122, 86, 124, W.foot[0], W.foot[1]),
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a

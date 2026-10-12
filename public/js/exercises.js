@@ -740,6 +740,13 @@ window.EXERCISES = [
     cue: 'Kneel tall on both knees with the tops of your feet flat on the floor and your hips stacked over your knees. Keeping your back flat and your ribs down, push your hips back and let your chest travel forward, then squeeze your glutes to drive the hips forward and stand tall on your knees again.',
   },
   {
+    id: 'kneeling-lean-rotate',
+    name: 'Kneeling Lean and Rotate',
+    figure: 'kneelingLeanRotateFlow',
+    surface: 'ground',
+    cue: 'Kneel on both knees and put your fingertips on your shoulders, elbows out wide. Hinge forward from your hips with a flat back until your chest is about halfway to the floor, and hold that lean. Rotate your upper body so one elbow points up toward the ceiling and the other down toward the floor, then rotate the other way. Slow and controlled, eyes following the top elbow.',
+  },
+  {
     id: 'toe-squat-hold',
     name: 'Toe Squat Hold',
     figure: 'toeSquatHold',

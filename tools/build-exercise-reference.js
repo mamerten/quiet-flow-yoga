@@ -111,7 +111,8 @@ const SUBSECTIONS = {
       'kneeling-thoracic-rotation', 'kneeling-rest',
       // kneeling and low lunges
       'worlds-greatest-stretch', 'lunge-reach-twist', 'couch-stretch',
-      'kneeling-ankle-stretch', 'kneeling-hip-hinge', 'squat-roll-hip-lift',
+      'kneeling-ankle-stretch', 'kneeling-hip-hinge', 'kneeling-lean-rotate',
+      'squat-roll-hip-lift',
       // face down
       'superman-hold', 'prone-w-rotation', 'scorpion-heel-taps',
     ]],
