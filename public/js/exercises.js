@@ -6,7 +6,8 @@
 // flow (hip extensions, L-sit-to-crab, Z-lifts, scapula push-ups, W-slides),
 // his shoulder routine (L-Pull/T-Raise/Y-Raise/Prone W-Rotation), his
 // posture routine (Elbow Lift Hold, Collarbone Look-Up, Hands-Behind-Back
-// Pull-Down, Book Balance Walk), his morning mobility flow (Beast
+// Pull-Down - since dropped as a near-twin of Reverse Hunchback - Book Balance
+// Walk), his morning mobility flow (Beast
 // Kickthrough, World's Greatest Stretch, Scorpion Heel Taps, 90/90
 // Switch), his bedtime hip-release flow (Lying Knee Drops, Windshield
 // Wipers, and a Dead Hang — a third move from that flow, "heel-to-toe
@@ -189,14 +190,6 @@ window.EXERCISES = [
     figure: 'squatFoldFlow',
     surface: 'standing',
     cue: 'From standing, fold forward and plant your hands on the floor, then bend your knees to sink into a deep squat without letting go. Straighten back up and repeat.',
-  },
-  {
-    id: 'hands-behind-pulldown',
-    name: 'Hands-Behind-Back Pull-Down',
-    figure: 'armsBehindBackDown',
-    surface: 'standing',
-    difficulty: 'E',
-    cue: 'Lace your fingers behind you and pull your hands down, not up. Opens your shoulders so they stop rounding forward.',
   },
   {
     id: 'squat-twist',
@@ -495,6 +488,20 @@ window.EXERCISES = [
     figure: 'kickThroughFlow',
     surface: 'ground',
     cue: 'Start in a high plank. Lift one hand and the opposite foot, then rotate your hips and kick that leg through underneath your body toward the side your hand came off, keeping the other hand and foot planted. Bring it back to the plank and kick through to the other side, alternating as you go.',
+  },
+  {
+    id: 'mountain-climber-kick-through',
+    name: 'Mountain Climbers to Kick-Through',
+    figure: 'mountainClimberKickThroughFlow',
+    surface: 'ground',
+    cue: 'Start in a high plank. Drive one knee in toward your chest, then the other, quick and light. Then lift one hand and the opposite foot and kick that leg through underneath your body toward the side your hand came off. Bring it back to the plank, do two more mountain climbers, and kick through to the other side.',
+  },
+  {
+    id: 'shoulder-tap-kick-through',
+    name: 'Shoulder Tap to Kick-Through',
+    figure: 'shoulderTapKickThroughFlow',
+    surface: 'ground',
+    cue: 'Start in a high plank. Tap one hand to the opposite shoulder, then keep that hand up and kick the leg on the other side through underneath your body toward the side your hand came off. Bring it back to the plank, tap with the other hand, and kick through the other way.',
   },
   {
     id: 'scorpion-heel-taps',

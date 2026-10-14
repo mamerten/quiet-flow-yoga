@@ -225,6 +225,33 @@ const GUARD_FRONT = {
   prop: FLOOR_STAND,
 };
 const GUARD_ARMS_FRONT = [[[35, 50], [40, 24]], [[65, 50], [60, 24]]];
+// Kick-through, side view on its own floor line (y 120). The plank it starts
+// from; the lift, with one hand coming off toward the chest and the opposite
+// leg folding under the body; and the finish - hips dropped low, one hand
+// planted behind, the near knee up with that foot down, the kicking leg shot
+// straight out and clear of the floor, and the free fist pulled in to the
+// chest. The first drawing kept the hips high and set the kicking foot down by
+// the hands, which reads as a down dog with a step forward. Shared by
+// Kick-Through and Push-Up to Kick-Through so the two can't drift apart.
+const KT_FLOOR = GROUND(6, 98, 120);
+const KT_PLANK = {
+  head: [16, 60], headR: 7, neck: [24, 66], hip: [58, 92],
+  arms: [[[24, 92], [24, 118]], [[29, 92], [29, 118]]],
+  legs: [[[76, 105], [92, 118]], [[72, 106], [87, 118]]],
+  prop: KT_FLOOR,
+};
+const KT_LIFT = {
+  head: [16, 62], headR: 7, neck: [24, 68], hip: [58, 94],
+  arms: [[[24, 93], [24, 118]], [[32, 90], [38, 80]]],
+  legs: [[[76, 106], [92, 118]], [[72, 112], [52, 114]]],
+  prop: KT_FLOOR,
+};
+const KICK_THROUGH = {
+  head: [26, 64], headR: 7, neck: [24, 76], hip: [50, 102],
+  arms: [[[21, 97], [19, 118]], [[36, 92], [42, 78]]],
+  legs: [[[72, 90], [80, 118]], [[73, 99], [96, 96]]],
+  prop: KT_FLOOR,
+};
 // Plank: one straight diagonal from head to heels, held up by a vertical arm.
 const PLANK = {
   head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
@@ -429,22 +456,11 @@ window.FIGURES = {
 
   // C2 — side view, hands clasped behind the back and the arms lifted UP
   // and away, chest open (Reverse Hunchback). Side-on so "behind you" is
-  // unambiguous, and paired deliberately with armsBehindBackDown below:
-  // same view, opposite arm direction, because those two exercises start
-  // identically and are told apart only by which way the arms travel.
+  // unambiguous. It once had a mirror, Hands-Behind-Back Pull-Down, with the
+  // hands pulled down instead; that was dropped as too close to this one.
   armsBehindBackLift: svg(stick({
     head: [42, 18], headR: 7, neck: [48, 28], hip: [50, 80],
     arms: [[[61, 48], [78, 62]]],
-    legs: LEGS_SIDE,
-    prop: FLOOR_STAND,
-  })),
-
-  // C3 — side view, fingers laced behind the back and the hands pulled
-  // DOWN below the hips, shoulders dropping away from the ears
-  // (Hands-Behind-Back Pull-Down). The mirror of armsBehindBackLift.
-  armsBehindBackDown: svg(stick({
-    head: [42, 18], headR: 7, neck: [48, 28], hip: [50, 80],
-    arms: [[[56, 52], [60, 76]]],
     legs: LEGS_SIDE,
     prop: FLOOR_STAND,
   })),
@@ -741,31 +757,52 @@ window.FIGURES = {
     }),
   ]),
 
-  // C120 - 3-frame flip book, side view: plank, down into the push-up, then
-  // back up with one hand lifted and the opposite leg kicked through
-  // underneath (Push-Up to Kick-Through). Frames one and three are
-  // kickThroughFlow's own two frames and frame two is the push-up's bottom on
-  // the same floor line, so it reads as exactly what it is: a push-up, then a
-  // kick-through.
+  // C120 - 4-frame flip book, side view: plank, down into the push-up, then
+  // the lift and the kick-through finish (Push-Up to Kick-Through). The plank,
+  // lift and finish are Kick-Through's own shared frames; the push-up bottom
+  // sits on the same floor line, so it reads as exactly what it is.
   pushUpKickThroughFlow: animatedFigure([
-    stick({
-      head: [16, 60], headR: 7, neck: [24, 66], hip: [58, 92],
-      arms: [[[24, 92], [24, 118]], [[29, 92], [29, 118]]],
-      legs: [[[76, 105], [92, 118]], [[72, 106], [87, 118]]],
-      prop: GROUND(6, 96, 120),
-    }),
+    stick(KT_PLANK),
     stick({
       head: [16, 74], headR: 7, neck: [24, 80], hip: [58, 100],
       arms: [[[32, 100], [24, 118]], [[37, 100], [29, 118]]],
       legs: [[[76, 109], [92, 118]], [[72, 110], [87, 118]]],
-      prop: GROUND(6, 96, 120),
+      prop: KT_FLOOR,
     }),
+    stick(KT_LIFT),
+    stick(KICK_THROUGH),
+  ]),
+
+  // C125 - 3-frame flip book, side view: plank, one knee driven in toward the
+  // chest, then the kick-through finish (Mountain Climbers to Kick-Through).
+  // The middle frame is mountainClimber moved onto the kick-through floor line
+  // with the second arm and leg drawn in; first and last are the shared
+  // KT_PLANK and KICK_THROUGH.
+  mountainClimberKickThroughFlow: animatedFigure([
+    stick(KT_PLANK),
     stick({
-      head: [18, 58], headR: 7, neck: [26, 62], hip: [64, 74],
-      arms: [[[25, 90], [24, 118]], [[24, 44], [18, 28]]],
-      legs: [[[74, 96], [80, 118]], [[52, 96], [30, 116]]],
-      prop: GROUND(6, 96, 120),
+      head: [16, 60], headR: 7, neck: [24, 66], hip: [58, 92],
+      arms: [[[24, 92], [24, 118]], [[29, 92], [29, 118]]],
+      legs: [[[76, 105], [92, 118]], [[40, 86], [34, 102]]],
+      prop: KT_FLOOR,
     }),
+    stick(KICK_THROUGH),
+  ]),
+
+  // C126 - 3-frame flip book, side view: plank, one hand lifted to tap the
+  // opposite shoulder, then the kick-through finish (Shoulder Tap to
+  // Kick-Through). The tapping hand is the one that stays up for the kick, so
+  // it carries straight on into the fist-to-chest of the finish. The middle
+  // frame is shoulderTapFlow's tap moved onto the kick-through floor line.
+  shoulderTapKickThroughFlow: animatedFigure([
+    stick(KT_PLANK),
+    stick({
+      head: [16, 60], headR: 7, neck: [24, 66], hip: [58, 92],
+      arms: [[[24, 92], [24, 118]], [[34, 82], [26, 70]]],
+      legs: [[[76, 105], [92, 118]], [[72, 106], [87, 118]]],
+      prop: KT_FLOOR,
+    }),
+    stick(KICK_THROUGH),
   ]),
 
   // C121 - 3-frame flip book on the plank base: plank, down into the push-up,
@@ -1158,27 +1195,16 @@ window.FIGURES = {
     }),
   ]),
 
-  // C35 - 2-frame flip book, side view: a straight-armed plank, then one hand
-  // lifted and the opposite leg threaded through underneath to the far side as
-  // the hips turn open and the free arm reaches up (Kick-Through). This was
-  // Beast Kickthrough, starting from a bear with the knees hovering; it starts
-  // from a plank now because that is how it is done here, and the move after
-  // the start is unchanged. PLANK is redrawn on this figure's floor line with
-  // a second arm and leg so nothing appears from nowhere between frames; the
-  // supporting hand is pinned.
+  // C35 - 3-frame flip book, side view: a straight-armed plank, then one hand
+  // lifting toward the chest as the opposite leg folds under the body, then
+  // that leg kicked straight through and out with the hips dropped low and the
+  // planted hand behind (Kick-Through). Started from a plank rather than the
+  // bear it was first sourced from. All three frames are the shared KT_*
+  // bases above.
   kickThroughFlow: animatedFigure([
-    stick({
-      head: [16, 60], headR: 7, neck: [24, 66], hip: [58, 92],
-      arms: [[[24, 92], [24, 118]], [[29, 92], [29, 118]]],
-      legs: [[[76, 105], [92, 118]], [[72, 106], [87, 118]]],
-      prop: GROUND(6, 96, 120),
-    }),
-    stick({
-      head: [18, 58], headR: 7, neck: [26, 62], hip: [64, 74],
-      arms: [[[25, 90], [24, 118]], [[24, 44], [18, 28]]],
-      legs: [[[74, 96], [80, 118]], [[52, 96], [30, 116]]],
-      prop: GROUND(6, 96, 120),
-    }),
+    stick(KT_PLANK),
+    stick(KT_LIFT),
+    stick(KICK_THROUGH),
   ]),
 
   // C36 — side view, lying face down with one leg swung high up and across

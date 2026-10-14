@@ -69,7 +69,7 @@ const GROUP_ORDER = ['standing', 'ground', 'furniture', 'bar'];
 const SUBSECTIONS = {
   standing: [
     ['Upright', [
-      'reverse-hunchback', 'elbow-lift-hold', 'collarbone-look-up', 'hands-behind-pulldown',
+      'reverse-hunchback', 'elbow-lift-hold', 'collarbone-look-up',
       'w-slide', 'l-pull', 't-raise', 'y-raise', 'front-arm-circles', 'standing-torso-twist',
       'calf-raises', 'single-leg-balance', 'standing-lateral-leg-raise', 'touch-the-potato',
       'standing-quad-stretch',
@@ -104,7 +104,8 @@ const SUBSECTIONS = {
       'spiderman-push-up', 'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
       'push-up-lunge-reach', 'push-up-kick-through', 'push-up-side-plank',
       'side-plank', 'side-curl',
-      'plank-opposite-toe-touch', 'kick-through', 'mountain-climber', 'burpee',
+      'plank-opposite-toe-touch', 'kick-through', 'mountain-climber-kick-through',
+      'shoulder-tap-kick-through', 'mountain-climber', 'burpee',
       'down-up-dogs', 'bear-crawl',
       // hands and knees
       'bird-dog', 'cat-cow-mobility', 'frog-sit-opener', 'kneeling-shoulder-rocks',
