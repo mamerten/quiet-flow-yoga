@@ -5,7 +5,8 @@
 // a no-gym mobility/strength coach) actually teaches — his belly-pooch
 // flow (hip extensions, L-sit-to-crab, Z-lifts, scapula push-ups, W-slides),
 // his shoulder routine (L-Pull/T-Raise/Y-Raise/Prone W-Rotation), his
-// posture routine (Elbow Lift Hold, Collarbone Look-Up, Hands-Behind-Back
+// posture routine (Elbow Lift Hold - since dropped as too close to T-Raise -
+// Collarbone Look-Up, Hands-Behind-Back
 // Pull-Down - since dropped as a near-twin of Reverse Hunchback - Book Balance
 // Walk), his morning mobility flow (Beast
 // Kickthrough, World's Greatest Stretch, Scorpion Heel Taps, 90/90
@@ -149,13 +150,6 @@ window.EXERCISES = [
     cue: 'Step one foot back and lower into a lunge, front knee tracking over your foot. Push through your front heel to return.',
   },
   {
-    id: 'elbow-lift-hold',
-    name: 'Elbow Lift Hold',
-    figure: 'armsGoalpost',
-    surface: 'standing',
-    cue: 'Lift your elbows out and up to shoulder height and hold, breathing slowly. This wakes up the upper back that keeps you tall.',
-  },
-  {
     id: 'collarbone-look-up',
     name: 'Collarbone Look-Up',
     figure: 'collarboneLookUp',
@@ -210,8 +204,8 @@ window.EXERCISES = [
     name: 'Curtsy Lunge',
     figure: 'curtsyLunge',
     surface: 'standing',
-    sided: true,
-    cue: 'Step one leg behind and across the other, like a curtsy, bending both knees. Push through your front heel to return.',
+    mixedSides: true,
+    cue: 'Step one leg behind and across the other, like a curtsy, bending both knees. Push through your front heel to return, then curtsy with the other leg, alternating as you go.',
   },
 
   {
@@ -591,8 +585,8 @@ window.EXERCISES = [
     name: 'Kneeling Ankle Stretch',
     figure: 'kneelingAnkleStretch',
     surface: 'ground',
-    sided: true,
-    cue: 'Kneel on one knee with the toes of that foot tucked under and the heel pointing straight up. Front foot flat, hands on the floor for balance. Sit your weight back over the tucked foot until the stretch builds through the ball of the foot, the arch, and up into the ankle. Hold and breathe.',
+    mixedSides: true,
+    cue: 'Kneel on one knee with the toes of that foot tucked under and the heel pointing straight up. Front foot flat, hands on the floor for balance. Sit your weight back over the tucked foot until the stretch builds through the ball of the foot, the arch, and up into the ankle. Hold and breathe, and switch sides halfway through.',
   },
   {
     id: 'cat-cow-mobility',

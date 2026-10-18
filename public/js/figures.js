@@ -502,15 +502,6 @@ window.FIGURES = {
     }),
   ]),
 
-  // C6 — standing, elbows lifted out to shoulder height in a goalpost
-  // shape (Elbow Lift Hold).
-  armsGoalpost: svg(stick({
-    ...STAND_FRONT,
-    arms: [[[28, 34], [26, 16]], [[72, 34], [74, 16]]],
-    legs: LEGS_FRONT,
-    prop: FLOOR_STAND,
-  })),
-
   // C7 — standing, one hand reaching across to the opposite collarbone
   // with the head tilted up and away over that shoulder (Collarbone
   // Look-Up). The neck line keeps the tilted head visibly attached, which

@@ -69,7 +69,7 @@ const GROUP_ORDER = ['standing', 'ground', 'furniture', 'bar'];
 const SUBSECTIONS = {
   standing: [
     ['Upright', [
-      'reverse-hunchback', 'elbow-lift-hold', 'collarbone-look-up',
+      'reverse-hunchback', 'collarbone-look-up',
       'w-slide', 'l-pull', 't-raise', 'y-raise', 'front-arm-circles', 'standing-torso-twist',
       'calf-raises', 'single-leg-balance', 'standing-lateral-leg-raise', 'touch-the-potato',
       'standing-quad-stretch',
