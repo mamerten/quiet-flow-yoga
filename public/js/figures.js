@@ -704,6 +704,69 @@ window.FIGURES = {
     }),
   ]),
 
+  // C127 - 2-frame flip book seen from directly overhead, face down on a mat,
+  // fingers laced behind the head with both elbows resting wide; then one
+  // elbow swung up and out past the head as the chest turns open (Prone Elbow
+  // Rotation). Overhead for the same reason as proneWFlow: the rotation is
+  // the exercise and a side view flattens it. In frame two the shoulder bar
+  // narrows and shifts, the one cue overhead can give for a turning chest, and
+  // the raised elbow reaches past head height because that is where it
+  // lands. Hands, head and legs are pinned.
+  proneElbowRotationFlow: animatedFigure([
+    stick({
+      head: [50, 24], neck: [50, 34], shoulders: [[37, 40], [63, 40]], hip: [50, 92],
+      arms: [[[24, 38], [45, 24]], [[76, 38], [55, 24]]],
+      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [50, 24], neck: [50, 34], shoulders: [[41, 40], [64, 38]], hip: [50, 92],
+      arms: [[[26, 14], [45, 24]], [[76, 38], [55, 24]]],
+      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
+      prop: MAT,
+    }),
+  ]),
+
+  // C128 - 2-frame flip book seen from directly overhead, face down: one arm
+  // reaching up past the head in a Y, then swept down and out to the side in
+  // a T (Prone Y to T Sweep). The other arm rests by the side in both frames,
+  // so the one moving arm is the whole picture. Straight arms: the two
+  // segments are the same length and run on in one line in each frame.
+  proneYtSweepFlow: animatedFigure([
+    stick({
+      head: [50, 24], neck: [50, 34], shoulders: [[37, 40], [63, 40]], hip: [50, 92],
+      arms: [[[28, 24], [20, 7]], [[72, 54], [70, 72]]],
+      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [50, 24], neck: [50, 34], shoulders: [[37, 40], [63, 40]], hip: [50, 92],
+      arms: [[[22, 40], [7, 40]], [[72, 54], [70, 72]]],
+      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
+      prop: MAT,
+    }),
+  ]),
+
+  // C129 - 2-frame flip book seen from directly overhead, face down: hands
+  // flat on the floor beside the head, elbows out, and the head tipped toward
+  // one shoulder, then the other (Prone Neck Release). The hands and shoulders
+  // are pinned; only the head and neck move, which is the point - the hands
+  // pressing down keep the shoulders from rising to meet the ear.
+  proneNeckReleaseFlow: animatedFigure([
+    stick({
+      head: [37, 29], neck: [46, 35], shoulders: [[36, 41], [64, 41]], hip: [50, 92],
+      arms: [[[20, 50], [33, 36]], [[80, 50], [67, 36]]],
+      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [63, 29], neck: [54, 35], shoulders: [[36, 41], [64, 41]], hip: [50, 92],
+      arms: [[[20, 50], [33, 36]], [[80, 50], [67, 36]]],
+      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
+      prop: MAT,
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a

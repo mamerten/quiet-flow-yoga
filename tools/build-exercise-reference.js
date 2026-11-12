@@ -115,7 +115,8 @@ const SUBSECTIONS = {
       'kneeling-ankle-stretch', 'kneeling-hip-hinge', 'kneeling-lean-rotate',
       'squat-roll-hip-lift',
       // face down
-      'superman-hold', 'prone-w-rotation', 'scorpion-heel-taps',
+      'superman-hold', 'prone-w-rotation', 'prone-elbow-rotation', 'prone-y-t-sweep',
+      'prone-neck-release', 'scorpion-heel-taps',
     ]],
     ['Chest up', [
       // crab
