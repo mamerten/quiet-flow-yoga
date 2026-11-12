@@ -125,7 +125,6 @@ const SUBSECTIONS = {
       // on the back
       'glute-bridge', 'single-leg-glute-bridge', 'dead-bug', 'hollow-body-hold',
       'suitcase-crunches', 'bicycle-crunches', 'lying-knee-drops', 'windshield-wipers',
-      'lying-knee-roll-reach',
       // propped back on the hands: the leg raises
       'two-leg-side-sweep', 'single-leg-side-sweep', 'leg-raises', 'russian-twists',
     ]],

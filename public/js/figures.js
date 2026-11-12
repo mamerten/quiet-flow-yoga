@@ -812,28 +812,6 @@ window.FIGURES = {
     }),
   ]),
 
-  // C131 - 2-frame flip book seen from overhead, on the back: knees stacked and
-  // rolled to one side while the arm on the opposite side sweeps up past the
-  // head, then mirrored (Lying Knee Roll with Reach). The legs are
-  // windshieldWiperFlow's; what makes this a different exercise is the reaching
-  // arm and, in a real body, the knees being held up off the floor - which an
-  // overhead view can't show, so the arm carries the difference. The other arm
-  // rests out to the side in both frames.
-  kneeRollReachFlow: animatedFigure([
-    stick({
-      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
-      arms: [[[28, 22], [24, 6]], [[70, 50], [80, 66]]],
-      legs: [[[74, 98], [60, 126]], [[66, 102], [52, 130]]],
-      prop: MAT,
-    }),
-    stick({
-      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
-      arms: [[[30, 50], [20, 66]], [[72, 22], [76, 6]]],
-      legs: [[[26, 98], [40, 126]], [[34, 102], [48, 130]]],
-      prop: MAT,
-    }),
-  ]),
-
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a
