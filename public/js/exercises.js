@@ -569,6 +569,14 @@ window.EXERCISES = [
     cue: 'Lie on your back, knees bent and together. Slowly sway both knees side to side like a windshield wiper.',
   },
   {
+    id: 'lying-knee-roll-reach',
+    name: 'Lying Knee Roll with Reach',
+    figure: 'kneeRollReachFlow',
+    surface: 'ground',
+    mixedSides: true,
+    cue: 'Lie on your back with your hips and knees bent to 90 degrees, feet off the floor and knees stacked together, one arm out to the side. Roll both knees down to one side while the opposite arm sweeps up and over your head, following it with your eyes and keeping your shoulders on the floor. Bring everything back to the middle and roll to the other side, alternating as you go.',
+  },
+  {
     id: 'bicycle-crunches',
     name: 'Bicycle Crunches',
     figure: 'bicycleFlow',
