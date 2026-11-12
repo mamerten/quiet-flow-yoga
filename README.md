@@ -113,8 +113,13 @@ Or to `EXERCISES` in [`public/js/exercises.js`](public/js/exercises.js) (Calisth
 }
 ```
 
-After adding or editing either one, regenerate the narration audio so the
-spoken cue matches:
+After adding or editing either one, the narration audio has to be regenerated so the
+spoken cue matches. **GitHub does this for you**: the `Render narration` workflow
+(`.github/workflows/narration.yml`) runs on every push that changes `exercises.js`,
+`poses.js` or `tools/generate-voice.py`, renders the missing clips on a Linux server,
+and commits them with a service-worker cache bump. Pull afterwards to pick them up. It exists
+because Piper can't run on machines whose Windows Smart App Control blocks its unsigned
+`espeakbridge` module. To render locally instead:
 
 ```bash
 pip install piper-tts imageio-ffmpeg

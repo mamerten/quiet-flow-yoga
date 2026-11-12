@@ -1,0 +1,92 @@
+# Renders the spoken narration on GitHub's servers and commits the clips.
+#
+# Why this exists: tools/generate-voice.py needs Piper, and Piper's phonemizer
+# (espeakbridge) is an unsigned native module. On the machine this project is
+# usually edited on, Windows Smart App Control refuses to load it, so new
+# exercises shipped without audio and fell back to the device's own voice. A
+# Linux runner has no such policy, and every clip is named by a hash of its
+# model, speed and text, so clips this job makes are interchangeable with
+# clips made anywhere else.
+#
+# It runs when exercise or pose text changes, and can be started by hand from
+# the Actions tab. It only adds or prunes files under public/audio/ and bumps
+# SHELL_CACHE in public/sw.js (returning visitors keep the old clip list until
+# that changes). Neither is in the trigger paths below, so it can't retrigger
+# itself.
+name: Render narration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - public/js/exercises.js
+      - public/js/poses.js
+      - tools/generate-voice.py
+      - .github/workflows/narration.yml
+  workflow_dispatch:
+
+concurrency:
+  group: narration
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Piper and ffmpeg
+        run: pip install piper-tts imageio-ffmpeg
+
+      - name: Render any missing clips
+        run: python tools/generate-voice.py
+
+      - name: Check every manifest entry has a file
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          bad = False
+          for pack in sorted(os.listdir('public/audio')):
+              d = os.path.join('public/audio', pack)
+              if not os.path.isdir(d):
+                  continue
+              m = json.load(open(os.path.join(d, 'manifest.json'), encoding='utf-8'))
+              files = set(os.listdir(d)) - {'manifest.json'}
+              refs = set(m['clips'].values())
+              missing, orphans = refs - files, files - refs
+              print(pack, len(m['clips']), 'clips | missing', len(missing), '| orphans', len(orphans))
+              bad = bad or bool(missing) or bool(orphans)
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Commit the clips and bump the service worker cache
+        run: |
+          if [ -z "$(git status --porcelain public/audio)" ]; then
+            echo "Narration already up to date; nothing to commit."
+            exit 0
+          fi
+          python - <<'PY'
+          import re
+          p = 'public/sw.js'
+          s = open(p, encoding='utf-8').read()
+          s, n = re.subn(r"quiet-flow-shell-v(\d+)", lambda m: 'quiet-flow-shell-v%d' % (int(m.group(1)) + 1), s, count=1)
+          assert n == 1, 'SHELL_CACHE not found'
+          open(p, 'w', encoding='utf-8', newline='').write(s)
+          PY
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/audio public/sw.js
+          git commit -m "Render narration clips (automated)"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
