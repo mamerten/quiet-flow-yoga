@@ -103,7 +103,7 @@ const SUBSECTIONS = {
       'plank-hold', 'shoulder-taps', 'push-up-flow', 'shoulder-tap-push-up', 'wide-push-up',
       'spiderman-push-up', 'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
       'push-up-lunge-reach', 'push-up-kick-through', 'push-up-side-plank',
-      'side-plank', 'side-curl',
+      'side-plank', 'side-curl', 'side-plank-leg-shift',
       'plank-opposite-toe-touch', 'kick-through', 'mountain-climber-kick-through',
       'shoulder-tap-kick-through', 'mountain-climber', 'burpee',
       'down-up-dogs', 'bear-crawl',
@@ -115,7 +115,7 @@ const SUBSECTIONS = {
       'kneeling-ankle-stretch', 'kneeling-hip-hinge', 'kneeling-lean-rotate',
       'squat-roll-hip-lift',
       // face down
-      'superman-hold', 'prone-w-rotation', 'prone-elbow-rotation', 'prone-y-t-sweep',
+      'superman-hold', 'prone-w-rotation', 'prone-elbow-rotation', 'tennis-ball-to-toilet-paper-roll',
       'prone-neck-release', 'scorpion-heel-taps',
     ]],
     ['Chest up', [
@@ -125,7 +125,6 @@ const SUBSECTIONS = {
       // on the back
       'glute-bridge', 'single-leg-glute-bridge', 'dead-bug', 'hollow-body-hold',
       'suitcase-crunches', 'bicycle-crunches', 'lying-knee-drops', 'windshield-wipers',
-      'lying-knee-roll-reach',
       // propped back on the hands: the leg raises
       'two-leg-side-sweep', 'single-leg-side-sweep', 'leg-raises', 'russian-twists',
     ]],

@@ -31,6 +31,13 @@ const MAT = PROP('M14 8 H86 V136 H14 Z');
 const POTATO = (cx, cy) =>
   `<ellipse cx="${cx}" cy="${cy}" rx="4.5" ry="2.8" fill="currentColor" opacity="0.45"/>`;
 
+// Tennis Ball to Toilet Paper Roll: a roll seen from above is a ring on the
+// mat, drawn faded like the rest of the scenery at the two corners the balls
+// are placed on, and a ball is a solid dot in the hand.
+const ROLLS = '<circle cx="22" cy="13" r="5" fill="none" stroke="currentColor" stroke-width="2" opacity="0.45"/>'
+  + '<circle cx="78" cy="13" r="5" fill="none" stroke="currentColor" stroke-width="2" opacity="0.45"/>';
+const BALLS = (x, y) => `<circle cx="${x}" cy="${y}" r="3.2" fill="currentColor"/>`;
+
 // A towel held taut between two hands. Slightly thinner than a limb and hanging
 // with a little slack, so it doesn't read as a third arm.
 const TOWEL = (x1, y1, x2, y2, sag = 7) =>
@@ -705,87 +712,101 @@ window.FIGURES = {
   ]),
 
   // C127 - 2-frame flip book seen from directly overhead, face down on a mat,
-  // fingers laced behind the head with both elbows resting wide; then one
-  // elbow swung up and out past the head as the chest turns open (Prone Elbow
-  // Rotation). Overhead for the same reason as proneWFlow: the rotation is
-  // the exercise and a side view flattens it. In frame two the shoulder bar
-  // narrows and shifts, the one cue overhead can give for a turning chest, and
-  // the raised elbow reaches past head height because that is where it
-  // lands. Hands, head and legs are pinned.
+  // fingers laced behind the head holding a tennis ball in each hand; the left
+  // elbow swung up and out toward the corner with the chest turned open, then
+  // the right (Prone Elbow Rotation). Both frames lift an elbow - the move is
+  // the alternation - and the other elbow rests wide on the floor. The lifted
+  // side's shoulder moves up toward the head and the far shoulder drops back,
+  // which is the one cue overhead can give for a turning chest. The first
+  // drawing had a neutral frame and put the lifted elbow across the face.
   proneElbowRotationFlow: animatedFigure([
     stick({
-      head: [50, 24], neck: [50, 34], shoulders: [[37, 40], [63, 40]], hip: [50, 92],
-      arms: [[[24, 38], [45, 24]], [[76, 38], [55, 24]]],
-      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
+      head: [50, 26], neck: [50, 36], shoulders: [[41, 40], [64, 44]], hip: [50, 94],
+      arms: [[[22, 16], [46, 22]], [[78, 40], [54, 22]]],
+      legs: [[[44, 114], [42, 134]], [[56, 114], [58, 134]]],
       prop: MAT,
+      extra: '<circle cx="46" cy="21" r="3" fill="currentColor"/><circle cx="54" cy="21" r="3" fill="currentColor"/>',
     }),
     stick({
-      head: [50, 24], neck: [50, 34], shoulders: [[41, 40], [64, 38]], hip: [50, 92],
-      arms: [[[26, 14], [45, 24]], [[76, 38], [55, 24]]],
-      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
+      head: [50, 26], neck: [50, 36], shoulders: [[36, 44], [59, 40]], hip: [50, 94],
+      arms: [[[22, 40], [46, 22]], [[78, 16], [54, 22]]],
+      legs: [[[44, 114], [42, 134]], [[56, 114], [58, 134]]],
       prop: MAT,
+      extra: '<circle cx="46" cy="21" r="3" fill="currentColor"/><circle cx="54" cy="21" r="3" fill="currentColor"/>',
     }),
   ]),
 
-  // C128 - 2-frame flip book seen from directly overhead, face down: one arm
-  // reaching up past the head in a Y, then swept down and out to the side in
-  // a T (Prone Y to T Sweep). The other arm rests by the side in both frames,
-  // so the one moving arm is the whole picture. Straight arms: the two
-  // segments are the same length and run on in one line in each frame.
-  proneYtSweepFlow: animatedFigure([
+  // C128 - 3-frame flip book seen from directly overhead, face down: both arms
+  // reaching out in front to the 11:00 and 1:00 corners, where a toilet paper
+  // roll waits under each tennis ball; then both swept out wide to a T; then
+  // both brought back to the lower back (Tennis Ball to Toilet Paper Roll).
+  // BOTH arms move every frame - an earlier drawing moved one arm at a time,
+  // which isn't the exercise. The rolls are drawn as faded rings, the balls
+  // as solid dots in the hands.
+  tennisBallRollFlow: animatedFigure([
     stick({
-      head: [50, 24], neck: [50, 34], shoulders: [[37, 40], [63, 40]], hip: [50, 92],
-      arms: [[[28, 24], [20, 7]], [[72, 54], [70, 72]]],
-      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
-      prop: MAT,
+      head: [50, 28], neck: [50, 38], shoulders: [[38, 42], [62, 42]], hip: [50, 94],
+      arms: [[[29, 28], [22, 13]], [[71, 28], [78, 13]]],
+      legs: [[[44, 114], [42, 134]], [[56, 114], [58, 134]]],
+      prop: MAT + ROLLS,
+      extra: BALLS(22, 13) + BALLS(78, 13),
     }),
     stick({
-      head: [50, 24], neck: [50, 34], shoulders: [[37, 40], [63, 40]], hip: [50, 92],
-      arms: [[[22, 40], [7, 40]], [[72, 54], [70, 72]]],
-      legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
-      prop: MAT,
+      head: [50, 28], neck: [50, 38], shoulders: [[38, 42], [62, 42]], hip: [50, 94],
+      arms: [[[23, 42], [8, 42]], [[77, 42], [92, 42]]],
+      legs: [[[44, 114], [42, 134]], [[56, 114], [58, 134]]],
+      prop: MAT + ROLLS,
+      extra: BALLS(8, 42) + BALLS(92, 42),
+    }),
+    stick({
+      head: [50, 28], neck: [50, 38], shoulders: [[38, 42], [62, 42]], hip: [50, 94],
+      arms: [[[28, 62], [43, 76]], [[72, 62], [57, 76]]],
+      legs: [[[44, 114], [42, 134]], [[56, 114], [58, 134]]],
+      prop: MAT + ROLLS,
+      extra: BALLS(43, 76) + BALLS(57, 76),
     }),
   ]),
 
   // C129 - 2-frame flip book seen from directly overhead, face down: hands
   // flat on the floor beside the head, elbows out, and the head tipped toward
   // one shoulder, then the other (Prone Neck Release). The hands and shoulders
-  // are pinned; only the head and neck move, which is the point - the hands
-  // pressing down keep the shoulders from rising to meet the ear.
+  // are pinned; only the head and neck move. The head sits close enough to the
+  // neck point that the two overlap, so it reads as attached to the body - an
+  // earlier drawing floated it off to the side of the shoulders.
   proneNeckReleaseFlow: animatedFigure([
     stick({
-      head: [37, 29], neck: [46, 35], shoulders: [[36, 41], [64, 41]], hip: [50, 92],
+      head: [41, 28], neck: [48, 36], shoulders: [[36, 41], [64, 41]], hip: [50, 92],
       arms: [[[20, 50], [33, 36]], [[80, 50], [67, 36]]],
       legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
       prop: MAT,
     }),
     stick({
-      head: [63, 29], neck: [54, 35], shoulders: [[36, 41], [64, 41]], hip: [50, 92],
+      head: [59, 28], neck: [52, 36], shoulders: [[36, 41], [64, 41]], hip: [50, 92],
       arms: [[[20, 50], [33, 36]], [[80, 50], [67, 36]]],
       legs: [[[44, 112], [42, 132]], [[56, 112], [58, 132]]],
       prop: MAT,
     }),
   ]),
 
-  // C130 - 2-frame flip book seen from overhead, on the back: knees stacked and
-  // rolled to one side while the arm on the opposite side sweeps up past the
-  // head, then mirrored (Lying Knee Roll with Reach). The legs are
-  // windshieldWiperFlow's; what makes this a different exercise is the reaching
-  // arm and, in a real body, the knees being held up off the floor - which an
-  // overhead view can't show, so the arm carries the difference. The other arm
-  // rests out to the side in both frames.
-  kneeRollReachFlow: animatedFigure([
+  // C130 - 2-frame flip book seen from the front, in a one-arm side plank: one
+  // straight arm planted, the body turned sideways with the hips held high and
+  // the bottom leg out wide; the top foot swung back behind the bottom knee,
+  // then forward in front of it to tap the floor (Side Plank with Leg Shift).
+  // The planted hand, hips and bottom leg are pinned, so the picture is the top
+  // foot alone: higher and away is behind the knee, low and toward the viewer
+  // is in front of it. Hips stay up in both frames - that is the exercise.
+  sidePlankLegShiftFlow: animatedFigure([
     stick({
-      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
-      arms: [[[28, 22], [24, 6]], [[70, 50], [80, 66]]],
-      legs: [[[74, 98], [60, 126]], [[66, 102], [52, 130]]],
-      prop: MAT,
+      head: [30, 40], headR: 7, neck: [31, 52], hip: [56, 84],
+      arms: [[[22, 84], [14, 116]], [[44, 64], [40, 84]]],
+      legs: [[[78, 102], [96, 118]], [[82, 76], [96, 66]]],
+      prop: GROUND(6, 98, 120),
     }),
     stick({
-      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
-      arms: [[[30, 50], [20, 66]], [[72, 22], [76, 6]]],
-      legs: [[[26, 98], [40, 126]], [[34, 102], [48, 130]]],
-      prop: MAT,
+      head: [30, 40], headR: 7, neck: [31, 52], hip: [56, 84],
+      arms: [[[22, 84], [14, 116]], [[44, 64], [40, 84]]],
+      legs: [[[78, 102], [96, 118]], [[68, 100], [54, 118]]],
+      prop: GROUND(6, 98, 120),
     }),
   ]),
 
