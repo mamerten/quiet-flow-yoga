@@ -794,19 +794,43 @@ window.FIGURES = {
   // then forward in front of it to tap the floor (Side Plank with Leg Shift).
   // The planted hand, hips and bottom leg are pinned, so the picture is the top
   // foot alone: higher and away is behind the knee, low and toward the viewer
-  // is in front of it. Hips stay up in both frames - that is the exercise.
+  // is in front of it. Hips stay up in both frames - that is the exercise. The
+  // planted arm is kept about as long as the torso: the first drawing ran it
+  // far longer, which made the figure read as perched on stilts.
   sidePlankLegShiftFlow: animatedFigure([
     stick({
-      head: [30, 40], headR: 7, neck: [31, 52], hip: [56, 84],
-      arms: [[[22, 84], [14, 116]], [[44, 64], [40, 84]]],
-      legs: [[[78, 102], [96, 118]], [[82, 76], [96, 66]]],
-      prop: GROUND(6, 98, 120),
+      head: [30, 52], headR: 7, neck: [32, 66], hip: [56, 86],
+      arms: [[[25, 88], [19, 110]], [[44, 76], [40, 92]]],
+      legs: [[[76, 98], [94, 110]], [[78, 80], [92, 70]]],
+      prop: GROUND(6, 98, 112),
     }),
     stick({
-      head: [30, 40], headR: 7, neck: [31, 52], hip: [56, 84],
-      arms: [[[22, 84], [14, 116]], [[44, 64], [40, 84]]],
-      legs: [[[78, 102], [96, 118]], [[68, 100], [54, 118]]],
-      prop: GROUND(6, 98, 120),
+      head: [30, 52], headR: 7, neck: [32, 66], hip: [56, 86],
+      arms: [[[25, 88], [19, 110]], [[44, 76], [40, 92]]],
+      legs: [[[76, 98], [94, 110]], [[68, 98], [54, 110]]],
+      prop: GROUND(6, 98, 112),
+    }),
+  ]),
+
+  // C131 - 2-frame flip book seen from overhead, on the back: knees stacked and
+  // rolled to one side while the arm on the opposite side sweeps up past the
+  // head, then mirrored (Lying Knee Roll with Reach). The legs are
+  // windshieldWiperFlow's; what makes this a different exercise is the reaching
+  // arm and, in a real body, the knees being held up off the floor - which an
+  // overhead view can't show, so the arm carries the difference. The other arm
+  // rests out to the side in both frames.
+  kneeRollReachFlow: animatedFigure([
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[28, 22], [24, 6]], [[70, 50], [80, 66]]],
+      legs: [[[74, 98], [60, 126]], [[66, 102], [52, 130]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [20, 66]], [[72, 22], [76, 6]]],
+      legs: [[[26, 98], [40, 126]], [[34, 102], [48, 130]]],
+      prop: MAT,
     }),
   ]),
 
