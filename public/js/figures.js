@@ -812,6 +812,42 @@ window.FIGURES = {
     }),
   ]),
 
+  // C132 - side view, the side plank on a straight arm: one hand planted under
+  // the shoulder, the body one straight line to the feet, the top arm reaching
+  // for the ceiling (Side Plank Hold, Hand). The same body line as sidePlank
+  // above; the only change is the bottom arm, straight down instead of lying
+  // along the floor, which is what makes it the harder one.
+  sidePlankHand: svg(stick({
+    head: [18, 48], headR: 7, neck: [26, 54], hip: [62, 88],
+    arms: [[[25, 86], [24, 120]], [[30, 36], [34, 16]]],
+    legs: [[[78, 102], [94, 120]]],
+    prop: GROUND(6, 96, 124),
+  })),
+
+  // C133 - 2-frame flip book, side view: kneeling tall with the tops of the feet
+  // flat on the floor (soles up), arms crossed over the chest; then the whole
+  // body leaned back in one straight line from the knees (Reverse Nordic Curl).
+  // Shins and feet are pinned and kneelingHipHingeFlow's - the two are meant to
+  // read as relatives, but here the hips do NOT fold: knee, hip and shoulder
+  // stay on one line, which is the point. Crossed arms are drawn as one short
+  // bar across the front of the chest.
+  reverseNordicCurlFlow: animatedFigure([
+    stick({
+      head: [44, 40], headR: 7, neck: [45, 52], hip: [44, 92],
+      arms: [[[38, 66], [47, 60]]],
+      legs: [[[40, 120], [70, 122]]],
+      prop: GROUND(6, 96, 126),
+      extra: BONE(70, 122, 86, 124, W.foot[0], W.foot[1]),
+    }),
+    stick({
+      head: [86, 56], headR: 7, neck: [77, 64], hip: [56, 97],
+      arms: [[[71, 77], [80, 71]]],
+      legs: [[[40, 120], [70, 122]]],
+      prop: GROUND(6, 96, 126),
+      extra: BONE(70, 122, 86, 124, W.foot[0], W.foot[1]),
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a
@@ -1078,7 +1114,7 @@ window.FIGURES = {
 
   // C23 — propped on one forearm with the body in a straight line from
   // head to heels and the top arm reaching for the ceiling (Side Plank
-  // Hold). The forearm runs along the floor rather than straight down,
+  // Hold, Elbow). The forearm runs along the floor rather than straight down,
   // which is what separates it from a plank.
   sidePlank: svg(stick({
     head: [18, 48], headR: 7, neck: [26, 54], hip: [62, 88],

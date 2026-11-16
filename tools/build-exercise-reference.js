@@ -103,7 +103,7 @@ const SUBSECTIONS = {
       'plank-hold', 'shoulder-taps', 'push-up-flow', 'shoulder-tap-push-up', 'wide-push-up',
       'spiderman-push-up', 'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
       'push-up-lunge-reach', 'push-up-kick-through', 'push-up-side-plank',
-      'side-plank', 'side-curl', 'side-plank-leg-shift',
+      'side-plank', 'side-plank-hand', 'side-curl', 'side-plank-leg-shift',
       'plank-opposite-toe-touch', 'kick-through', 'mountain-climber-kick-through',
       'shoulder-tap-kick-through', 'mountain-climber', 'burpee',
       'down-up-dogs', 'bear-crawl',
@@ -112,7 +112,7 @@ const SUBSECTIONS = {
       'kneeling-thoracic-rotation', 'kneeling-rest',
       // kneeling and low lunges
       'worlds-greatest-stretch', 'lunge-reach-twist', 'couch-stretch',
-      'kneeling-ankle-stretch', 'kneeling-hip-hinge', 'kneeling-lean-rotate',
+      'kneeling-ankle-stretch', 'kneeling-hip-hinge', 'reverse-nordic-curl', 'kneeling-lean-rotate',
       'squat-roll-hip-lift',
       // face down
       'superman-hold', 'prone-w-rotation', 'prone-elbow-rotation', 'tennis-ball-to-toilet-paper-roll',
@@ -152,8 +152,12 @@ function figureCell(e) {
   return `<div class="frames">${svgs.join('')}</div>`;
 }
 
+const GROUP_NAMES = {
+  kicks: 'kicks', punches: 'punches', 'ninety-ninety': '90/90s', 'leg-raises': 'leg raises and sweeps',
+};
 const notes = (e) => [
   e.needsWall && 'needs a wall',
+  e.group && `max 1 per session: ${GROUP_NAMES[e.group] || e.group}`,
 ].filter(Boolean);
 
 const groups = {};

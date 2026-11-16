@@ -17,6 +17,14 @@
 // between sessions: each eligible exercise is equally likely in every session,
 // regardless of what came up yesterday or when it was added to the library.
 // Within a session nothing repeats until the whole deck has been dealt.
+//
+// Groups: a few families of near-identical moves (the kicks, the punches, the
+// 90/90s, the leg raises and sweeps) carry a `group` in exercises.js, and a run
+// deals at most ONE exercise from each. Picked fairly at random, four kicks in
+// one 25-exercise session is ordinary luck, and it reads as the app being
+// stuck on kicks. The first of a group to be dealt is the one; the rest of that
+// group are skipped for the whole run, however long it is. A left/right pair
+// counts as one exercise.
 // (An earlier version carried the deck over between sessions so everything
 // came up once before anything repeated; that was dropped by request, partly
 // because it made newly added exercises turn up noticeably more often.)
@@ -64,6 +72,26 @@ window.createCalisthenicsSequencer = function createCalisthenicsSequencer(filter
   let remaining = shuffleExercises(all);
   let lastId = null;
   let pendingRightSide = null; // sided exercise whose right side comes next
+  const usedGroups = new Set(); // groups that have already had their one turn
+  const eligible = (e) => !(e.group && usedGroups.has(e.group));
+
+  // The next exercise from the deck, passing over any whose group has already
+  // had its turn this run (those are dropped, not put back). The deck can only
+  // run dry of eligible exercises if every exercise left is in a used group -
+  // a pool made of nothing but groups - and then the limit is lifted rather
+  // than looping forever.
+  function take() {
+    let refills = 0;
+    for (;;) {
+      if (remaining.length === 0) {
+        if (refills >= 1) usedGroups.clear();
+        remaining = shuffleExercises(all);
+        refills++;
+      }
+      const e = remaining.shift();
+      if (eligible(e)) return e;
+    }
+  }
 
   return {
     next() {
@@ -75,15 +103,18 @@ window.createCalisthenicsSequencer = function createCalisthenicsSequencer(filter
         return { pose: exercise, side: 'right', duration: null };
       }
 
-      if (remaining.length === 0) remaining = shuffleExercises(all);
-      let exercise = remaining.shift();
+      let exercise = take();
       // Never the same exercise twice running - only possible right after a
       // reshuffle. Swapped with a random later one so it still gets its turn.
-      if (exercise.id === lastId && remaining.length > 0) {
-        const j = Math.floor(Math.random() * remaining.length);
-        [exercise, remaining[j]] = [remaining[j], exercise];
+      if (exercise.id === lastId) {
+        const later = remaining.map((e, k) => k).filter((k) => eligible(remaining[k]));
+        if (later.length > 0) {
+          const j = later[Math.floor(Math.random() * later.length)];
+          [exercise, remaining[j]] = [remaining[j], exercise];
+        }
       }
       lastId = exercise.id;
+      if (exercise.group) usedGroups.add(exercise.group);
 
       if (exercise.sided) {
         pendingRightSide = exercise; // due on the very next call, immediately

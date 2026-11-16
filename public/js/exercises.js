@@ -84,6 +84,10 @@
 //   difficulty     optional: 'E' | 'M' | 'H' (easy, medium, hard), as rated
 //                  for the person using this app. Shown in the exercise
 //                  reference; the app itself doesn't use it yet.
+//   group          optional: a family of near-identical moves (kicks, punches,
+//                  ninety-ninety, leg-raises). A run deals at most ONE
+//                  exercise from each group, so a session can't fill up with
+//                  four kicks. See js/calisthenics-workout.js.
 //   mixedSides     optional: true if both sides are worked inside the one
 //                  set, left and right mixed together as you go - the
 //                  kickboxing moves. Not paired and not scheduled any
@@ -125,6 +129,7 @@ window.EXERCISES = [
     name: 'Squat Knee Drops',
     figure: 'squatKneeDropFlow',
     surface: 'standing',
+    difficulty: 'H',
     cue: 'Sink into a deep squat with your feet fairly close together and your hands clasped in front of your chest. Let one knee sink in toward the floor while both feet stay flat, then bring it back up and let the other one sink. Side to side, slow and controlled.',
   },
   {
@@ -154,6 +159,7 @@ window.EXERCISES = [
     name: 'Collarbone Look-Up',
     figure: 'collarboneLookUp',
     surface: 'standing',
+    difficulty: 'E',
     cue: 'Cross one arm over and rest your fingers on the opposite collarbone, keep your ribs down, and look up and away from that hand. Alternate sides as you go. Unloads a stiff, forward-jutted neck.',
   },
   {
@@ -169,6 +175,7 @@ window.EXERCISES = [
     name: 'Standing Lateral Leg Raise',
     figure: 'standingLateralLegRaiseFlow',
     surface: 'standing',
+    group: 'leg-raises',
     cue: 'Stand tall on one leg with your hands on your hips. Keeping both legs straight and your body upright, lift the other leg straight out to the side as high as you can without leaning, then lower it with control, not letting the foot rest between reps. Switch legs halfway through.',
   },
   {
@@ -406,11 +413,20 @@ window.EXERCISES = [
   },
   {
     id: 'side-plank',
-    name: 'Side Plank Hold',
+    name: 'Side Plank Hold, Elbow',
     figure: 'sidePlank',
     surface: 'ground',
     sided: true,
     cue: 'Prop up on one forearm with your body in a straight line, hips lifted. Reach your top arm toward the ceiling.',
+  },
+  {
+    id: 'side-plank-hand',
+    name: 'Side Plank Hold, Hand',
+    figure: 'sidePlankHand',
+    surface: 'ground',
+    sided: true,
+    difficulty: 'H',
+    cue: 'Prop up on one hand with your arm straight under your shoulder and your body in a straight line, hips lifted. Reach your top arm toward the ceiling. This is the harder version of the elbow side plank.',
   },
   {
     id: 'side-curl',
@@ -426,6 +442,7 @@ window.EXERCISES = [
     figure: 'sidePlankLegShiftFlow',
     surface: 'ground',
     sided: true,
+    difficulty: 'H',
     cue: 'Get into a one-arm side plank: one hand planted under your shoulder with the arm straight, your body turned to the side, hips lifted high and your bottom leg out wide. Keeping your hips up, swing your top foot back behind your bottom knee, then forward in front of it, and tap the floor. Keep shifting it back and forth, slow and balanced. Switch sides halfway through.',
   },
   {
@@ -433,6 +450,7 @@ window.EXERCISES = [
     name: "Child's Pose",
     figure: 'kneelingRest',
     surface: 'ground',
+    difficulty: 'E',
     cue: 'Sit back onto your heels and fold forward, arms stretched out or resting by your sides. A good reset between rounds.',
   },
   {
@@ -519,6 +537,7 @@ window.EXERCISES = [
     name: 'Mountain Climbers to Kick-Through',
     figure: 'mountainClimberKickThroughFlow',
     surface: 'ground',
+    difficulty: 'H',
     cue: 'Start in a high plank. Drive one knee in toward your chest, then the other, quick and light. Then lift one hand and the opposite foot and kick that leg through underneath your body toward the side your hand came off. Bring it back to the plank, do two more mountain climbers, and kick through to the other side.',
   },
   {
@@ -534,6 +553,7 @@ window.EXERCISES = [
     figure: 'scorpionTwist',
     surface: 'ground',
     sided: true,
+    difficulty: 'H',
     cue: 'Lie on your stomach, arms out to the sides. Swing one heel as far as you can, up and across towards the hand, then reset.',
   },
   {
@@ -542,6 +562,7 @@ window.EXERCISES = [
     figure: 'ninetyNinetyFlow',
     surface: 'ground',
     difficulty: 'H',
+    group: 'ninety-ninety',
     cue: 'Sit tall with both knees bent at 90 degrees, one leg in front of you and the other out to the side behind you, hands on the floor for support. Lift your knees and swing them over to the other side, turning your chest with them so your whole torso rotates 90 degrees to face the new front leg.',
   },
   {
@@ -550,6 +571,7 @@ window.EXERCISES = [
     figure: 'ninetyNinetyOverheadFlow',
     surface: 'ground',
     difficulty: 'H',
+    group: 'ninety-ninety',
     cue: 'Sit tall with both knees bent and your arms stretched straight overhead, hands clasped. Swing your knees from one side to the other without putting a hand down, keeping your chest lifted the whole time.',
   },
   {
@@ -559,6 +581,7 @@ window.EXERCISES = [
     surface: 'ground',
     sided: true,
     difficulty: 'H',
+    group: 'ninety-ninety',
     cue: 'Sit in a 90/90: one shin across the floor in front of you, the other leg out to the side behind you, both knees bent square. Put your hands on your hips. Squeeze your glutes and drive your hips up and forward until you are kneeling tall on the front shin and the back knee, then sit back down with control.',
   },
   {
@@ -624,6 +647,7 @@ window.EXERCISES = [
     name: 'Cat-Cow',
     figure: 'catCowFlow',
     surface: 'ground',
+    difficulty: 'E',
     cue: 'On hands and knees, arch your back and look up, then round your spine and tuck your chin. Slow and steady, following your breath.',
   },
   {
@@ -638,6 +662,7 @@ window.EXERCISES = [
     name: 'Leg Raises',
     figure: 'legRaiseFlow',
     surface: 'ground',
+    group: 'leg-raises',
     cue: 'Sit propped back on your hands with your legs straight out in front. Raise them together as high as you can, then lower them back down without letting your feet touch the floor.',
   },
   {
@@ -645,6 +670,7 @@ window.EXERCISES = [
     name: 'Two-Leg Side Sweep',
     figure: 'twoLegSweepFlow',
     surface: 'ground',
+    group: 'leg-raises',
     cue: 'Sit propped back on your hands, legs straight out in front. Put a shoe or a cushion on the floor ahead of you to clear — or just pick a spot. Lift both legs together and sweep them across to one side of it, then back across to the other, keeping them straight and off the floor the whole way.',
   },
   {
@@ -652,6 +678,7 @@ window.EXERCISES = [
     name: 'Single-Leg Side Sweep',
     figure: 'singleLegSweepFlow',
     surface: 'ground',
+    group: 'leg-raises',
     cue: 'Sit propped back on your hands, legs straight out in front. Put a shoe or a cushion on the floor ahead of you to clear — or just pick a spot. Lift one leg and sweep it across over that marker and back, alternating legs, without letting either heel touch down.',
   },
   {
@@ -725,6 +752,7 @@ window.EXERCISES = [
     name: 'Standing Quad Stretch',
     figure: 'standingQuadStretch',
     surface: 'standing',
+    difficulty: 'E',
     cue: 'Stand tall on one leg, bend the other knee, and hold that ankle behind you, drawing the heel toward your glute. Keep your knees close together and your hips tucked under, and reach the free arm out in front for balance. Hold, then switch legs halfway through.',
   },
   {
@@ -770,6 +798,13 @@ window.EXERCISES = [
     figure: 'kneelingHipHingeFlow',
     surface: 'ground',
     cue: 'Kneel tall on both knees with the tops of your feet flat on the floor and your hips stacked over your knees. Keeping your back flat and your ribs down, push your hips back and let your chest travel forward, then squeeze your glutes to drive the hips forward and stand tall on your knees again.',
+  },
+  {
+    id: 'reverse-nordic-curl',
+    name: 'Reverse Nordic Curl',
+    figure: 'reverseNordicCurlFlow',
+    surface: 'ground',
+    cue: 'Kneel tall with the tops of your feet flat on the floor, soles facing up, and cross your arms over your chest. Keeping your body in one straight line from your knees to your head, with no bend at the hips, lean back as far as you can control, then pull yourself back upright using your thighs. Repeat for reps.',
   },
   {
     id: 'kneeling-lean-rotate',
@@ -958,6 +993,7 @@ window.EXERCISES = [
     surface: 'ground',
     mixedSides: true,
     difficulty: 'H',
+    group: 'ninety-ninety',
     cue: 'Sit in a 90/90, with one shin in front of you and the other out to the side behind you, both knees bent square. Turn your torso toward the back leg, reaching both hands to the floor beside it and looking behind you over that shoulder, then come back up tall. Switch which leg is in front halfway through.',
   },
   {
@@ -966,6 +1002,7 @@ window.EXERCISES = [
     figure: 'jabCrossFlow',
     surface: 'standing',
     mixedSides: true,
+    group: 'punches',
     cue: 'Stand with one foot forward, knees soft, fists up by your chin. Snap your lead hand straight out, then drive your rear hand out as you turn your hips and pivot your back foot. Bring each hand straight back to your chin. Quick and light.',
   },
   {
@@ -974,6 +1011,7 @@ window.EXERCISES = [
     figure: 'hookFlow',
     surface: 'standing',
     mixedSides: true,
+    group: 'punches',
     cue: 'Stand with one foot forward, knees soft, fists up by your chin. Lift one elbow to shoulder height and swing that fist in a flat arc across in front of you, turning your hips with it. Back to guard, then hook with the other hand.',
   },
   {
@@ -982,6 +1020,7 @@ window.EXERCISES = [
     figure: 'uppercutFlow',
     surface: 'standing',
     mixedSides: true,
+    group: 'punches',
     cue: 'Stand with one foot forward, fists up by your chin. Dip your knees, then drive one fist upward in front of you as if under a chin, pushing up through your legs. Back to guard, then the other hand.',
   },
   {
@@ -990,6 +1029,7 @@ window.EXERCISES = [
     figure: 'bobWeaveFlow',
     surface: 'standing',
     mixedSides: true,
+    group: 'punches',
     cue: 'Stand with your feet wide and your fists up by your chin. Bend your knees and duck your head down and across in a U shape, as if slipping under a punch, then come up on the other side. Keep your eyes forward and your hands up.',
   },
   {
@@ -998,6 +1038,7 @@ window.EXERCISES = [
     figure: 'frontKickFlow',
     surface: 'standing',
     mixedSides: true,
+    group: 'kicks',
     cue: 'Fists up by your chin. Lift one knee high, then snap that foot straight out in front of you at hip height, pushing through the ball of your foot. Pull it back, set it down, and kick with the other leg.',
   },
   {
@@ -1006,6 +1047,7 @@ window.EXERCISES = [
     figure: 'roundhouseKickFlow',
     surface: 'standing',
     mixedSides: true,
+    group: 'kicks',
     cue: 'Stand with one foot forward and your fists up. Pivot on your standing foot and swing your other leg around sideways, striking with your shin at hip height as your body leans away. Set it down and switch legs.',
   },
   {
@@ -1014,6 +1056,7 @@ window.EXERCISES = [
     figure: 'kneeStrikeFlow',
     surface: 'standing',
     mixedSides: true,
+    group: 'kicks',
     cue: 'Reach both hands up in front of you as if taking hold of someone by the shoulders. Drive one knee up hard toward your chest while pulling your hands down to meet it. Set it down and drive the other knee.',
   },
   {
@@ -1022,6 +1065,7 @@ window.EXERCISES = [
     figure: 'sideKickFlow',
     surface: 'standing',
     mixedSides: true,
+    group: 'kicks',
     cue: 'Fists up by your chin. Draw one knee up across your body, then push that heel straight out to the side, leaning your body away from the kick. Pull the knee back in, set it down, and switch legs.',
   },
   {
