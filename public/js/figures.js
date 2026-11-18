@@ -848,6 +848,29 @@ window.FIGURES = {
     }),
   ]),
 
+  // C134 - 2-frame flip book, side view: the crab hold with both feet planted
+  // and the hips pressed up level with the knees, then one leg lifted with the
+  // knee bent and the foot raised while the hips stay exactly where they were
+  // (Crab Hold, Leg Lift). Both frames share the hold's body - head, shoulders,
+  // hands and hips are identical - so the lifted leg is the only thing that
+  // moves, and the level hips are the point of the exercise. The second leg is
+  // drawn planted in both frames, a little forward of the first, so it reads as
+  // a pair of feet rather than one.
+  crabLegLiftFlow: animatedFigure([
+    stick({
+      head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
+      arms: [[[24, 102], [22, 122]], [[31, 100], [29, 122]]],
+      legs: [[[86, 84], [88, 122]], [[82, 86], [80, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
+      arms: [[[24, 102], [22, 122]], [[31, 100], [29, 122]]],
+      legs: [[[86, 84], [88, 122]], [[86, 68], [74, 48]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a

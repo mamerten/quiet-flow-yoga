@@ -327,6 +327,15 @@ window.EXERCISES = [
     cue: 'Sit with your knees bent and feet flat, hands on the floor behind you with your fingers toward your feet. Press your hips up until they are level with your knees and your body forms a flat table. Squeeze your glutes and hold.',
   },
   {
+    id: 'crab-hold-leg-lift',
+    name: 'Crab Hold, Leg Lift',
+    figure: 'crabLegLiftFlow',
+    surface: 'ground',
+    mixedSides: true,
+    difficulty: 'H',
+    cue: 'Get into a crab hold: sit with your knees bent and feet flat, hands on the floor behind you with your fingers toward your feet, and press your hips up until they are level with your knees. Lift one foot off the floor with the knee bent and press that foot toward the ceiling, keeping your hips level and not letting them sag or tilt. Lower it and lift the other foot, alternating as you go. This is the harder version of the crab hold.',
+  },
+  {
     id: 'bear-to-crab',
     name: 'Bear to Crab',
     figure: 'bearToCrabFlow',
