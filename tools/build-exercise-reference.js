@@ -104,8 +104,8 @@ const SUBSECTIONS = {
       'spiderman-push-up', 'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
       'push-up-lunge-reach', 'push-up-kick-through', 'push-up-side-plank',
       'side-plank', 'side-plank-hand', 'side-curl', 'side-plank-leg-shift',
-      'plank-opposite-toe-touch', 'kick-through', 'mountain-climber-kick-through',
-      'shoulder-tap-kick-through', 'mountain-climber', 'burpee',
+      'plank-opposite-toe-touch', 'kick-through', 'kick-through-from-beast', 'mountain-climber-kick-through',
+      'shoulder-tap-kick-through', 'mountain-climber', 'beast-lunge-switch', 'burpee',
       'down-up-dogs', 'bear-crawl',
       // hands and knees
       'bird-dog', 'cat-cow-mobility', 'frog-sit-opener', 'kneeling-shoulder-rocks',
@@ -120,7 +120,7 @@ const SUBSECTIONS = {
     ]],
     ['Chest up', [
       // crab
-      'crab-hold', 'crab-hold-leg-lift', 'bear-to-crab', 'crab-lift', 'crab-toe-touch', 'crab-reach',
+      'crab-hold', 'crab-hold-leg-lift', 'bear-to-crab', 'crab-lift', 'crab-knee-tuck', 'crab-toe-touch', 'crab-reach',
       'reverse-plank',
       // on the back
       'glute-bridge', 'single-leg-glute-bridge', 'dead-bug', 'hollow-body-hold',
@@ -153,11 +153,11 @@ function figureCell(e) {
 }
 
 const GROUP_NAMES = {
-  kicks: 'kicks', punches: 'punches', 'ninety-ninety': '90/90s', 'leg-raises': 'leg raises and sweeps',
+  kicks: 'kicks', punches: 'punches', 'ninety-ninety': '90/90s', 'leg-raises': 'leg raises and sweeps', 'push-ups': 'push-ups',
 };
 const notes = (e) => [
   e.needsWall && 'needs a wall',
-  e.group && `max 1 per session: ${GROUP_NAMES[e.group] || e.group}`,
+  e.group && `max ${(window.GROUP_LIMITS || {})[e.group] || 1} per session: ${GROUP_NAMES[e.group] || e.group}`,
 ].filter(Boolean);
 
 const groups = {};

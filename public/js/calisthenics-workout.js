@@ -19,10 +19,12 @@
 // Within a session nothing repeats until the whole deck has been dealt.
 //
 // Groups: a few families of near-identical moves (the kicks, the punches, the
-// 90/90s, the leg raises and sweeps) carry a `group` in exercises.js, and a run
-// deals at most ONE exercise from each. Picked fairly at random, four kicks in
-// one 25-exercise session is ordinary luck, and it reads as the app being
-// stuck on kicks. The first of a group to be dealt is the one; the rest of that
+// 90/90s, the leg raises and sweeps, the push-ups) carry a `group` in
+// exercises.js, and a run deals at most ONE exercise from each - or the number
+// in window.GROUP_LIMITS where a family is allowed more (the push-ups: two).
+// Picked fairly at random, four kicks in one 25-exercise session is ordinary
+// luck, and it reads as the app being stuck on kicks. The first of a group to
+// be dealt counts toward its limit; once the limit is reached the rest of that
 // group are skipped for the whole run, however long it is. A left/right pair
 // counts as one exercise.
 // (An earlier version carried the deck over between sessions so everything
@@ -72,11 +74,12 @@ window.createCalisthenicsSequencer = function createCalisthenicsSequencer(filter
   let remaining = shuffleExercises(all);
   let lastId = null;
   let pendingRightSide = null; // sided exercise whose right side comes next
-  const usedGroups = new Set(); // groups that have already had their one turn
-  const eligible = (e) => !(e.group && usedGroups.has(e.group));
+  const groupCount = new Map(); // how many of each group have been dealt this run
+  const limitOf = (g) => (window.GROUP_LIMITS && window.GROUP_LIMITS[g]) || 1;
+  const eligible = (e) => !(e.group && (groupCount.get(e.group) || 0) >= limitOf(e.group));
 
   // The next exercise from the deck, passing over any whose group has already
-  // had its turn this run (those are dropped, not put back). The deck can only
+  // used up its limit this run (those are dropped, not put back). The deck can only
   // run dry of eligible exercises if every exercise left is in a used group -
   // a pool made of nothing but groups - and then the limit is lifted rather
   // than looping forever.
@@ -84,7 +87,7 @@ window.createCalisthenicsSequencer = function createCalisthenicsSequencer(filter
     let refills = 0;
     for (;;) {
       if (remaining.length === 0) {
-        if (refills >= 1) usedGroups.clear();
+        if (refills >= 1) groupCount.clear();
         remaining = shuffleExercises(all);
         refills++;
       }
@@ -114,7 +117,7 @@ window.createCalisthenicsSequencer = function createCalisthenicsSequencer(filter
         }
       }
       lastId = exercise.id;
-      if (exercise.group) usedGroups.add(exercise.group);
+      if (exercise.group) groupCount.set(exercise.group, (groupCount.get(exercise.group) || 0) + 1);
 
       if (exercise.sided) {
         pendingRightSide = exercise; // due on the very next call, immediately

@@ -871,6 +871,66 @@ window.FIGURES = {
     }),
   ]),
 
+  // C135 - 3-frame flip book, side view: a beast - hands and feet down, knees
+  // bent and hovering, hips high; then one hand lifted toward the chest and the
+  // opposite leg swung in under the body; then the kick-through finish
+  // (Kick-Through from Beast). The finish is the shared KICK_THROUGH frame, so
+  // it is the same end position as the plank version; only the way in differs.
+  kickThroughBeastFlow: animatedFigure([
+    stick({
+      head: [16, 58], headR: 7, neck: [24, 64], hip: [64, 64],
+      arms: [[[24, 92], [24, 118]], [[29, 92], [29, 118]]],
+      legs: [[[74, 96], [80, 118]], [[68, 98], [72, 118]]],
+      prop: KT_FLOOR,
+    }),
+    stick({
+      head: [20, 68], headR: 7, neck: [28, 74], hip: [60, 82],
+      arms: [[[26, 96], [24, 118]], [[37, 88], [43, 78]]],
+      legs: [[[76, 100], [82, 118]], [[48, 100], [34, 110]]],
+      prop: KT_FLOOR,
+    }),
+    stick(KICK_THROUGH),
+  ]),
+
+  // C136 - 2-frame flip book, side view: hands down and hips high with one foot
+  // stepped forward between the hands in a low lunge, then both feet off the
+  // floor mid-hop as the legs switch (Beast Lunge Switch). In a side view the two
+  // legs swap places without changing the silhouette, so the airborne frame is
+  // what says "switch": feet together under the hips, clear of the floor line.
+  beastLungeSwitchFlow: animatedFigure([
+    stick({
+      head: [26, 54], headR: 7, neck: [34, 62], hip: [64, 70],
+      arms: [[[32, 92], [28, 118]], [[37, 92], [33, 118]]],
+      legs: [[[44, 90], [38, 118]], [[84, 92], [98, 114]]],
+      prop: KT_FLOOR,
+    }),
+    stick({
+      head: [26, 48], headR: 7, neck: [34, 56], hip: [62, 62],
+      arms: [[[32, 88], [28, 118]], [[37, 88], [33, 118]]],
+      legs: [[[56, 84], [52, 104]], [[70, 86], [66, 104]]],
+      prop: KT_FLOOR,
+    }),
+  ]),
+
+  // C137 - 2-frame flip book, side view: sitting with the hands planted behind
+  // and the hips lifted just off the floor, the knees drawn in tight toward the
+  // chest; then both legs extended out and up at an angle (Crab Knee Tuck). Head,
+  // hands and hips are pinned; only the legs travel.
+  crabKneeTuckFlow: animatedFigure([
+    stick({
+      head: [22, 68], headR: 7, neck: [30, 78], hip: [54, 100],
+      arms: [[[26, 100], [24, 120]], [[32, 98], [30, 120]]],
+      legs: [[[60, 80], [46, 90]], [[63, 82], [50, 92]]],
+      prop: GROUND(6, 98, 122),
+    }),
+    stick({
+      head: [22, 68], headR: 7, neck: [30, 78], hip: [54, 100],
+      arms: [[[26, 100], [24, 120]], [[32, 98], [30, 120]]],
+      legs: [[[74, 90], [94, 70]], [[77, 92], [97, 72]]],
+      prop: GROUND(6, 98, 122),
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a

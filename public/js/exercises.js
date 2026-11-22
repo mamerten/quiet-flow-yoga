@@ -85,9 +85,10 @@
 //                  for the person using this app. Shown in the exercise
 //                  reference; the app itself doesn't use it yet.
 //   group          optional: a family of near-identical moves (kicks, punches,
-//                  ninety-ninety, leg-raises). A run deals at most ONE
-//                  exercise from each group, so a session can't fill up with
-//                  four kicks. See js/calisthenics-workout.js.
+//                  ninety-ninety, leg-raises, push-ups). A run deals at most
+//                  ONE exercise from each group (GROUP_LIMITS, below, raises
+//                  that for a group), so a session can't fill up with four
+//                  kicks. See js/calisthenics-workout.js.
 //   mixedSides     optional: true if both sides are worked inside the one
 //                  set, left and right mixed together as you go - the
 //                  kickboxing moves. Not paired and not scheduled any
@@ -275,6 +276,7 @@ window.EXERCISES = [
     name: 'Push-Up',
     figure: 'pushUpFlow',
     surface: 'ground',
+    group: 'push-ups',
     cue: 'Lower your chest toward the floor and press back up, keeping your body in one straight line.',
   },
   {
@@ -282,6 +284,7 @@ window.EXERCISES = [
     name: 'Shoulder Tap Push-Ups',
     figure: 'shoulderTapPushUpFlow',
     surface: 'ground',
+    group: 'push-ups',
     cue: 'From a high plank, lower into a push-up and press back up. At the top, tap one hand to the opposite shoulder and put it back down, then do the next push-up and tap with the other hand. Keep your hips level the whole time.',
   },
   {
@@ -289,6 +292,7 @@ window.EXERCISES = [
     name: 'Push-Up Lunge Reach',
     figure: 'pushUpLungeReachFlow',
     surface: 'ground',
+    group: 'push-ups',
     cue: 'Do a push-up. At the top, step one foot up beside your hand and lift that same hand off the floor, reaching it forward. Step back to plank, do another push-up, and switch sides each rep.',
   },
   {
@@ -296,6 +300,7 @@ window.EXERCISES = [
     name: 'Push-Up to Kick-Through',
     figure: 'pushUpKickThroughFlow',
     surface: 'ground',
+    group: 'push-ups',
     cue: 'Start in a high plank and do one push-up. At the top, lift one hand and the opposite foot, rotate your hips and kick that leg through underneath your body toward the side your hand came off. Bring it back to the plank, do another push-up, and kick through to the other side.',
   },
   {
@@ -303,6 +308,7 @@ window.EXERCISES = [
     name: 'Push-Up to Side Plank',
     figure: 'pushUpSidePlankFlow',
     surface: 'ground',
+    group: 'push-ups',
     cue: 'Start in a high plank and do one push-up. At the top, shift your weight onto one hand and roll your whole body open to the side, reaching the other arm straight up toward the ceiling as your feet roll onto their edges. Roll back down to the plank, do another push-up, and open to the other side.',
   },
   {
@@ -310,6 +316,7 @@ window.EXERCISES = [
     name: 'Crawl Position Push-Up',
     figure: 'crawlPushUpFlow',
     surface: 'ground',
+    group: 'push-ups',
     cue: 'Get into a crawl position on your hands and feet with your hips high and your knees pulled forward toward your elbows, hovering just off the floor. Bend your elbows and lower your head toward the floor between your hands, keeping your knees off the ground, then press back up.',
   },
   {
@@ -348,6 +355,7 @@ window.EXERCISES = [
     figure: 'pikePushUpFlow',
     surface: 'ground',
     difficulty: 'H',
+    group: 'push-ups',
     cue: 'From a plank, walk your feet in and lift your hips high into an upside-down V. Bend your elbows to lower the top of your head toward the floor between your hands, then press back up, keeping your hips high throughout.',
   },
   {
@@ -356,6 +364,7 @@ window.EXERCISES = [
     figure: 'spidermanPushUpFlow',
     surface: 'ground',
     difficulty: 'H',
+    group: 'push-ups',
     cue: 'Do a push-up, and as you lower, draw one knee out to the side and up toward that same elbow. Press back up as the leg returns, and switch sides each rep.',
   },
   {
@@ -364,6 +373,7 @@ window.EXERCISES = [
     figure: 'widePushUpFlow',
     surface: 'ground',
     difficulty: 'H',
+    group: 'push-ups',
     cue: 'Set your hands well wider than your shoulders and do a push-up, lowering your chest between your hands with your body in one straight line. Press back up with control.',
   },
   {
@@ -372,6 +382,13 @@ window.EXERCISES = [
     figure: 'mountainClimber',
     surface: 'ground',
     cue: 'From a plank, drive your knees toward your chest one at a time, at a quick and steady pace.',
+  },
+  {
+    id: 'beast-lunge-switch',
+    name: 'Beast Lunge Switch',
+    figure: 'beastLungeSwitchFlow',
+    surface: 'ground',
+    cue: 'Start in a beast with your hands on the floor and your hips high. Step or hop one foot forward between your hands into a low lunge, then hop and switch so the other foot comes forward, keeping your hands planted and your hips low and light. Quick and controlled, alternating as you go.',
   },
   {
     id: 'worlds-greatest-stretch',
@@ -535,11 +552,25 @@ window.EXERCISES = [
     cue: 'From an L-sit, hands by your hips, press down and lift your hips up into a crab position. Lower with control and repeat.',
   },
   {
+    id: 'crab-knee-tuck',
+    name: 'Crab Knee Tuck',
+    figure: 'crabKneeTuckFlow',
+    surface: 'ground',
+    cue: 'Sit with your hands on the floor behind you and your hips lifted just off the floor. Lift both feet and draw your knees in toward your chest, then extend your legs out and up at an angle, and tuck them in again. Keep your chest open and your hips up the whole time.',
+  },
+  {
     id: 'kick-through',
-    name: 'Kick-Through',
+    name: 'Kick-Through from Plank',
     figure: 'kickThroughFlow',
     surface: 'ground',
     cue: 'Start in a high plank. Lift one hand and the opposite foot, then rotate your hips and kick that leg through underneath your body toward the side your hand came off, keeping the other hand and foot planted. Bring it back to the plank and kick through to the other side, alternating as you go.',
+  },
+  {
+    id: 'kick-through-from-beast',
+    name: 'Kick-Through from Beast',
+    figure: 'kickThroughBeastFlow',
+    surface: 'ground',
+    cue: 'Start in a beast: hands and feet on the floor, knees bent and hovering just off the floor, back flat. Lift one hand and the opposite foot, then rotate your hips and kick that leg through underneath you to the side your hand came off, finishing sitting low with one hand planted behind you, that knee straight out in front and your other knee bent with the foot down. Return to the beast and kick through to the other side, alternating as you go.',
   },
   {
     id: 'mountain-climber-kick-through',
@@ -1094,6 +1125,11 @@ window.EXERCISES = [
     cue: 'Hang from a bar with arms straight, then pull your chin up and over the bar, elbows driving down and back. Lower with control.',
   },
 ];
+
+// How many exercises of a group one run may deal. A group not listed here is
+// limited to one; the push-ups are allowed two because there are so many of them
+// and they are a favourite.
+window.GROUP_LIMITS = { 'push-ups': 2 };
 
 window.exercisesBySurface = function exercisesBySurface(surface) {
   return window.EXERCISES.filter((e) => e.surface === surface);
