@@ -945,25 +945,26 @@ window.FIGURES = {
     }),
   ]),
 
-  // C139 - 2-frame flip book seen from directly overhead, in a crab: hands
-  // behind the hips and both feet planted; then one hand and the OPPOSITE foot
-  // lifted, with the chest turned toward the hand still on the floor and the
-  // lifted arm swung across the body (Crab to Twist). Overhead because the
-  // twist is the exercise and a side view flattens it; the shoulder bar turning
-  // and the arm crossing the body are what show it. The planted hand and foot
-  // are pinned.
+  // C139 - 2-frame flip book, side view, on crabReachFlow's body: the crab hold,
+  // then one hand and the opposite foot lifted with the chest opened and the
+  // lifted arm swept up and across, the knee bent the right way with the foot
+  // hanging below it (Crab to Twist). It sits with Crab Reach and Crab Toe Touch
+  // and is drawn like them. The first version was drawn from overhead, where the
+  // shoulder bar turned and the arm crossed the chest, and it read as a figure
+  // with a hand on its head; a side crab is how the rest of the family is drawn
+  // and how it is recognised.
   crabTwistFlow: animatedFigure([
     stick({
-      head: [50, 24], neck: [50, 34], shoulders: [[38, 40], [62, 40]], hip: [50, 88],
-      arms: [[[30, 62], [34, 84]], [[70, 62], [66, 84]]],
-      legs: [[[42, 108], [44, 130]], [[58, 108], [56, 130]]],
-      prop: MAT,
+      head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
+      arms: [[[24, 102], [22, 122]], [[31, 100], [29, 122]]],
+      legs: [[[86, 84], [88, 122]], [[82, 86], [80, 122]]],
+      prop: GROUND(6, 96, 124),
     }),
     stick({
-      head: [56, 26], neck: [52, 34], shoulders: [[41, 43], [63, 36]], hip: [50, 88],
-      arms: [[[54, 55], [74, 46]], [[72, 58], [66, 84]]],
-      legs: [[[42, 108], [44, 130]], [[60, 96], [62, 110]]],
-      prop: MAT,
+      head: [22, 64], headR: 7, neck: [30, 76], hip: [62, 78],
+      arms: [[[24, 100], [22, 122]], [[42, 56], [58, 42]]],
+      legs: [[[86, 80], [88, 122]], [[80, 62], [90, 82]]],
+      prop: GROUND(6, 96, 124),
     }),
   ]),
 

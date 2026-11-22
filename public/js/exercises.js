@@ -85,7 +85,7 @@
 //                  for the person using this app. Shown in the exercise
 //                  reference; the app itself doesn't use it yet.
 //   group          optional: a family of near-identical moves (kicks, punches,
-//                  ninety-ninety, leg-raises, push-ups). A run deals at most
+//                  ninety-ninety, leg-raises, push-ups, ankle-stretches). A run deals at most
 //                  ONE exercise from each group (GROUP_LIMITS, below, raises
 //                  that for a group), so a session can't fill up with four
 //                  kicks. See js/calisthenics-workout.js.
@@ -673,6 +673,7 @@ window.EXERCISES = [
     figure: 'kneelingAnkleStretch',
     surface: 'ground',
     mixedSides: true,
+    group: 'ankle-stretches',
     cue: 'Kneel on one knee with the toes of that foot tucked under and the heel pointing straight up. Front foot flat, hands on the floor for balance. Sit your weight back over the tucked foot until the stretch builds through the ball of the foot, the arch, and up into the ankle. Hold and breathe, and switch sides halfway through.',
   },
   {
@@ -794,6 +795,7 @@ window.EXERCISES = [
     figure: 'wallAnkleStretch',
     surface: 'standing',
     needsWall: true,
+    group: 'ankle-stretches',
     cue: 'Face a wall and set the ball of one foot up against it, heel on the floor. Keeping that heel down, drive your knee forward toward the wall until you feel the stretch through your ankle and calf. Hold, then switch feet halfway through. A step or any sturdy edge works too.',
   },
   {
@@ -970,6 +972,7 @@ window.EXERCISES = [
     figure: 'crabToeTouchFlow',
     surface: 'ground',
     mixedSides: true,
+    difficulty: 'H',
     cue: 'Sit low in a crab, hands planted on the floor behind you and feet flat in front, hips just off the floor. Kick one leg up with the knee bent and reach the opposite hand across to touch that foot. Set them both back down and touch with the other hand and foot, alternating as you go.',
   },
   {
@@ -978,6 +981,7 @@ window.EXERCISES = [
     figure: 'crabLegLiftKneeTouchFlow',
     surface: 'ground',
     mixedSides: true,
+    difficulty: 'H',
     cue: 'Get into a crab with your hands on the floor behind you, fingers toward your feet, and your hips lifted. Lift one foot off the floor and draw that knee up toward your chest, then reach the opposite hand across and touch the knee. Put both back down and repeat with the other leg and hand, alternating as you go.',
   },
   {
@@ -995,6 +999,7 @@ window.EXERCISES = [
     figure: 'crabTwistFlow',
     surface: 'ground',
     mixedSides: true,
+    difficulty: 'H',
     cue: 'Get into a crab with your hands behind you and your hips lifted. Lift one hand and the opposite foot off the floor, then twist your chest toward the hand that is still on the ground, swinging the lifted arm across your body. Return to the crab and repeat with the other hand and foot, alternating as you go.',
   },
   {

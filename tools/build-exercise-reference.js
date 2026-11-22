@@ -153,7 +153,7 @@ function figureCell(e) {
 }
 
 const GROUP_NAMES = {
-  kicks: 'kicks', punches: 'punches', 'ninety-ninety': '90/90s', 'leg-raises': 'leg raises and sweeps', 'push-ups': 'push-ups',
+  kicks: 'kicks', punches: 'punches', 'ninety-ninety': '90/90s', 'leg-raises': 'leg raises and sweeps', 'push-ups': 'push-ups', 'ankle-stretches': 'ankle stretches',
 };
 const notes = (e) => [
   e.needsWall && 'needs a wall',
