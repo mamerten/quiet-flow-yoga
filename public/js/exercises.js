@@ -384,11 +384,11 @@ window.EXERCISES = [
     cue: 'From a plank, drive your knees toward your chest one at a time, at a quick and steady pace.',
   },
   {
-    id: 'beast-lunge-switch',
-    name: 'Beast Lunge Switch',
-    figure: 'beastLungeSwitchFlow',
+    id: 'side-mountain-climber-to-stand',
+    name: 'Side Mountain Climber to Stand',
+    figure: 'sideMountainClimberStandFlow',
     surface: 'ground',
-    cue: 'Start in a beast with your hands on the floor and your hips high. Step or hop one foot forward between your hands into a low lunge, then hop and switch so the other foot comes forward, keeping your hands planted and your hips low and light. Quick and controlled, alternating as you go.',
+    cue: 'Start in a beast on your hands and feet. Drive one knee up and out wide to the side, planting that foot outside the same-side hand, like a mountain climber stepping wide. Press through your feet and stand all the way up with your hands hanging, then squat or fold back down to the floor and repeat with the other leg, alternating as you go.',
   },
   {
     id: 'worlds-greatest-stretch',
@@ -550,13 +550,6 @@ window.EXERCISES = [
     figure: 'crabLiftFlow',
     surface: 'ground',
     cue: 'From an L-sit, hands by your hips, press down and lift your hips up into a crab position. Lower with control and repeat.',
-  },
-  {
-    id: 'crab-knee-tuck',
-    name: 'Crab Knee Tuck',
-    figure: 'crabKneeTuckFlow',
-    surface: 'ground',
-    cue: 'Sit with your hands on the floor behind you and your hips lifted just off the floor. Lift both feet and draw your knees in toward your chest, then extend your legs out and up at an angle, and tuck them in again. Keep your chest open and your hips up the whole time.',
   },
   {
     id: 'kick-through',

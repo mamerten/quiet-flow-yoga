@@ -892,42 +892,32 @@ window.FIGURES = {
     stick(KICK_THROUGH),
   ]),
 
-  // C136 - 2-frame flip book, side view: hands down and hips high with one foot
-  // stepped forward between the hands in a low lunge, then both feet off the
-  // floor mid-hop as the legs switch (Beast Lunge Switch). In a side view the two
-  // legs swap places without changing the silhouette, so the airborne frame is
-  // what says "switch": feet together under the hips, clear of the floor line.
-  beastLungeSwitchFlow: animatedFigure([
+  // C136 - 3-frame flip book, side view: a beast with the hands down and the
+  // hips high; then one foot stepped up wide beside the hands in a low lunge with
+  // the other leg trailing; then standing all the way up with the arms hanging
+  // (Side Mountain Climber to Stand). The photos it comes from are three-quarter
+  // views, so the "wide" in the step is carried by the foot landing beside the
+  // hands rather than behind them, which is what a side view can show. One floor
+  // line (y 132) runs through all three frames, since the standing frame is much
+  // taller than the other two and a floor that moved would read as a hop.
+  sideMountainClimberStandFlow: animatedFigure([
     stick({
-      head: [26, 54], headR: 7, neck: [34, 62], hip: [64, 70],
-      arms: [[[32, 92], [28, 118]], [[37, 92], [33, 118]]],
-      legs: [[[44, 90], [38, 118]], [[84, 92], [98, 114]]],
-      prop: KT_FLOOR,
+      head: [18, 70], headR: 7, neck: [26, 76], hip: [68, 76],
+      arms: [[[26, 106], [26, 131]], [[31, 106], [31, 131]]],
+      legs: [[[78, 110], [84, 131]], [[72, 112], [76, 131]]],
+      prop: GROUND(6, 100, 132),
     }),
     stick({
-      head: [26, 48], headR: 7, neck: [34, 56], hip: [62, 62],
-      arms: [[[32, 88], [28, 118]], [[37, 88], [33, 118]]],
-      legs: [[[56, 84], [52, 104]], [[70, 86], [66, 104]]],
-      prop: KT_FLOOR,
-    }),
-  ]),
-
-  // C137 - 2-frame flip book, side view: sitting with the hands planted behind
-  // and the hips lifted just off the floor, the knees drawn in tight toward the
-  // chest; then both legs extended out and up at an angle (Crab Knee Tuck). Head,
-  // hands and hips are pinned; only the legs travel.
-  crabKneeTuckFlow: animatedFigure([
-    stick({
-      head: [22, 68], headR: 7, neck: [30, 78], hip: [54, 100],
-      arms: [[[26, 100], [24, 120]], [[32, 98], [30, 120]]],
-      legs: [[[60, 80], [46, 90]], [[63, 82], [50, 92]]],
-      prop: GROUND(6, 98, 122),
+      head: [26, 72], headR: 7, neck: [34, 80], hip: [62, 104],
+      arms: [[[32, 108], [30, 131]], [[37, 108], [35, 131]]],
+      legs: [[[42, 110], [38, 131]], [[82, 118], [100, 130]]],
+      prop: GROUND(6, 100, 132),
     }),
     stick({
-      head: [22, 68], headR: 7, neck: [30, 78], hip: [54, 100],
-      arms: [[[26, 100], [24, 120]], [[32, 98], [30, 120]]],
-      legs: [[[74, 90], [94, 70]], [[77, 92], [97, 72]]],
-      prop: GROUND(6, 98, 122),
+      head: [48, 24], headR: 7, neck: [46, 35], hip: [46, 84],
+      arms: [[[50, 60], [52, 82]]],
+      legs: [[[47, 108], [45, 132]], [[52, 108], [54, 132]]],
+      prop: GROUND(6, 100, 132),
     }),
   ]),
 
