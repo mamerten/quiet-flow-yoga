@@ -508,6 +508,13 @@ window.EXERCISES = [
     cue: 'Sit on the floor with your legs straight out in front of you, feet together and toes pointing up. Fold forward from your hips and reach for your toes, keeping your back long. For an even deeper stretch, grab your ankles and gently pull, or loop a towel around your feet and pull on its ends.',
   },
   {
+    id: 'butt-walk',
+    name: 'Butt Walk',
+    figure: 'buttWalkFlow',
+    surface: 'ground',
+    cue: 'Sit on the floor with your legs straight out in front of you and your arms folded at your chest. Shift your weight onto one cheek and swing the opposite hip forward, then switch, walking yourself forward on your glutes. Keep your chest tall and your legs long, and take a few steps.',
+  },
+  {
     id: 'scapular-pushup',
     name: 'Scapular Push-Up',
     figure: 'scapPushUpFlow',

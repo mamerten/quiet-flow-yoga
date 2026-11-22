@@ -968,6 +968,32 @@ window.FIGURES = {
     }),
   ]),
 
+  // C140 - 2-frame flip book, side view: sitting tall with the legs straight out
+  // and the arms folded at the chest; then the whole body lifted a touch and
+  // moved forward along the floor (Butt Walk). A butt walk is a hip-to-hip
+  // shuffle, and the twist that drives it is a left-right motion a side view
+  // cannot show, so what is drawn is what a side view can: the same body,
+  // moved forward with the hips just clear of the floor. The legs, torso and
+  // arms move as one piece (same shapes in both frames, shifted 8 right and 4
+  // up) so it reads as a step and not as a change of pose. Same body as
+  // seatedToeTouchFlow, which also has the toes drawn up.
+  buttWalkFlow: animatedFigure([
+    stick({
+      head: [30, 58], headR: 7, neck: [30, 70], hip: [28, 114],
+      arms: [[[38, 90], [46, 74]]],
+      legs: [[[54, 116], [80, 118]]],
+      prop: GROUND(6, 96, 124),
+      extra: BONE(80, 118, 82, 107, W.foot[0], W.foot[1]),
+    }),
+    stick({
+      head: [38, 54], headR: 7, neck: [38, 66], hip: [36, 110],
+      arms: [[[46, 86], [54, 70]]],
+      legs: [[[62, 114], [88, 118]]],
+      prop: GROUND(6, 96, 124),
+      extra: BONE(88, 118, 90, 107, W.foot[0], W.foot[1]),
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a
