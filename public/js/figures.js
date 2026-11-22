@@ -855,7 +855,10 @@ window.FIGURES = {
   // hands and hips are identical - so the lifted leg is the only thing that
   // moves, and the level hips are the point of the exercise. The second leg is
   // drawn planted in both frames, a little forward of the first, so it reads as
-  // a pair of feet rather than one.
+  // a pair of feet rather than one. The lifted knee bends the way a knee does:
+  // the shin folds back from the thigh and the foot hangs below the knee. The
+  // first drawing had the foot higher than the knee, which is the joint bending
+  // backward.
   crabLegLiftFlow: animatedFigure([
     stick({
       head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
@@ -866,7 +869,7 @@ window.FIGURES = {
     stick({
       head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
       arms: [[[24, 102], [22, 122]], [[31, 100], [29, 122]]],
-      legs: [[[86, 84], [88, 122]], [[86, 68], [74, 48]]],
+      legs: [[[86, 84], [88, 122]], [[82, 66], [92, 86]]],
       prop: GROUND(6, 96, 124),
     }),
   ]),
@@ -918,6 +921,49 @@ window.FIGURES = {
       arms: [[[50, 60], [52, 82]]],
       legs: [[[47, 108], [45, 132]], [[52, 108], [54, 132]]],
       prop: GROUND(6, 100, 132),
+    }),
+  ]),
+
+  // C138 - 2-frame flip book, side view: the crab hold, then one knee drawn up
+  // toward the chest with the opposite hand come off the floor to touch it (Crab
+  // Leg Lift and Knee Touch). The hold's body is pinned, as in crabLegLiftFlow;
+  // the knee is pulled in closer than there so the hand can reach it, and the
+  // shin folds back and down from it, the way a knee bends. Compare Crab Toe
+  // Touch, where the reach is to the foot.
+  crabLegLiftKneeTouchFlow: animatedFigure([
+    stick({
+      head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
+      arms: [[[24, 102], [22, 122]], [[31, 100], [29, 122]]],
+      legs: [[[86, 84], [88, 122]], [[82, 86], [80, 122]]],
+      prop: GROUND(6, 96, 124),
+    }),
+    stick({
+      head: [20, 70], headR: 7, neck: [28, 80], hip: [62, 82],
+      arms: [[[24, 102], [22, 122]], [[48, 66], [72, 62]]],
+      legs: [[[86, 84], [88, 122]], [[74, 62], [80, 84]]],
+      prop: GROUND(6, 96, 124),
+    }),
+  ]),
+
+  // C139 - 2-frame flip book seen from directly overhead, in a crab: hands
+  // behind the hips and both feet planted; then one hand and the OPPOSITE foot
+  // lifted, with the chest turned toward the hand still on the floor and the
+  // lifted arm swung across the body (Crab to Twist). Overhead because the
+  // twist is the exercise and a side view flattens it; the shoulder bar turning
+  // and the arm crossing the body are what show it. The planted hand and foot
+  // are pinned.
+  crabTwistFlow: animatedFigure([
+    stick({
+      head: [50, 24], neck: [50, 34], shoulders: [[38, 40], [62, 40]], hip: [50, 88],
+      arms: [[[30, 62], [34, 84]], [[70, 62], [66, 84]]],
+      legs: [[[42, 108], [44, 130]], [[58, 108], [56, 130]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [56, 26], neck: [52, 34], shoulders: [[41, 43], [63, 36]], hip: [50, 88],
+      arms: [[[54, 55], [74, 46]], [[72, 58], [66, 84]]],
+      legs: [[[42, 108], [44, 130]], [[60, 96], [62, 110]]],
+      prop: MAT,
     }),
   ]),
 
@@ -2598,8 +2644,8 @@ window.FIGURES = {
     }),
     stick({
       head: [28, 70], headR: 7, neck: [32, 82], hip: [52, 108],
-      arms: [[[28, 102], [24, 122]], [[50, 76], [68, 72]]],
-      legs: [[[72, 96], [80, 122]], [[66, 88], [70, 70]]],
+      arms: [[[28, 102], [24, 122]], [[54, 82], [82, 94]]],
+      legs: [[[72, 96], [80, 122]], [[70, 84], [86, 96]]],
       prop: GROUND(6, 96, 124),
     }),
   ]),

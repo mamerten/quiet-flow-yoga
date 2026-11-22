@@ -973,6 +973,14 @@ window.EXERCISES = [
     cue: 'Sit low in a crab, hands planted on the floor behind you and feet flat in front, hips just off the floor. Kick one leg up with the knee bent and reach the opposite hand across to touch that foot. Set them both back down and touch with the other hand and foot, alternating as you go.',
   },
   {
+    id: 'crab-leg-lift-knee-touch',
+    name: 'Crab Leg Lift and Knee Touch',
+    figure: 'crabLegLiftKneeTouchFlow',
+    surface: 'ground',
+    mixedSides: true,
+    cue: 'Get into a crab with your hands on the floor behind you, fingers toward your feet, and your hips lifted. Lift one foot off the floor and draw that knee up toward your chest, then reach the opposite hand across and touch the knee. Put both back down and repeat with the other leg and hand, alternating as you go.',
+  },
+  {
     id: 'crab-reach',
     name: 'Crab Reach',
     figure: 'crabReachFlow',
@@ -980,6 +988,14 @@ window.EXERCISES = [
     mixedSides: true,
     difficulty: 'H',
     cue: 'Sit with your knees bent and feet flat, hands on the floor behind you, and press your hips up into a tabletop. Lift one hand and reach it back over your head, turning your chest up toward the ceiling and following the hand with your eyes. Plant it again and reach with the other hand, alternating as you go.',
+  },
+  {
+    id: 'crab-to-twist',
+    name: 'Crab to Twist',
+    figure: 'crabTwistFlow',
+    surface: 'ground',
+    mixedSides: true,
+    cue: 'Get into a crab with your hands behind you and your hips lifted. Lift one hand and the opposite foot off the floor, then twist your chest toward the hand that is still on the ground, swinging the lifted arm across your body. Return to the crab and repeat with the other hand and foot, alternating as you go.',
   },
   {
     id: 'a-skips',

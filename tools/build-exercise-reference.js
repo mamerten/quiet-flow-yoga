@@ -120,7 +120,7 @@ const SUBSECTIONS = {
     ]],
     ['Chest up', [
       // crab
-      'crab-hold', 'crab-hold-leg-lift', 'bear-to-crab', 'crab-lift', 'crab-toe-touch', 'crab-reach',
+      'crab-hold', 'crab-hold-leg-lift', 'bear-to-crab', 'crab-lift', 'crab-toe-touch', 'crab-leg-lift-knee-touch', 'crab-reach', 'crab-to-twist',
       'reverse-plank',
       // on the back
       'glute-bridge', 'single-leg-glute-bridge', 'dead-bug', 'hollow-body-hold',
