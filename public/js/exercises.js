@@ -589,6 +589,14 @@ window.EXERCISES = [
     cue: 'Start in a beast: hands and feet on the floor, knees bent and hovering just off the floor, back flat. Lift one hand and the opposite foot, then rotate your hips and kick that leg through underneath you to the side your hand came off, finishing sitting low with one hand planted behind you, that knee straight out in front and your other knee bent with the foot down. Return to the beast and kick through to the other side, alternating as you go.',
   },
   {
+    id: 'forward-kick-through',
+    name: 'Forward Kick-Through',
+    figure: 'forwardKickThroughFlow',
+    surface: 'ground',
+    difficulty: 'H',
+    cue: 'Start in a push-up position. Bring one leg far up toward your chest and hand, then turn your body open and kick your other leg through forward underneath you, finishing sitting low with one hand planted behind you, that leg straight out in front and your first knee bent with the foot down. Return to the push-up position and repeat with the other leg, alternating as you go.',
+  },
+  {
     id: 'mountain-climber-kick-through',
     name: 'Mountain Climbers to Kick-Through',
     figure: 'mountainClimberKickThroughFlow',

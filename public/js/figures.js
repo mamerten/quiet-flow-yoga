@@ -1081,6 +1081,26 @@ window.FIGURES = {
     }),
   ]),
 
+  // C144 - 3-frame flip book, side view: a push-up position; then one knee driven
+  // far forward, in toward the hands, with the opposite hand lifted as the body
+  // opens; then the other leg kicked straight through underneath to the finish
+  // (Forward Kick-Through). The finish is the shared KICK_THROUGH frame, so it is
+  // the same end position as the other kick-throughs: the difference is the way
+  // in. There the foot that kicks through is the one lifted off the back; here
+  // one leg steps up first and stays bent, and the OTHER leg is what kicks
+  // through, forward. The far leg's shin hangs below the knee, the way a knee
+  // bends. The upper body in frame two is KT_LIFT's.
+  forwardKickThroughFlow: animatedFigure([
+    stick(KT_PLANK),
+    stick({
+      head: [16, 62], headR: 7, neck: [24, 68], hip: [58, 94],
+      arms: [[[24, 93], [24, 118]], [[32, 90], [38, 80]]],
+      legs: [[[76, 106], [92, 118]], [[36, 98], [44, 116]]],
+      prop: KT_FLOOR,
+    }),
+    stick(KICK_THROUGH),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a
