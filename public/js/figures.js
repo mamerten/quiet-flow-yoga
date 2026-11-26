@@ -994,6 +994,31 @@ window.FIGURES = {
     }),
   ]),
 
+  // C141 - 3-frame flip book, side view on the plank base: plank, down to the
+  // bottom of the push-up, then back up with one knee driven forward under the
+  // chest (Push-Up Knee Forward). Frames one and two are pushUpFlow's own, so
+  // the push-up half reads identically; in frame three both hands and the back
+  // foot stay planted and only the knee moves. The lifted leg is the mountain
+  // climber's: thigh forward, shin hanging below the knee, which is the way a
+  // knee bends. Compare Push-Up Lunge Reach, where the foot comes all the way
+  // up beside the hand and that hand lifts as well, and Spiderman Push-Ups,
+  // where the knee goes out to the elbow at the bottom of the rep.
+  pushUpKneeForwardFlow: animatedFigure([
+    stick(PLANK),
+    stick({
+      head: [16, 66], headR: 7, neck: [24, 72], hip: [58, 92],
+      arms: [[[32, 92], [24, 110]]],
+      legs: [[[76, 101], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+    stick({
+      head: [16, 52], headR: 7, neck: [24, 58], hip: [58, 84],
+      arms: [[[24, 84], [24, 110]]],
+      legs: [[[76, 97], [92, 110]], [[40, 78], [36, 96]]],
+      prop: GROUND(8, 98, 112),
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a

@@ -102,7 +102,7 @@ const SUBSECTIONS = {
       // planks and push-ups
       'plank-hold', 'shoulder-taps', 'push-up-flow', 'shoulder-tap-push-up', 'wide-push-up',
       'spiderman-push-up', 'pike-push-up', 'crawl-position-push-up', 'scapular-pushup',
-      'push-up-lunge-reach', 'push-up-kick-through', 'push-up-side-plank',
+      'push-up-lunge-reach', 'push-up-knee-forward', 'push-up-kick-through', 'push-up-side-plank',
       'side-plank', 'side-plank-hand', 'side-curl', 'side-plank-leg-shift',
       'plank-opposite-toe-touch', 'kick-through', 'kick-through-from-beast', 'mountain-climber-kick-through',
       'shoulder-tap-kick-through', 'mountain-climber', 'side-mountain-climber-to-stand', 'burpee',

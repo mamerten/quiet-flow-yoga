@@ -296,6 +296,14 @@ window.EXERCISES = [
     cue: 'Do a push-up. At the top, step one foot up beside your hand and lift that same hand off the floor, reaching it forward. Step back to plank, do another push-up, and switch sides each rep.',
   },
   {
+    id: 'push-up-knee-forward',
+    name: 'Push-Up Knee Forward',
+    figure: 'pushUpKneeForwardFlow',
+    surface: 'ground',
+    group: 'push-ups',
+    cue: 'Do a push-up. At the top, drive one knee forward toward your chest, keeping both hands planted and your hips low. Return that foot to plank, do another push-up, and switch legs each rep.',
+  },
+  {
     id: 'push-up-kick-through',
     name: 'Push-Up to Kick-Through',
     figure: 'pushUpKickThroughFlow',
