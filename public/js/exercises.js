@@ -304,6 +304,14 @@ window.EXERCISES = [
     cue: 'Do a push-up. At the top, drive one knee forward toward your chest, keeping both hands planted and your hips low. Return that foot to plank, do another push-up, and switch legs each rep.',
   },
   {
+    id: 'push-up-hips-back',
+    name: 'Push-Up Hips Back (Mike Tyson)',
+    figure: 'pushUpHipsBackFlow',
+    surface: 'ground',
+    group: 'push-ups',
+    cue: 'Do a push-up. At the top, keep your arms straight and push your hips back toward your heels as far as you can, letting your head drop between your arms. Slide forward into the plank and do the next push-up.',
+  },
+  {
     id: 'push-up-kick-through',
     name: 'Push-Up to Kick-Through',
     figure: 'pushUpKickThroughFlow',

@@ -180,8 +180,12 @@ function poseLabel(seg) {
 // tools/generate-voice.py, which does the same for the pre-generated audio;
 // this copy only matters for the device-voice fallback path.
 const ROMAN_TO_WORD = { I: 'One', II: 'Two', III: 'Three' };
+// A parenthetical on screen ("Push-Up Hips Back (Mike Tyson)") is an aside; the
+// voice says it as one, "Push-Up Hips Back, Mike Tyson", never "parenthesis".
 function spokenPoseName(pose) {
-  return pose.name.replace(/\b(III|II|I)$/, (m) => ROMAN_TO_WORD[m]);
+  return pose.name
+    .replace(/\s*\(([^)]*)\)/g, ', $1')
+    .replace(/\b(III|II|I)$/, (m) => ROMAN_TO_WORD[m]);
 }
 function spokenLabel(seg) {
   const name = spokenPoseName(seg.pose);

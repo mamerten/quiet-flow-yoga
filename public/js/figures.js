@@ -1019,6 +1019,33 @@ window.FIGURES = {
     }),
   ]),
 
+  // C142 - 4-frame flip book, side view on the plank base: plank, down to the
+  // bottom of the push-up, back up to the plank, then the hips pushed back
+  // toward the heels with the arms still straight and the head dropped between
+  // them (Push-Up Hips Back, "Mike Tyson"). The first three frames are
+  // pushUpFlow's own, so the push-up half reads identically; the order is the
+  // exercise (down, up, THEN back), which is why the plank appears twice. In the
+  // last frame the hands and toes stay where they were. The arm is as long as in
+  // the plank (shoulder to hand 52), so the shoulders slide back and up as the
+  // hips go, and the knee is solved so both leg bones keep their length: it ends
+  // low, just above the floor. Compare Pike Push-Ups, where the hips go UP.
+  pushUpHipsBackFlow: animatedFigure([
+    stick(PLANK),
+    stick({
+      head: [16, 66], headR: 7, neck: [24, 72], hip: [58, 92],
+      arms: [[[32, 92], [24, 110]]],
+      legs: [[[76, 101], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+    stick(PLANK),
+    stick({
+      head: [27, 52], headR: 7, neck: [36, 60], hip: [70, 86],
+      arms: [[[30, 85], [24, 110]]],
+      legs: [[[72, 107], [92, 110]]],
+      prop: GROUND(8, 98, 112),
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a

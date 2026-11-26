@@ -72,6 +72,10 @@ ROMAN_TO_WORD = {"I": "One", "II": "Two", "III": "Three"}
 
 
 def spoken_name(name):
+    # A parenthetical on screen ("Push-Up Hips Back (Mike Tyson)") is an
+    # aside; the voice should say it as one, "Push-Up Hips Back, Mike Tyson",
+    # and never the word "parenthesis". Keep in sync with spokenPoseName().
+    name = re.sub(r"\s*\(([^)]*)\)", r", \1", name)
     return re.sub(r"\b(III|II|I)$", lambda m: ROMAN_TO_WORD[m.group(1)], name)
 
 
