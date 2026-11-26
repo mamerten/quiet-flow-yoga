@@ -126,7 +126,7 @@ const SUBSECTIONS = {
       'glute-bridge', 'single-leg-glute-bridge', 'dead-bug', 'hollow-body-hold',
       'suitcase-crunches', 'bicycle-crunches', 'lying-knee-drops', 'windshield-wipers',
       // propped back on the hands: the leg raises
-      'two-leg-side-sweep', 'single-leg-side-sweep', 'leg-raises', 'russian-twists',
+      'two-leg-side-sweep', 'single-leg-side-sweep', 'leg-raises', 'leg-in-out-rotate', 'russian-twists',
     ]],
   ],
 };
@@ -226,6 +226,55 @@ for (const key of GROUP_ORDER) {
   </section>`;
 }
 
+// The "never repeat" rules, written out at the top of the page. Built from the
+// same data the app deals from (each exercise's `group`, plus GROUP_LIMITS), so
+// the page can't say one thing while the app does another. Order here is the
+// order they are listed in; a group missing from it is still shown, last.
+const RULE_ORDER = ['push-ups', 'kicks', 'punches', 'ninety-ninety', 'leg-raises', 'ankle-stretches'];
+const groupLimit = (g) => (window.GROUP_LIMITS || {})[g] || 1;
+const usedGroups = [...new Set(exercises.filter((e) => e.group).map((e) => e.group))];
+const unlisted = usedGroups.filter((g) => !RULE_ORDER.includes(g));
+if (unlisted.length) console.warn(`Groups not in RULE_ORDER, shown last: ${unlisted.join(', ')}`);
+const ruleGroups = [...RULE_ORDER.filter((g) => usedGroups.includes(g)), ...unlisted];
+const groupRows = ruleGroups.map((g) => {
+  const members = exercises.filter((e) => e.group === g);
+  const names = members
+    .map((e) => esc(e.name) + (e.sided ? ' <span class="pair">(left + right)</span>' : ''))
+    .join(' <span class="sep">&middot;</span> ');
+  return `
+      <tr>
+        <td class="g-name">${esc(GROUP_NAMES[g] || g)}</td>
+        <td class="g-max">${groupLimit(g)}</td>
+        <td class="g-members">${names} <span class="count">(${members.length})</span></td>
+      </tr>`;
+}).join('');
+const grouped = exercises.filter((e) => e.group).length;
+const rulesSection = `
+  <section class="rules">
+    <h2>Session rules: groups that never repeat</h2>
+    <p>
+      A few families of near-identical moves are limited so one session can't fill up with the same
+      thing. A <em>session</em> is one run of Calisthenics, start to finish.
+    </p>
+    <table>
+      <thead><tr><th>Group</th><th class="max-col">Max per session</th><th>Moves in the group</th></tr></thead>
+      <tbody>${groupRows}
+      </tbody>
+    </table>
+    <ul>
+      <li><strong>The limit is per session.</strong> Once a group has used up its max, the rest of
+        its moves are skipped for the whole session, however long it runs. Which ones come up is random.</li>
+      <li><strong>A left + right pair counts as one move.</strong> The two sides always come back to back.</li>
+      <li><strong>Everything else is unlimited.</strong> The ${exercises.length - grouped} moves in no group
+        (the crabs, the kick-throughs, the planks and so on) can come up any number of times.</li>
+      <li><strong>The same move never comes up twice in a row.</strong></li>
+      <li><strong>Every session is a fresh shuffle.</strong> Nothing is remembered between sessions, and
+        the equipment toggles on the home screen decide which moves are in the deck at all.</li>
+      <li>Moves in a group are tagged <em>max N per session</em> in the Name column below. The groups are set by
+        <code>group</code> on each exercise and <code>GROUP_LIMITS</code> in <code>public/js/exercises.js</code>.</li>
+    </ul>
+  </section>`;
+
 const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -292,6 +341,16 @@ const html = `<!doctype html>
   .level-col, .level-cell { width: 44px; text-align: center; }
   .level-cell { font-weight: 700; color: #5f7a68; }
   .cue-cell { line-height: 1.45; }
+  .rules p { margin: 0 0 12px; line-height: 1.5; font-size: 0.92rem; }
+  .rules ul { margin: 14px 0 0; padding-left: 20px; line-height: 1.55; font-size: 0.9rem; }
+  .rules li { margin-bottom: 4px; }
+  .rules code { font-size: 0.82rem; }
+  .max-col, .g-max { width: 110px; text-align: center; }
+  .g-name { width: 200px; font-weight: 700; }
+  .g-max { font-size: 1.15rem; font-weight: 700; color: #5f7a68; }
+  .g-members { line-height: 1.6; }
+  .g-members .sep { color: #c3cbc5; }
+  .g-members .pair, .g-members .count { color: #9aa39d; font-size: 0.8rem; }
   .missing { color: #a33; }
   @media (max-width: 700px) {
     body { margin: 16px 12px 40px; }
@@ -313,7 +372,7 @@ const html = `<!doctype html>
     frame side by side. Rebuilt from <code>public/js/exercises.js</code> and <code>public/js/figures.js</code>
     by <code>tools/build-exercise-reference.js</code> whenever the exercises change. Internal reference
     only, not part of the shipped site.
-  </p>${sections}
+  </p>${rulesSection}${sections}
 </body>
 </html>
 `;

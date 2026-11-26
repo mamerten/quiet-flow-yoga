@@ -723,6 +723,15 @@ window.EXERCISES = [
     cue: 'Sit propped back on your hands with your legs straight out in front. Raise them together as high as you can, then lower them back down without letting your feet touch the floor.',
   },
   {
+    id: 'leg-in-out-rotate',
+    name: 'Leg In and Out and Rotate',
+    figure: 'legInOutRotateFlow',
+    surface: 'ground',
+    mixedSides: true,
+    group: 'leg-raises',
+    cue: 'Sit propped back on your hands with your legs together. Pull your knees in toward your chest, then extend your legs straight out, angled about 45 degrees to one side, keeping them off the floor. Pull them back in, then extend them out to the other side, switching sides each rep.',
+  },
+  {
     id: 'two-leg-side-sweep',
     name: 'Two-Leg Side Sweep',
     figure: 'twoLegSweepFlow',

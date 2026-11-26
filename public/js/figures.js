@@ -1046,6 +1046,41 @@ window.FIGURES = {
     }),
   ]),
 
+  // C143 - 4-frame flip book seen from overhead, on twoLegSweepFlow's body:
+  // the knees pulled in over the belly, then the legs straight out angled 45
+  // degrees to one side, in again, then out to the other side (Leg In and Out
+  // and Rotate). Overhead for the same reason as the sweeps: the 45 degree
+  // shift is the point of the exercise and a side view flattens it. "In" shows
+  // as short stubs over the belly (a tucked leg seen from above is nearly end
+  // on) and "out" as the long leg line, which is also how far each leg reaches.
+  // Torso, arms and hips are pinned; only the legs move.
+  legInOutRotateFlow: animatedFigure([
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [22, 70]], [[70, 50], [78, 70]]],
+      legs: [[[43, 66], [44, 86]], [[57, 66], [56, 86]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [22, 70]], [[70, 50], [78, 70]]],
+      legs: [[[34, 94], [18, 110]], [[38, 97], [22, 114]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [22, 70]], [[70, 50], [78, 70]]],
+      legs: [[[43, 66], [44, 86]], [[57, 66], [56, 86]]],
+      prop: MAT,
+    }),
+    stick({
+      head: [50, 20], neck: [50, 30], shoulders: [[38, 36], [62, 36]], hip: [50, 78],
+      arms: [[[30, 50], [22, 70]], [[70, 50], [78, 70]]],
+      legs: [[[66, 94], [82, 110]], [[62, 97], [78, 114]]],
+      prop: MAT,
+    }),
+  ]),
+
   // C118 - 2-frame flip book, side view: standing tall, then sat back and down
   // until the thighs are level with the floor, arms reaching forward to
   // balance (Bodyweight Squat). The plain squat every other squat here is a
